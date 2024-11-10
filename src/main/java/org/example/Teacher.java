@@ -1,21 +1,37 @@
 package org.example;
 
-public class Teacher extends User{
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class Teacher extends User {
     private String userName;
 
-    public Teacher(int userID,String password, String email){
-        super(userID,password,email);
-    }
-    public Teacher(String email, String password){
-        super(email,password);
-    }
-    public void setUserName(String userName){
-        userName = "Joed";
+    public Teacher(int userID, String email, String password, String userName) {
+        super(userID, email, password);
         this.userName = userName;
     }
-    public String getUserName(){
+
+    public Teacher(String email, String password, String userName) {
+        super(email, password);
+        this.userName = userName;
+    }
+
+    public String getUserName() {
         return userName;
     }
 
-    //bale d pa ako sure kung anong ilakagay ko dine
+    // Save Teacher to Database
+    public void saveTeacherToDatabase() {
+        String sql = "INSERT INTO teachers(email, password, userName) VALUES(?, ?, ?)";
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, getEmail());
+            pstmt.setString(2, getPassword());
+            pstmt.setString(3, userName);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
