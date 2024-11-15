@@ -8,12 +8,12 @@ package loginandsignup;
  *
  * @author johne
  */
-public class Login extends javax.swing.JFrame {
+public class SignUp extends javax.swing.JFrame {
 
     /**
      * Creates new form Login
      */
-    public Login() {
+    public SignUp() {
         initComponents();
     }
 
@@ -33,11 +33,13 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        EmailLogin = new javax.swing.JTextField();
-        conLogin = new javax.swing.JButton();
-        LoginPass = new javax.swing.JPasswordField();
-        jLabel4 = new javax.swing.JLabel();
-        goSignUp = new javax.swing.JButton();
+        EmailTxT = new javax.swing.JTextField();
+        SaveAndGoLogin = new javax.swing.JButton();
+        PasswordSignUp = new javax.swing.JPasswordField();
+        NameSignUP = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        goLogin = new javax.swing.JButton();
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -80,7 +82,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel1.setText("LOGIN");
+        jLabel1.setText("SIGN UP");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(153, 153, 153));
@@ -90,37 +92,45 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(153, 153, 153));
         jLabel3.setText("Email: ");
 
-        EmailLogin.setForeground(new java.awt.Color(153, 153, 153));
-        EmailLogin.addActionListener(new java.awt.event.ActionListener() {
+        EmailTxT.setForeground(new java.awt.Color(153, 153, 153));
+        EmailTxT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EmailLoginActionPerformed(evt);
+                EmailTxTActionPerformed(evt);
             }
         });
 
-        conLogin.setBackground(new java.awt.Color(0, 102, 102));
-        conLogin.setForeground(new java.awt.Color(255, 255, 255));
-        conLogin.setText("Login");
-        conLogin.addActionListener(new java.awt.event.ActionListener() {
+        SaveAndGoLogin.setBackground(new java.awt.Color(0, 102, 102));
+        SaveAndGoLogin.setForeground(new java.awt.Color(255, 255, 255));
+        SaveAndGoLogin.setText("Save");
+        SaveAndGoLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                conLoginActionPerformed(evt);
+                SaveAndGoLoginActionPerformed(evt);
             }
         });
 
-        LoginPass.addActionListener(new java.awt.event.ActionListener() {
+        PasswordSignUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoginPassActionPerformed(evt);
+                PasswordSignUpActionPerformed(evt);
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        jLabel4.setText("I don't have an account?");
-
-        goSignUp.setBackground(new java.awt.Color(0, 102, 102));
-        goSignUp.setForeground(new java.awt.Color(255, 255, 255));
-        goSignUp.setText("Sign Up");
-        goSignUp.addActionListener(new java.awt.event.ActionListener() {
+        NameSignUP.setForeground(new java.awt.Color(153, 153, 153));
+        NameSignUP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                goSignUpActionPerformed(evt);
+                NameSignUPActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel6.setText("Name:");
+
+        goLogin.setBackground(new java.awt.Color(0, 102, 102));
+        goLogin.setForeground(new java.awt.Color(255, 255, 255));
+        goLogin.setText("Login");
+        goLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                goLoginActionPerformed(evt);
             }
         });
 
@@ -128,53 +138,63 @@ public class Login extends javax.swing.JFrame {
         Right.setLayout(RightLayout);
         RightLayout.setHorizontalGroup(
             RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RightLayout.createSequentialGroup()
+                .addGap(140, 140, 140)
+                .addComponent(jLabel1)
+                .addContainerGap(116, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RightLayout.createSequentialGroup()
-                .addGap(0, 21, Short.MAX_VALUE)
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(RightLayout.createSequentialGroup()
-                            .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel3))
-                            .addGap(312, 312, 312))
-                        .addGroup(RightLayout.createSequentialGroup()
-                            .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(EmailLogin)
-                                .addComponent(LoginPass))
-                            .addContainerGap()))
-                    .addGroup(RightLayout.createSequentialGroup()
-                        .addComponent(conLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(goSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RightLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(41, 41, 41))))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(NameSignUP, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RightLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2)
+                            .addComponent(PasswordSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(RightLayout.createSequentialGroup()
+                                .addComponent(SaveAndGoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(goLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RightLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(131, 131, 131))
+                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RightLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addGap(335, 335, 335))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RightLayout.createSequentialGroup()
+                        .addComponent(EmailTxT, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         RightLayout.setVerticalGroup(
             RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RightLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(44, 44, 44)
                 .addComponent(jLabel1)
-                .addGap(47, 47, 47)
+                .addGap(36, 36, 36)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(NameSignUP, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addGap(12, 12, 12)
-                .addComponent(EmailLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(EmailTxT, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LoginPass, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PasswordSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(conLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(goSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addContainerGap(140, Short.MAX_VALUE))
+                    .addComponent(SaveAndGoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(goLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(127, 127, 127))
         );
 
         panel2.add(Right);
@@ -202,26 +222,27 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void EmailLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailLoginActionPerformed
+    private void EmailTxTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailTxTActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_EmailLoginActionPerformed
+    }//GEN-LAST:event_EmailTxTActionPerformed
 
-    private void conLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conLoginActionPerformed
+    private void SaveAndGoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveAndGoLoginActionPerformed
+        Login l =new Login();
+       l.setVisible(true);
+    }//GEN-LAST:event_SaveAndGoLoginActionPerformed
+
+    private void PasswordSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordSignUpActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_conLoginActionPerformed
+    }//GEN-LAST:event_PasswordSignUpActionPerformed
 
-    private void LoginPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginPassActionPerformed
+    private void NameSignUPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NameSignUPActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_LoginPassActionPerformed
+    }//GEN-LAST:event_NameSignUPActionPerformed
 
-    private void goSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goSignUpActionPerformed
-      Login l =new Login();
-      l.dispose();
-      SignUp suf =new SignUp();
-      suf.setVisible(true);
-       
-   
-    }//GEN-LAST:event_goSignUpActionPerformed
+    private void goLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goLoginActionPerformed
+        Login l =new Login();
+       l.setVisible(true);
+    }//GEN-LAST:event_goLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,29 +261,32 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         
         //</editor-fold>
 
         /* Create and display the form */
-       Login l =new Login();
+       SignUp l =new SignUp();
        l.setVisible(true);
-      
-    
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField EmailLogin;
+    private javax.swing.JTextField EmailTxT;
     private javax.swing.JPanel Left;
-    private javax.swing.JPasswordField LoginPass;
+    private javax.swing.JTextField NameSignUP;
+    private javax.swing.JPasswordField PasswordSignUp;
     private javax.swing.JPanel Right;
-    private javax.swing.JButton conLogin;
-    private javax.swing.JButton goSignUp;
+    private javax.swing.JButton SaveAndGoLogin;
+    private javax.swing.JButton goLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel panel2;
     // End of variables declaration//GEN-END:variables
