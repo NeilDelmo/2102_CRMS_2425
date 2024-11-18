@@ -4,6 +4,15 @@
  */
 package loginandsignup;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
+
 /**
  *
  * @author johne
@@ -101,7 +110,7 @@ public class SignUp extends javax.swing.JFrame {
 
         SaveAndGoLogin.setBackground(new java.awt.Color(0, 102, 102));
         SaveAndGoLogin.setForeground(new java.awt.Color(255, 255, 255));
-        SaveAndGoLogin.setText("Save");
+        SaveAndGoLogin.setText("Signup");
         SaveAndGoLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SaveAndGoLoginActionPerformed(evt);
@@ -123,7 +132,7 @@ public class SignUp extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel6.setText("Name:");
+        jLabel6.setText("FullName:");
 
         goLogin.setBackground(new java.awt.Color(0, 102, 102));
         goLogin.setForeground(new java.awt.Color(255, 255, 255));
@@ -194,7 +203,7 @@ public class SignUp extends javax.swing.JFrame {
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SaveAndGoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(goLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(127, 127, 127))
+                .addGap(97, 97, 97))
         );
 
         panel2.add(Right);
@@ -224,11 +233,49 @@ public class SignUp extends javax.swing.JFrame {
 
     private void EmailTxTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailTxTActionPerformed
         // TODO add your handling code here:
+        Login LoginFrame = new Login();
+        LoginFrame.setVisible(true);
+        LoginFrame.pack();
+        LoginFrame.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_EmailTxTActionPerformed
 
     private void SaveAndGoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveAndGoLoginActionPerformed
-        Login l =new Login();
-       l.setVisible(true);
+
+       String fullname,email,password, query;
+       String URL, USER, PASS;
+       URL = "jdbc:mysql://localhost:3306/crms";
+       USER = "root";
+       PASS = "";
+       
+       try{
+           Class.forName("com.mysql.cj.jdbc.Driver");
+           Connection con = DriverManager.getConnection(URL,USER,PASS);
+           Statement st = con.createStatement();
+           if("".equals(NameSignUP.getText())){
+               JOptionPane.showMessageDialog(new JFrame(), "Full name is required", "Error", JOptionPane.ERROR_MESSAGE);
+           }else if("".equals(EmailTxT.getText())){
+           JOptionPane.showMessageDialog(new JFrame(), "Email Address is required", "Error", JOptionPane.ERROR_MESSAGE);
+           }else if("".equals(PasswordSignUp.getText())){
+            JOptionPane.showMessageDialog(new JFrame(), "Password is required", "Error", JOptionPane.ERROR_MESSAGE);   
+           }else{
+               fullname = NameSignUP.getText();
+               email = EmailTxT.getText();
+               password = PasswordSignUp.getText();
+               System.out.println(password);
+               
+               query = "INSERT INTO teachers(fullname,password,email)" +
+                       "VALUES('"+fullname+"','"+password+"','"+email+"')";
+               st.execute(query);
+               NameSignUP.setText("");
+               EmailTxT.setText("");
+               PasswordSignUp.setText("");
+               showMessageDialog(null,"Account has been created successfully!");
+               this.dispose();
+           }
+       }catch(Exception e){
+           System.out.println("Error! "+ e.getMessage());
+       }
     }//GEN-LAST:event_SaveAndGoLoginActionPerformed
 
     private void PasswordSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordSignUpActionPerformed

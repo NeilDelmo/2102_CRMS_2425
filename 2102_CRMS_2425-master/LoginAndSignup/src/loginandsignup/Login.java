@@ -3,6 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package loginandsignup;
+import Dashboard.DashboardUI;
+
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  *
@@ -208,6 +218,44 @@ public class Login extends javax.swing.JFrame {
 
     private void conLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conLoginActionPerformed
         // TODO add your handling code here:
+         String email,password, query,passDb = null;
+       String URL, USER, PASS;
+       URL = "jdbc:mysql://localhost:3306/crms";
+       USER = "root";
+       PASS = "";
+       int notFound = 0;
+       
+       try{
+           Class.forName("com.mysql.cj.jdbc.Driver");
+           Connection con = DriverManager.getConnection(URL,USER,PASS);
+           Statement st = con.createStatement();
+            if("".equals(EmailLogin.getText())){
+           JOptionPane.showMessageDialog(new JFrame(), "Email Address is required", "Error", JOptionPane.ERROR_MESSAGE);
+           }else if("".equals(LoginPass.getText())){
+            JOptionPane.showMessageDialog(new JFrame(), "Password is required", "Error", JOptionPane.ERROR_MESSAGE);   
+           }else{
+               email = EmailLogin.getText();
+               password = LoginPass.getText();
+               
+               query = "SELECT * FROM teachers WHERE email = '"+ email+"'";
+               ResultSet rs = st.executeQuery(query);
+               while(rs.next()){
+               passDb = rs.getString("password");
+               notFound = 1;
+               }
+               if (notFound == 1 && password.equals(passDb)){
+                    DashboardUI dashboard = new DashboardUI();
+                    dashboard.setVisible(true);
+                    this.dispose(); 
+                   
+               }else{
+                   JOptionPane.showMessageDialog(new JFrame(), "Incorrect Email or Password", "Error", JOptionPane.ERROR_MESSAGE);  
+               }
+               LoginPass.setText("");
+           }
+       }catch(Exception e){
+           System.out.println("Error! "+ e.getMessage());
+       }
     }//GEN-LAST:event_conLoginActionPerformed
 
     private void LoginPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginPassActionPerformed
