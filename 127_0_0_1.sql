@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 18, 2024 at 12:44 PM
+-- Generation Time: Nov 18, 2024 at 02:46 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,8 +28,42 @@ USE `crms`;
 --
 -- Table structure for table `teachers`
 --
--- Error reading structure for table crms.teachers: #1932 - Table &#039;crms.teachers&#039; doesn&#039;t exist in engine
--- Error reading data for table crms.teachers: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#039;FROM `crms`.`teachers`&#039; at line 1
+
+CREATE TABLE `teachers` (
+  `teacher_id` int(11) NOT NULL,
+  `fullname` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `teachers`
+--
+
+INSERT INTO `teachers` (`teacher_id`, `fullname`, `password`, `email`) VALUES
+(1, 'Joed Pogi', 'qwerty', 'joed123@gmail.com');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `teachers`
+--
+ALTER TABLE `teachers`
+  ADD PRIMARY KEY (`teacher_id`),
+  ADD UNIQUE KEY `fullname` (`fullname`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `teachers`
+--
+ALTER TABLE `teachers`
+  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
