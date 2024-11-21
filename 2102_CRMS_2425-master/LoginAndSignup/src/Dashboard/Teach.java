@@ -224,10 +224,17 @@ public class Teach extends javax.swing.JFrame {
 
     private void btnAddClass_TeachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClass_TeachActionPerformed
         // TODO add your handling code here:
+<<<<<<< HEAD
         addclasses addclassFrame = new addclasses();
          addclassFrame.setExtendedState(Teach.MAXIMIZED_BOTH);
          addclassFrame.setVisible(true);
          
+=======
+        AddClass addclassFrame = new AddClass();
+         addclassFrame.setExtendedState(Teach.MAXIMIZED_BOTH);
+         addclassFrame.setVisible(true);
+         this.dispose();
+>>>>>>> 3bf94b404a38d2c69d331e739c6242dd0046c4b1
     }//GEN-LAST:event_btnAddClass_TeachActionPerformed
 
     /**

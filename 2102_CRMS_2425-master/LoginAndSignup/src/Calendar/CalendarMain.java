@@ -1,6 +1,10 @@
 package Calendar;
 
+<<<<<<< HEAD
 import Dashboard.addclasses;
+=======
+import Dashboard.AddClass;
+>>>>>>> 3bf94b404a38d2c69d331e739c6242dd0046c4b1
 import Dashboard.Home;
 import Dashboard.Teach;
 import javax.swing.JFrame;
@@ -450,7 +454,11 @@ public class CalendarMain extends javax.swing.JFrame {
 
     private void btnAddClass_CalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClass_CalendarActionPerformed
         // TODO add your handling code here:
+<<<<<<< HEAD
         addclasses addclassFrame = new addclasses();
+=======
+        AddClass addclassFrame = new AddClass();
+>>>>>>> 3bf94b404a38d2c69d331e739c6242dd0046c4b1
          addclassFrame.setExtendedState(Teach.MAXIMIZED_BOTH);
          addclassFrame.setVisible(true);
          this.dispose();

@@ -4,11 +4,11 @@ import Calendar.CalendarMain;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class Home extends javax.swing.JFrame {
+public class AddClass extends javax.swing.JFrame {
 
-    public Home() {
+    public AddClass() {
         initComponents();
-         this.setExtendedState(Home.MAXIMIZED_BOTH);
+         this.setExtendedState(AddClass.MAXIMIZED_BOTH);
     }
 
 
@@ -20,16 +20,15 @@ public class Home extends javax.swing.JFrame {
         rSButtonHover2 = new rojeru_san.complementos.RSButtonHover();
         rSButtonHover3 = new rojeru_san.complementos.RSButtonHover();
         jLabel3 = new javax.swing.JLabel();
-        rSCalendarBeanInfo1 = new rojeru_san.componentes.RSCalendarBeanInfo();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btnMenu_Home = new rojeru_san.complementos.RSButtonHover();
-        btnAddClass_Home = new rojeru_san.complementos.RSButtonHover();
-        btnUser_Home = new rojeru_san.complementos.RSButtonHover();
+        btnMenu_AddClass = new rojeru_san.complementos.RSButtonHover();
+        btnAddClass_AddClass = new rojeru_san.complementos.RSButtonHover();
+        btnUser_AddClass = new rojeru_san.complementos.RSButtonHover();
         jPanel1 = new javax.swing.JPanel();
-        btnHome_Home = new rojeru_san.complementos.RSButtonHover();
-        btnCalendar_Home = new rojeru_san.complementos.RSButtonHover();
-        btnTeach_Home = new rojeru_san.complementos.RSButtonHover();
+        btnHome_AddClass = new rojeru_san.complementos.RSButtonHover();
+        btnCalendar_AddClass = new rojeru_san.complementos.RSButtonHover();
+        btnTeach_AddClass = new rojeru_san.complementos.RSButtonHover();
         jLabel5 = new javax.swing.JLabel();
 
         rSButtonHover1.setBackground(new java.awt.Color(255, 255, 255));
@@ -70,24 +69,19 @@ public class Home extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/pngwing.com (1).png"))); // NOI18N
         jLabel1.setText("Classroom");
 
-        btnMenu_Home.setBackground(new java.awt.Color(0, 102, 102));
-        btnMenu_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/menu.png"))); // NOI18N
-        btnMenu_Home.addActionListener(new java.awt.event.ActionListener() {
+        btnMenu_AddClass.setBackground(new java.awt.Color(0, 102, 102));
+        btnMenu_AddClass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/menu.png"))); // NOI18N
+
+        btnAddClass_AddClass.setBackground(new java.awt.Color(0, 102, 102));
+        btnAddClass_AddClass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/plus (1).png"))); // NOI18N
+        btnAddClass_AddClass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMenu_HomeActionPerformed(evt);
+                btnAddClass_AddClassActionPerformed(evt);
             }
         });
 
-        btnAddClass_Home.setBackground(new java.awt.Color(0, 102, 102));
-        btnAddClass_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/plus (1).png"))); // NOI18N
-        btnAddClass_Home.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddClass_HomeActionPerformed(evt);
-            }
-        });
-
-        btnUser_Home.setBackground(new java.awt.Color(0, 102, 102));
-        btnUser_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/user.png"))); // NOI18N
+        btnUser_AddClass.setBackground(new java.awt.Color(0, 102, 102));
+        btnUser_AddClass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/user.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -95,23 +89,23 @@ public class Home extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(btnMenu_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnMenu_AddClass, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAddClass_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAddClass_AddClass, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnUser_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUser_AddClass, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(20, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnUser_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAddClass_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMenu_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnUser_AddClass, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddClass_AddClass, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMenu_AddClass, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(16, 16, 16))
         );
@@ -119,30 +113,30 @@ public class Home extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        btnHome_Home.setBackground(new java.awt.Color(255, 255, 255));
-        btnHome_Home.setForeground(new java.awt.Color(0, 0, 0));
-        btnHome_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/Home.png"))); // NOI18N
-        btnHome_Home.addActionListener(new java.awt.event.ActionListener() {
+        btnHome_AddClass.setBackground(new java.awt.Color(255, 255, 255));
+        btnHome_AddClass.setForeground(new java.awt.Color(0, 0, 0));
+        btnHome_AddClass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/Home.png"))); // NOI18N
+        btnHome_AddClass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHome_HomeActionPerformed(evt);
+                btnHome_AddClassActionPerformed(evt);
             }
         });
 
-        btnCalendar_Home.setBackground(new java.awt.Color(255, 255, 255));
-        btnCalendar_Home.setForeground(new java.awt.Color(0, 0, 0));
-        btnCalendar_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/calendar.png"))); // NOI18N
-        btnCalendar_Home.addActionListener(new java.awt.event.ActionListener() {
+        btnCalendar_AddClass.setBackground(new java.awt.Color(255, 255, 255));
+        btnCalendar_AddClass.setForeground(new java.awt.Color(0, 0, 0));
+        btnCalendar_AddClass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/calendar.png"))); // NOI18N
+        btnCalendar_AddClass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalendar_HomeActionPerformed(evt);
+                btnCalendar_AddClassActionPerformed(evt);
             }
         });
 
-        btnTeach_Home.setBackground(new java.awt.Color(255, 255, 255));
-        btnTeach_Home.setForeground(new java.awt.Color(0, 0, 0));
-        btnTeach_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/classespng.png"))); // NOI18N
-        btnTeach_Home.addActionListener(new java.awt.event.ActionListener() {
+        btnTeach_AddClass.setBackground(new java.awt.Color(255, 255, 255));
+        btnTeach_AddClass.setForeground(new java.awt.Color(0, 0, 0));
+        btnTeach_AddClass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/classespng.png"))); // NOI18N
+        btnTeach_AddClass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTeach_HomeActionPerformed(evt);
+                btnTeach_AddClassActionPerformed(evt);
             }
         });
 
@@ -153,27 +147,24 @@ public class Home extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCalendar_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTeach_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnHome_AddClass, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCalendar_AddClass, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTeach_AddClass, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnHome_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnHome_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnHome_AddClass, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCalendar_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCalendar_AddClass, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTeach_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnTeach_AddClass, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel5.setText("Home");
+        jLabel5.setText("Add Classes");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -183,16 +174,16 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(392, 392, 392)
                 .addComponent(jLabel5)
-                .addContainerGap(450, Short.MAX_VALUE))
+                .addContainerGap(419, Short.MAX_VALUE))
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(385, 385, 385)
+                .addGap(138, 138, 138)
                 .addComponent(jLabel5)
-                .addGap(0, 27, Short.MAX_VALUE))
+                .addGap(0, 274, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(67, 67, 67)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -213,41 +204,31 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rSButtonHover3ActionPerformed
 
-    private void btnHome_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHome_HomeActionPerformed
-    JOptionPane.showMessageDialog(new JFrame(), "You are already in the home window.", "Error", JOptionPane.ERROR_MESSAGE);
-    }//GEN-LAST:event_btnHome_HomeActionPerformed
+    private void btnHome_AddClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHome_AddClassActionPerformed
+    AddClass homeFrame = new AddClass();
+    homeFrame.setExtendedState(AddClass.MAXIMIZED_BOTH); // Set full screen
+    homeFrame.setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_btnHome_AddClassActionPerformed
 
-    private void btnCalendar_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendar_HomeActionPerformed
+    private void btnCalendar_AddClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendar_AddClassActionPerformed
     CalendarMain calendarFrame = new CalendarMain();
     calendarFrame.setExtendedState(CalendarMain.MAXIMIZED_BOTH); // Set full screen
     calendarFrame.setVisible(true);
     this.dispose();
-    }//GEN-LAST:event_btnCalendar_HomeActionPerformed
+    }//GEN-LAST:event_btnCalendar_AddClassActionPerformed
 
-    private void btnTeach_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeach_HomeActionPerformed
+    private void btnTeach_AddClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeach_AddClassActionPerformed
     Teach teachFrame = new Teach();
     teachFrame.setExtendedState(Teach.MAXIMIZED_BOTH); // Set full screen
     teachFrame.setVisible(true);
     this.dispose();
-    }//GEN-LAST:event_btnTeach_HomeActionPerformed
+    }//GEN-LAST:event_btnTeach_AddClassActionPerformed
 
-    private void btnAddClass_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClass_HomeActionPerformed
+    private void btnAddClass_AddClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClass_AddClassActionPerformed
         // TODO add your handling code here:
-<<<<<<< HEAD
-        addclasses addclassFrame = new addclasses();
-         addclassFrame.setVisible(true);
-
-=======
-        AddClass addclassFrame = new AddClass();
-         addclassFrame.setExtendedState(Teach.MAXIMIZED_BOTH);
-         addclassFrame.setVisible(true);
-         this.dispose();
->>>>>>> 3bf94b404a38d2c69d331e739c6242dd0046c4b1
-    }//GEN-LAST:event_btnAddClass_HomeActionPerformed
-
-    private void btnMenu_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu_HomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnMenu_HomeActionPerformed
+         JOptionPane.showMessageDialog(new JFrame(), "You are already in the  add class window.", "Error", JOptionPane.ERROR_MESSAGE);
+    }//GEN-LAST:event_btnAddClass_AddClassActionPerformed
 
     /**
      * @param args the command line arguments
@@ -266,14 +247,62 @@ public class Home extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddClass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddClass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddClass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddClass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -294,18 +323,18 @@ public class Home extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Home().setVisible(true);
+                new AddClass().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private rojeru_san.complementos.RSButtonHover btnAddClass_Home;
-    private rojeru_san.complementos.RSButtonHover btnCalendar_Home;
-    private rojeru_san.complementos.RSButtonHover btnHome_Home;
-    private rojeru_san.complementos.RSButtonHover btnMenu_Home;
-    private rojeru_san.complementos.RSButtonHover btnTeach_Home;
-    private rojeru_san.complementos.RSButtonHover btnUser_Home;
+    private rojeru_san.complementos.RSButtonHover btnAddClass_AddClass;
+    private rojeru_san.complementos.RSButtonHover btnCalendar_AddClass;
+    private rojeru_san.complementos.RSButtonHover btnHome_AddClass;
+    private rojeru_san.complementos.RSButtonHover btnMenu_AddClass;
+    private rojeru_san.complementos.RSButtonHover btnTeach_AddClass;
+    private rojeru_san.complementos.RSButtonHover btnUser_AddClass;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
@@ -314,6 +343,5 @@ public class Home extends javax.swing.JFrame {
     private rojeru_san.complementos.RSButtonHover rSButtonHover1;
     private rojeru_san.complementos.RSButtonHover rSButtonHover2;
     private rojeru_san.complementos.RSButtonHover rSButtonHover3;
-    private rojeru_san.componentes.RSCalendarBeanInfo rSCalendarBeanInfo1;
     // End of variables declaration//GEN-END:variables
 }
