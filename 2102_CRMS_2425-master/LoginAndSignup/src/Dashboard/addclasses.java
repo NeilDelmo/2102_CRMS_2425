@@ -9,15 +9,21 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+
 /**
  *
  * @author L E N O V O
  */
 public class addclasses extends javax.swing.JFrame {
+    
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/crms"; // Change to your database name
+    private static final String USER = "root"; // Change to your MySQL username
+    private static final String PASS = ""; // Change to your MySQL password
 
-    /**
-     * Creates new form addclasses
-     */
     public addclasses() {
         initComponents();
         setButtonStyles();
@@ -177,16 +183,42 @@ public class addclasses extends javax.swing.JFrame {
     }//GEN-LAST:event_jCTextField1ActionPerformed
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
-        
+        this.dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void CreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateButtonActionPerformed
+        String className = jCTextField1.getText().trim();
+        String section = jCTextField2.getText().trim();
+        String subject = jCTextField3.getText().trim();
+        String room = jCTextField4.getText().trim();
+        
+        if (className.isEmpty() || section.isEmpty() || subject.isEmpty() || room.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+        String insertSQL = "INSERT INTO classes(class_name,section,subject,room) VALUES(?,?,?,?)"; 
+         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+         PreparedStatement pstmt = conn.prepareStatement(insertSQL)){
+         
+             pstmt.setString(1,className);
+             pstmt.setString(2, section);
+             pstmt.setString(3,subject);
+             pstmt.setString(4,room);
+             int rowsAffected = pstmt.executeUpdate();
+             if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(this, "Class added successfully!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to add class.", "Database Error", JOptionPane.ERROR_MESSAGE);
+         }
+              } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error adding class: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+    }
+
         
     }//GEN-LAST:event_CreateButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
