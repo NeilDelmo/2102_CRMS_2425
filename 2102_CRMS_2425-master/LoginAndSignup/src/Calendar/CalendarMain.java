@@ -32,55 +32,6 @@ public class CalendarMain extends javax.swing.JFrame {
         btnCalendar_Calendar = new rojeru_san.complementos.RSButtonHover();
         btnTeach_Calendar = new rojeru_san.complementos.RSButtonHover();
         jPanel2 = new javax.swing.JPanel();
-        Sun = new Calendar.Cell();
-        Mon = new Calendar.Cell();
-        Tues = new Calendar.Cell();
-        Wed = new Calendar.Cell();
-        Thurs = new Calendar.Cell();
-        Fri = new Calendar.Cell();
-        Sat = new Calendar.Cell();
-        cell8 = new Calendar.Cell();
-        cell9 = new Calendar.Cell();
-        cell10 = new Calendar.Cell();
-        cell11 = new Calendar.Cell();
-        cell12 = new Calendar.Cell();
-        cell13 = new Calendar.Cell();
-        cell14 = new Calendar.Cell();
-        cell15 = new Calendar.Cell();
-        cell16 = new Calendar.Cell();
-        cell17 = new Calendar.Cell();
-        cell18 = new Calendar.Cell();
-        cell19 = new Calendar.Cell();
-        cell20 = new Calendar.Cell();
-        cell21 = new Calendar.Cell();
-        cell22 = new Calendar.Cell();
-        cell23 = new Calendar.Cell();
-        cell24 = new Calendar.Cell();
-        cell25 = new Calendar.Cell();
-        cell26 = new Calendar.Cell();
-        cell27 = new Calendar.Cell();
-        cell28 = new Calendar.Cell();
-        cell29 = new Calendar.Cell();
-        cell30 = new Calendar.Cell();
-        cell31 = new Calendar.Cell();
-        cell32 = new Calendar.Cell();
-        cell33 = new Calendar.Cell();
-        cell34 = new Calendar.Cell();
-        cell35 = new Calendar.Cell();
-        cell36 = new Calendar.Cell();
-        cell37 = new Calendar.Cell();
-        cell38 = new Calendar.Cell();
-        cell39 = new Calendar.Cell();
-        cell40 = new Calendar.Cell();
-        cell41 = new Calendar.Cell();
-        cell42 = new Calendar.Cell();
-        cell43 = new Calendar.Cell();
-        cell44 = new Calendar.Cell();
-        cell45 = new Calendar.Cell();
-        cell46 = new Calendar.Cell();
-        cell47 = new Calendar.Cell();
-        cell48 = new Calendar.Cell();
-        cell49 = new Calendar.Cell();
 
         rSButtonHover1.setBackground(new java.awt.Color(255, 255, 255));
         rSButtonHover1.setForeground(new java.awt.Color(0, 0, 0));
@@ -117,17 +68,17 @@ public class CalendarMain extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/pngwing.com (1).png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Classlogo.png"))); // NOI18N
         jLabel1.setText("Classroom");
 
         btnUser_Calendar.setBackground(new java.awt.Color(0, 102, 102));
-        btnUser_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/user.png"))); // NOI18N
+        btnUser_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
 
         btnMenu_Calendar.setBackground(new java.awt.Color(0, 102, 102));
-        btnMenu_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/menu.png"))); // NOI18N
+        btnMenu_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/menu.png"))); // NOI18N
 
         btnAddClass_Calendar.setBackground(new java.awt.Color(0, 102, 102));
-        btnAddClass_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/plus (1).png"))); // NOI18N
+        btnAddClass_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/plus (1).png"))); // NOI18N
         btnAddClass_Calendar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddClass_CalendarActionPerformed(evt);
@@ -167,7 +118,7 @@ public class CalendarMain extends javax.swing.JFrame {
 
         btnHome_Calendar.setBackground(new java.awt.Color(255, 255, 255));
         btnHome_Calendar.setForeground(new java.awt.Color(0, 0, 0));
-        btnHome_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/Home.png"))); // NOI18N
+        btnHome_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Home.png"))); // NOI18N
         btnHome_Calendar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHome_CalendarActionPerformed(evt);
@@ -176,7 +127,7 @@ public class CalendarMain extends javax.swing.JFrame {
 
         btnCalendar_Calendar.setBackground(new java.awt.Color(255, 255, 255));
         btnCalendar_Calendar.setForeground(new java.awt.Color(0, 0, 0));
-        btnCalendar_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/calendar.png"))); // NOI18N
+        btnCalendar_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/calendar.png"))); // NOI18N
         btnCalendar_Calendar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCalendar_CalendarActionPerformed(evt);
@@ -185,7 +136,7 @@ public class CalendarMain extends javax.swing.JFrame {
 
         btnTeach_Calendar.setBackground(new java.awt.Color(255, 255, 255));
         btnTeach_Calendar.setForeground(new java.awt.Color(0, 0, 0));
-        btnTeach_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/classespng.png"))); // NOI18N
+        btnTeach_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/classespng.png"))); // NOI18N
         btnTeach_Calendar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTeach_CalendarActionPerformed(evt);
@@ -213,172 +164,10 @@ public class CalendarMain extends javax.swing.JFrame {
                 .addComponent(btnCalendar_Calendar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTeach_Calendar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(288, Short.MAX_VALUE))
+                .addContainerGap(2169, Short.MAX_VALUE))
         );
 
         jPanel2.setLayout(new java.awt.GridLayout(7, 7));
-
-        Sun.setText("Sunday");
-        Sun.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SunActionPerformed(evt);
-            }
-        });
-        jPanel2.add(Sun);
-
-        Mon.setText("Monday");
-        Mon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MonActionPerformed(evt);
-            }
-        });
-        jPanel2.add(Mon);
-
-        Tues.setText("Tuesday");
-        Tues.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TuesActionPerformed(evt);
-            }
-        });
-        jPanel2.add(Tues);
-
-        Wed.setText("Wednesday");
-        jPanel2.add(Wed);
-
-        Thurs.setText("Thursday");
-        jPanel2.add(Thurs);
-
-        Fri.setText("Friday");
-        jPanel2.add(Fri);
-
-        Sat.setText("Saturday");
-        jPanel2.add(Sat);
-
-        cell8.setText("cell8");
-        jPanel2.add(cell8);
-
-        cell9.setText("cell9");
-        jPanel2.add(cell9);
-
-        cell10.setText("cell1");
-        jPanel2.add(cell10);
-
-        cell11.setText("cell1");
-        jPanel2.add(cell11);
-
-        cell12.setText("cell1");
-        jPanel2.add(cell12);
-
-        cell13.setText("cell1");
-        jPanel2.add(cell13);
-
-        cell14.setText("cell1");
-        jPanel2.add(cell14);
-
-        cell15.setText("cell1");
-        jPanel2.add(cell15);
-
-        cell16.setText("cell1");
-        jPanel2.add(cell16);
-
-        cell17.setText("cell1");
-        jPanel2.add(cell17);
-
-        cell18.setText("cell1");
-        jPanel2.add(cell18);
-
-        cell19.setText("cell1");
-        jPanel2.add(cell19);
-
-        cell20.setText("cell1");
-        jPanel2.add(cell20);
-
-        cell21.setText("cell1");
-        jPanel2.add(cell21);
-
-        cell22.setText("cell1");
-        jPanel2.add(cell22);
-
-        cell23.setText("cell1");
-        jPanel2.add(cell23);
-
-        cell24.setText("cell1");
-        jPanel2.add(cell24);
-
-        cell25.setText("cell1");
-        jPanel2.add(cell25);
-
-        cell26.setText("cell1");
-        jPanel2.add(cell26);
-
-        cell27.setText("cell1");
-        jPanel2.add(cell27);
-
-        cell28.setText("cell1");
-        jPanel2.add(cell28);
-
-        cell29.setText("cell1");
-        jPanel2.add(cell29);
-
-        cell30.setText("cell1");
-        jPanel2.add(cell30);
-
-        cell31.setText("cell1");
-        jPanel2.add(cell31);
-
-        cell32.setText("cell1");
-        jPanel2.add(cell32);
-
-        cell33.setText("cell1");
-        jPanel2.add(cell33);
-
-        cell34.setText("cell1");
-        jPanel2.add(cell34);
-
-        cell35.setText("cell1");
-        jPanel2.add(cell35);
-
-        cell36.setText("cell1");
-        jPanel2.add(cell36);
-
-        cell37.setText("cell1");
-        jPanel2.add(cell37);
-
-        cell38.setText("cell1");
-        jPanel2.add(cell38);
-
-        cell39.setText("cell1");
-        jPanel2.add(cell39);
-
-        cell40.setText("cell1");
-        jPanel2.add(cell40);
-
-        cell41.setText("cell1");
-        jPanel2.add(cell41);
-
-        cell42.setText("cell1");
-        jPanel2.add(cell42);
-
-        cell43.setText("cell1");
-        jPanel2.add(cell43);
-
-        cell44.setText("cell1");
-        jPanel2.add(cell44);
-
-        cell45.setText("cell1");
-        jPanel2.add(cell45);
-
-        cell46.setText("cell1");
-        jPanel2.add(cell46);
-
-        cell47.setText("cell1");
-        jPanel2.add(cell47);
-
-        cell48.setText("cell1");
-        jPanel2.add(cell48);
-
-        cell49.setText("cell1");
-        jPanel2.add(cell49);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -396,7 +185,7 @@ public class CalendarMain extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 2296, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(67, 67, 67)
@@ -435,18 +224,6 @@ public class CalendarMain extends javax.swing.JFrame {
     teachFrame.setVisible(true);
     this.dispose();
     }//GEN-LAST:event_btnTeach_CalendarActionPerformed
-
-    private void SunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SunActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SunActionPerformed
-
-    private void MonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MonActionPerformed
-
-    private void TuesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TuesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TuesActionPerformed
 
     private void btnAddClass_CalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClass_CalendarActionPerformed
         // TODO add your handling code here:
@@ -519,61 +296,12 @@ public class CalendarMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private Calendar.Cell Fri;
-    private Calendar.Cell Mon;
-    private Calendar.Cell Sat;
-    private Calendar.Cell Sun;
-    private Calendar.Cell Thurs;
-    private Calendar.Cell Tues;
-    private Calendar.Cell Wed;
     private rojeru_san.complementos.RSButtonHover btnAddClass_Calendar;
     private rojeru_san.complementos.RSButtonHover btnCalendar_Calendar;
     private rojeru_san.complementos.RSButtonHover btnHome_Calendar;
     private rojeru_san.complementos.RSButtonHover btnMenu_Calendar;
     private rojeru_san.complementos.RSButtonHover btnTeach_Calendar;
     private rojeru_san.complementos.RSButtonHover btnUser_Calendar;
-    private Calendar.Cell cell10;
-    private Calendar.Cell cell11;
-    private Calendar.Cell cell12;
-    private Calendar.Cell cell13;
-    private Calendar.Cell cell14;
-    private Calendar.Cell cell15;
-    private Calendar.Cell cell16;
-    private Calendar.Cell cell17;
-    private Calendar.Cell cell18;
-    private Calendar.Cell cell19;
-    private Calendar.Cell cell20;
-    private Calendar.Cell cell21;
-    private Calendar.Cell cell22;
-    private Calendar.Cell cell23;
-    private Calendar.Cell cell24;
-    private Calendar.Cell cell25;
-    private Calendar.Cell cell26;
-    private Calendar.Cell cell27;
-    private Calendar.Cell cell28;
-    private Calendar.Cell cell29;
-    private Calendar.Cell cell30;
-    private Calendar.Cell cell31;
-    private Calendar.Cell cell32;
-    private Calendar.Cell cell33;
-    private Calendar.Cell cell34;
-    private Calendar.Cell cell35;
-    private Calendar.Cell cell36;
-    private Calendar.Cell cell37;
-    private Calendar.Cell cell38;
-    private Calendar.Cell cell39;
-    private Calendar.Cell cell40;
-    private Calendar.Cell cell41;
-    private Calendar.Cell cell42;
-    private Calendar.Cell cell43;
-    private Calendar.Cell cell44;
-    private Calendar.Cell cell45;
-    private Calendar.Cell cell46;
-    private Calendar.Cell cell47;
-    private Calendar.Cell cell48;
-    private Calendar.Cell cell49;
-    private Calendar.Cell cell8;
-    private Calendar.Cell cell9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;

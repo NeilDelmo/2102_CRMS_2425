@@ -94,7 +94,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel2" max="32767" attributes="0"/>
+              <Component id="jPanel2" pref="2296" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
@@ -155,7 +155,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Dashboard/pngwing.com (1).png"/>
+              <Image iconType="3" name="/icon/Classlogo.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Classroom"/>
           </Properties>
@@ -166,7 +166,7 @@
               <Color blue="66" green="66" red="0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Dashboard/user.png"/>
+              <Image iconType="3" name="/icon/user.png"/>
             </Property>
           </Properties>
         </Component>
@@ -176,7 +176,7 @@
               <Color blue="66" green="66" red="0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Dashboard/menu.png"/>
+              <Image iconType="3" name="/icon/menu.png"/>
             </Property>
           </Properties>
         </Component>
@@ -186,7 +186,7 @@
               <Color blue="66" green="66" red="0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Dashboard/plus (1).png"/>
+              <Image iconType="3" name="/icon/plus (1).png"/>
             </Property>
           </Properties>
           <Events>
@@ -230,7 +230,7 @@
                   <Component id="btnCalendar_Calendar" min="-2" pref="40" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnTeach_Calendar" min="-2" pref="40" max="-2" attributes="0"/>
-                  <EmptySpace pref="288" max="32767" attributes="0"/>
+                  <EmptySpace pref="2169" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -245,7 +245,7 @@
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Dashboard/Home.png"/>
+              <Image iconType="3" name="/icon/Home.png"/>
             </Property>
           </Properties>
           <Events>
@@ -261,7 +261,7 @@
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Dashboard/calendar.png"/>
+              <Image iconType="3" name="/icon/calendar.png"/>
             </Property>
           </Properties>
           <Events>
@@ -277,7 +277,7 @@
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Dashboard/classespng.png"/>
+              <Image iconType="3" name="/icon/classespng.png"/>
             </Property>
           </Properties>
           <Events>
@@ -292,262 +292,6 @@
         <Property name="columns" type="int" value="7"/>
         <Property name="rows" type="int" value="7"/>
       </Layout>
-      <SubComponents>
-        <Component class="Calendar.Cell" name="Sun">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Sunday"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SunActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="Calendar.Cell" name="Mon">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Monday"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MonActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="Calendar.Cell" name="Tues">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Tuesday"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TuesActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="Calendar.Cell" name="Wed">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Wednesday"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="Thurs">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Thursday"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="Fri">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Friday"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="Sat">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Saturday"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell8">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell8"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell9">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell9"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell10">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell11">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell12">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell13">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell14">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell15">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell16">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell17">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell18">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell19">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell20">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell21">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell22">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell23">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell24">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell25">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell26">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell27">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell28">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell29">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell30">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell31">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell32">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell33">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell34">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell35">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell36">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell37">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell38">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell39">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell40">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell41">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell42">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell43">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell44">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell45">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell46">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell47">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell48">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-        <Component class="Calendar.Cell" name="cell49">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="cell1"/>
-          </Properties>
-        </Component>
-      </SubComponents>
     </Container>
   </SubComponents>
 </Form>

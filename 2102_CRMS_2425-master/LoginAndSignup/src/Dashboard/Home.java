@@ -71,7 +71,7 @@ public class Home extends javax.swing.JFrame {
         jLabel1.setText("Classroom");
 
         btnMenu_Home.setBackground(new java.awt.Color(0, 102, 102));
-        btnMenu_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/menu.png"))); // NOI18N
+        btnMenu_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/Classlogo.png"))); // NOI18N
         btnMenu_Home.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMenu_HomeActionPerformed(evt);
@@ -233,8 +233,10 @@ public class Home extends javax.swing.JFrame {
 
     private void btnAddClass_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClass_HomeActionPerformed
         // TODO add your handling code here:
-        addclasses addclassFrame = new addclasses();
-         addclassFrame.setVisible(true);
+        addclasses addclassesFrame = new addclasses();
+         addclassesFrame.setExtendedState(Teach.MAXIMIZED_BOTH);
+         addclassesFrame.setVisible(true);
+         this.dispose();
     }//GEN-LAST:event_btnAddClass_HomeActionPerformed
 
     private void btnMenu_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu_HomeActionPerformed
@@ -266,6 +268,22 @@ public class Home extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

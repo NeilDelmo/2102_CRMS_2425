@@ -106,6 +106,11 @@ public class Login extends javax.swing.JFrame {
                 EmailLoginActionPerformed(evt);
             }
         });
+        EmailLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                Enter(evt);
+            }
+        });
 
         conLogin.setBackground(new java.awt.Color(0, 102, 102));
         conLogin.setForeground(new java.awt.Color(255, 255, 255));
@@ -265,6 +270,10 @@ public class Login extends javax.swing.JFrame {
        
    
     }//GEN-LAST:event_goSignUpActionPerformed
+
+    private void Enter(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Enter
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Enter
 
     /**
      * @param args the command line arguments
