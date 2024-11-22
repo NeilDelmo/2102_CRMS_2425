@@ -14,7 +14,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 
-/**
+/*
  *
  * @author L E N O V O
  */
@@ -27,7 +27,7 @@ public class addclasses extends javax.swing.JFrame {
     public addclasses() {
         initComponents();
         setButtonStyles();
-        this.setLocationRelativeTo(null); //to make it centralized
+        this.setLocationRelativeTo(null);//to make it centralized
     }
 
     /**
