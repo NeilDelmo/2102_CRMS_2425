@@ -66,14 +66,14 @@ public class Teach extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Classlogo.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/Classlogo.png"))); // NOI18N
         jLabel1.setText("Classroom");
 
         btnMenu_Teach.setBackground(new java.awt.Color(0, 102, 102));
-        btnMenu_Teach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/menu.png"))); // NOI18N
+        btnMenu_Teach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/menu.png"))); // NOI18N
 
         btnAddClass_Teach.setBackground(new java.awt.Color(0, 102, 102));
-        btnAddClass_Teach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/plus (1).png"))); // NOI18N
+        btnAddClass_Teach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/plus (1).png"))); // NOI18N
         btnAddClass_Teach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddClass_TeachActionPerformed(evt);
@@ -81,7 +81,7 @@ public class Teach extends javax.swing.JFrame {
         });
 
         btnUser_Teach.setBackground(new java.awt.Color(0, 102, 102));
-        btnUser_Teach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
+        btnUser_Teach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/user.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -115,7 +115,7 @@ public class Teach extends javax.swing.JFrame {
 
         btnHome_Teach.setBackground(new java.awt.Color(255, 255, 255));
         btnHome_Teach.setForeground(new java.awt.Color(0, 0, 0));
-        btnHome_Teach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Home.png"))); // NOI18N
+        btnHome_Teach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/Home.png"))); // NOI18N
         btnHome_Teach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHome_TeachActionPerformed(evt);
@@ -124,7 +124,7 @@ public class Teach extends javax.swing.JFrame {
 
         btnCalendar_Teach.setBackground(new java.awt.Color(255, 255, 255));
         btnCalendar_Teach.setForeground(new java.awt.Color(0, 0, 0));
-        btnCalendar_Teach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/calendar.png"))); // NOI18N
+        btnCalendar_Teach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/calendar.png"))); // NOI18N
         btnCalendar_Teach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCalendar_TeachActionPerformed(evt);
@@ -133,7 +133,7 @@ public class Teach extends javax.swing.JFrame {
 
         btnTeach_Teach.setBackground(new java.awt.Color(255, 255, 255));
         btnTeach_Teach.setForeground(new java.awt.Color(0, 0, 0));
-        btnTeach_Teach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/classespng.png"))); // NOI18N
+        btnTeach_Teach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/classespng.png"))); // NOI18N
         btnTeach_Teach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTeach_TeachActionPerformed(evt);

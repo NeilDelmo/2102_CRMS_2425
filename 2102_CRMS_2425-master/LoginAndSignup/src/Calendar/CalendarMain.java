@@ -68,17 +68,17 @@ public class CalendarMain extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Classlogo.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/Classlogo.png"))); // NOI18N
         jLabel1.setText("Classroom");
 
         btnUser_Calendar.setBackground(new java.awt.Color(0, 102, 102));
-        btnUser_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
+        btnUser_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/user.png"))); // NOI18N
 
         btnMenu_Calendar.setBackground(new java.awt.Color(0, 102, 102));
-        btnMenu_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/menu.png"))); // NOI18N
+        btnMenu_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/menu.png"))); // NOI18N
 
         btnAddClass_Calendar.setBackground(new java.awt.Color(0, 102, 102));
-        btnAddClass_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/plus (1).png"))); // NOI18N
+        btnAddClass_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Calendar/plus (1).png"))); // NOI18N
         btnAddClass_Calendar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddClass_CalendarActionPerformed(evt);
@@ -118,7 +118,7 @@ public class CalendarMain extends javax.swing.JFrame {
 
         btnHome_Calendar.setBackground(new java.awt.Color(255, 255, 255));
         btnHome_Calendar.setForeground(new java.awt.Color(0, 0, 0));
-        btnHome_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Home.png"))); // NOI18N
+        btnHome_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/Home.png"))); // NOI18N
         btnHome_Calendar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHome_CalendarActionPerformed(evt);
@@ -127,7 +127,7 @@ public class CalendarMain extends javax.swing.JFrame {
 
         btnCalendar_Calendar.setBackground(new java.awt.Color(255, 255, 255));
         btnCalendar_Calendar.setForeground(new java.awt.Color(0, 0, 0));
-        btnCalendar_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/calendar.png"))); // NOI18N
+        btnCalendar_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/calendar.png"))); // NOI18N
         btnCalendar_Calendar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCalendar_CalendarActionPerformed(evt);
@@ -136,7 +136,7 @@ public class CalendarMain extends javax.swing.JFrame {
 
         btnTeach_Calendar.setBackground(new java.awt.Color(255, 255, 255));
         btnTeach_Calendar.setForeground(new java.awt.Color(0, 0, 0));
-        btnTeach_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/classespng.png"))); // NOI18N
+        btnTeach_Calendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/classespng.png"))); // NOI18N
         btnTeach_Calendar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTeach_CalendarActionPerformed(evt);

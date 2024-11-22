@@ -155,7 +155,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icon/Classlogo.png"/>
+              <Image iconType="3" name="/Dashboard/Classlogo.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Classroom"/>
           </Properties>
@@ -166,7 +166,7 @@
               <Color blue="66" green="66" red="0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icon/user.png"/>
+              <Image iconType="3" name="/Dashboard/user.png"/>
             </Property>
           </Properties>
         </Component>
@@ -176,7 +176,7 @@
               <Color blue="66" green="66" red="0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icon/menu.png"/>
+              <Image iconType="3" name="/Dashboard/menu.png"/>
             </Property>
           </Properties>
         </Component>
@@ -186,7 +186,7 @@
               <Color blue="66" green="66" red="0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icon/plus (1).png"/>
+              <Image iconType="3" name="/Calendar/plus (1).png"/>
             </Property>
           </Properties>
           <Events>
@@ -245,7 +245,7 @@
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icon/Home.png"/>
+              <Image iconType="3" name="/Dashboard/Home.png"/>
             </Property>
           </Properties>
           <Events>
@@ -261,7 +261,7 @@
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icon/calendar.png"/>
+              <Image iconType="3" name="/Dashboard/calendar.png"/>
             </Property>
           </Properties>
           <Events>
@@ -277,7 +277,7 @@
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icon/classespng.png"/>
+              <Image iconType="3" name="/Dashboard/classespng.png"/>
             </Property>
           </Properties>
           <Events>
