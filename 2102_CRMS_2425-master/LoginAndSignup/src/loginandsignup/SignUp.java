@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package loginandsignup;
 
 import java.sql.Connection;
@@ -50,6 +46,8 @@ public class SignUp extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         goLogin = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        ConfirmPasswordSignUp = new javax.swing.JPasswordField();
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -147,64 +145,80 @@ public class SignUp extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jLabel4.setText("Already have an account");
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel7.setText("Confirm Password:");
+
+        ConfirmPasswordSignUp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConfirmPasswordSignUpActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout RightLayout = new javax.swing.GroupLayout(Right);
         Right.setLayout(RightLayout);
         RightLayout.setHorizontalGroup(
             RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RightLayout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RightLayout.createSequentialGroup()
-                        .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5))
-                        .addGap(341, 341, 341))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RightLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(43, 43, 43))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(40, 40, 40))
             .addGroup(RightLayout.createSequentialGroup()
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(RightLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(EmailTxT, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)
-                            .addComponent(NameSignUP, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(RightLayout.createSequentialGroup()
-                                    .addComponent(SaveAndGoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(goLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(PasswordSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(RightLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel7))
+                            .addGroup(RightLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(RightLayout.createSequentialGroup()
+                                        .addComponent(SaveAndGoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(goLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(ConfirmPasswordSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(NameSignUP, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(EmailTxT, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(PasswordSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel2))))))
                     .addGroup(RightLayout.createSequentialGroup()
                         .addGap(128, 128, 128)
                         .addComponent(jLabel1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
         RightLayout.setVerticalGroup(
             RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RightLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addComponent(jLabel1)
-                .addGap(36, 36, 36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(NameSignUP, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(EmailTxT, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PasswordSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(goLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SaveAndGoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ConfirmPasswordSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SaveAndGoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(goLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(75, 75, 75))
@@ -246,40 +260,69 @@ public class SignUp extends javax.swing.JFrame {
 
     private void SaveAndGoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveAndGoLoginActionPerformed
 
-       String fullname,email,password, query;
-       String URL, USER, PASS;
-       URL = "jdbc:mysql://localhost:3306/crms";
-       USER = "root";
-       PASS = "";
-       
-       try{
-           Class.forName("com.mysql.cj.jdbc.Driver");
-           Connection con = DriverManager.getConnection(URL,USER,PASS);
-           Statement st = con.createStatement();
-           if("".equals(NameSignUP.getText())){
-               JOptionPane.showMessageDialog(new JFrame(), "Full name is required", "Error", JOptionPane.ERROR_MESSAGE);
-           }else if("".equals(EmailTxT.getText())){
-           JOptionPane.showMessageDialog(new JFrame(), "Email Address is required", "Error", JOptionPane.ERROR_MESSAGE);
-           }else if("".equals(PasswordSignUp.getText())){
-            JOptionPane.showMessageDialog(new JFrame(), "Password is required", "Error", JOptionPane.ERROR_MESSAGE);   
-           }else{
-               fullname = NameSignUP.getText();
-               email = EmailTxT.getText();
-               password = PasswordSignUp.getText();
-               System.out.println(password);
-               
-               query = "INSERT INTO teachers(fullname,password,email)" +
-                       "VALUES('"+fullname+"','"+password+"','"+email+"')";
-               st.execute(query);
-               NameSignUP.setText("");
-               EmailTxT.setText("");
-               PasswordSignUp.setText("");
-               showMessageDialog(null,"Account has been created successfully!");
-               this.dispose();
-           }
-       }catch(Exception e){
-           System.out.println("Error! "+ e.getMessage());
-       }
+    String fullname, email, password, confirmPassword, query;
+    String URL, USER, PASS;
+    URL = "jdbc:mysql://localhost:3306/crms";
+    USER = "root";
+    PASS = "";
+    
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection(URL, USER, PASS);
+        Statement st = con.createStatement();
+        
+        if ("".equals(NameSignUP.getText())) {
+            JOptionPane.showMessageDialog(new JFrame(), "Full name is required", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if ("".equals(EmailTxT.getText())) {
+            JOptionPane.showMessageDialog(new JFrame(), "Email Address is required", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if ("".equals(PasswordSignUp.getText())) {
+            JOptionPane.showMessageDialog(new JFrame(), "Password is required", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if ("".equals(ConfirmPasswordSignUp.getText())) {
+            JOptionPane.showMessageDialog(new JFrame(), "Confirm Password is required", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            password = PasswordSignUp.getText();
+            confirmPassword = ConfirmPasswordSignUp.getText();
+            
+            if (!password.equals(confirmPassword)) {
+                JOptionPane.showMessageDialog(new JFrame(), "Passwords do not match. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                fullname = NameSignUP.getText();
+                email = EmailTxT.getText();
+                
+                query = "INSERT INTO teachers(fullname, password, email)" +
+                        "VALUES('" + fullname + "','" + password + "','" + email + "')";
+                st.execute(query);
+                NameSignUP.setText("");
+                EmailTxT.setText("");
+                PasswordSignUp.setText("");
+                ConfirmPasswordSignUp.setText("");
+                JOptionPane.showMessageDialog(null, "Account has been created successfully!");
+                this.dispose();
+                
+                // Confirmation dialog
+                int response = JOptionPane.showConfirmDialog(
+                    this, 
+                    "Do you want to log out and go to the login screen?", 
+                    "Confirm Logout", 
+                    JOptionPane.YES_NO_OPTION, 
+                    JOptionPane.QUESTION_MESSAGE
+                );
+
+                if (response == JOptionPane.YES_OPTION) {
+                    // User chose to log out
+                    Login l = new Login();
+                    l.setVisible(true);
+                    this.dispose();
+                } else {
+                    // User chose not to log out
+                    // Do nothing and stay on the current screen
+                }
+            }
+        }
+    } catch (Exception e) {
+        System.out.println("Error! " + e.getMessage());
+    }
+
     }//GEN-LAST:event_SaveAndGoLoginActionPerformed
 
     private void PasswordSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordSignUpActionPerformed
@@ -293,7 +336,12 @@ public class SignUp extends javax.swing.JFrame {
     private void goLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goLoginActionPerformed
         Login l =new Login();
        l.setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_goLoginActionPerformed
+
+    private void ConfirmPasswordSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmPasswordSignUpActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ConfirmPasswordSignUpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -326,6 +374,7 @@ public class SignUp extends javax.swing.JFrame {
        l.setVisible(true);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField ConfirmPasswordSignUp;
     private javax.swing.JTextField EmailTxT;
     private javax.swing.JPanel Left;
     private javax.swing.JTextField NameSignUP;
@@ -339,6 +388,7 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel panel2;
     // End of variables declaration//GEN-END:variables
