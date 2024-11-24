@@ -9,6 +9,9 @@ import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.AbstractAction;
+import javax.swing.KeyStroke;
+import java.awt.event.ActionEvent;
 
 /**
  *
@@ -17,7 +20,23 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class Login extends javax.swing.JFrame {
         
     public Login() {
-        initComponents();   
+        initComponents();
+        // Add action mappings in constructor
+EmailLogin.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "moveToPassword");
+EmailLogin.getActionMap().put("moveToPassword", new AbstractAction() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        LoginPass.requestFocus();
+    }
+});
+
+LoginPass.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "doLogin");
+LoginPass.getActionMap().put("doLogin", new AbstractAction() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        conLogin.doClick();
+    }
+});
          
     }
     /**

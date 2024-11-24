@@ -5,11 +5,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import loginandsignup.Login;
 
-public class Students extends javax.swing.JFrame {
+public class Classwork extends javax.swing.JFrame {
 
-    public Students() {
+    public Classwork() {
         initComponents();
-         this.setExtendedState(Students.MAXIMIZED_BOTH);
+         this.setExtendedState(Classwork.MAXIMIZED_BOTH);
     }
 
 
@@ -208,7 +208,7 @@ public class Students extends javax.swing.JFrame {
                 .addComponent(btnLogout_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jLabel5.setText("Students");
+        jLabel5.setText("Classwork");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -218,7 +218,7 @@ public class Students extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(346, 346, 346)
                 .addComponent(jLabel5)
-                .addContainerGap(436, Short.MAX_VALUE))
+                .addContainerGap(430, Short.MAX_VALUE))
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -256,10 +256,8 @@ public class Students extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHome_HomeActionPerformed
 
     private void btnClasswork_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClasswork_HomeActionPerformed
-        Classwork classworkFrame = new Classwork();
-        classworkFrame.setExtendedState(Classwork.MAXIMIZED_BOTH); // Set full screen
-        classworkFrame.setVisible(true);
-        this.dispose();
+        
+        JOptionPane.showMessageDialog(new JFrame(), "You are already in the Classwork window.", "Error", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_btnClasswork_HomeActionPerformed
 
     private void btnTeach_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeach_HomeActionPerformed
@@ -271,9 +269,8 @@ public class Students extends javax.swing.JFrame {
 
     private void btnAddClass_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClass_HomeActionPerformed
         // TODO add your handling code here:
-        addclasses addclassesFrame = new addclasses();
+         addclasses addclassesFrame = new addclasses();
          addclassesFrame.setVisible(true);
-        
     }//GEN-LAST:event_btnAddClass_HomeActionPerformed
 
     private void btnMenu_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu_HomeActionPerformed
@@ -306,8 +303,10 @@ public class Students extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLogout_HomeActionPerformed
 
     private void btnStudents_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudents_HomeActionPerformed
-        // TODO add your handling code here:
-          JOptionPane.showMessageDialog(new JFrame(), "You are already in the Students window.", "Error", JOptionPane.ERROR_MESSAGE);
+        Students studentsFrame = new Students();
+         studentsFrame.setExtendedState(Students.MAXIMIZED_BOTH); // Set full screen
+         studentsFrame.setVisible(true);
+         this.dispose();
     }//GEN-LAST:event_btnStudents_HomeActionPerformed
 
     /**
@@ -327,13 +326,13 @@ public class Students extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Students.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Classwork.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Students.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Classwork.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Students.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Classwork.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Students.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Classwork.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -403,7 +402,7 @@ public class Students extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Students().setVisible(true);
+                new Classwork().setVisible(true);
             }
         });
     }
