@@ -8,6 +8,12 @@ import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.AbstractAction;
+import javax.swing.KeyStroke;
+import javax.swing.JComponent;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import javax.swing.Action;
 
 /**
  *
@@ -20,6 +26,43 @@ public class SignUp extends javax.swing.JFrame {
      */
     public SignUp() {
         initComponents();
+        setupEnterKeyBindings();
+    }
+    
+    private void setupEnterKeyBindings() {
+        // Create action for handling Enter key
+        Action enterAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JComponent source = (JComponent) e.getSource();
+                
+                if (source == NameSignUP) {
+                    EmailTxT.requestFocus();
+                }
+                else if (source == EmailTxT) {
+                    PasswordSignUp.requestFocus();
+                }
+                else if (source == PasswordSignUp) {
+                    ConfirmPasswordSignUp.requestFocus();
+                }
+                else if (source == ConfirmPasswordSignUp) {
+                    SaveAndGoLogin.doClick();
+                }
+            }
+        };
+
+        // Bind Enter key to each text field
+        NameSignUP.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "enterAction");
+        NameSignUP.getActionMap().put("enterAction", enterAction);
+
+        EmailTxT.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "enterAction");
+        EmailTxT.getActionMap().put("enterAction", enterAction);
+
+        PasswordSignUp.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "enterAction");
+        PasswordSignUp.getActionMap().put("enterAction", enterAction);
+
+        ConfirmPasswordSignUp.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "enterAction");
+        ConfirmPasswordSignUp.getActionMap().put("enterAction", enterAction);
     }
 
     /**
