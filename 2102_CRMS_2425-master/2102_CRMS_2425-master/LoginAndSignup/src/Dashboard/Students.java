@@ -282,6 +282,10 @@ public class Students extends javax.swing.JFrame {
 
     private void btnUser_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUser_HomeActionPerformed
         // TODO add your handling code here:
+        AccountManagement AccManageFrame = new AccountManagement();
+        AccManageFrame.setExtendedState(AccountManagement.MAXIMIZED_BOTH); // Set full screen
+        AccManageFrame.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnUser_HomeActionPerformed
 
     private void btnLogout_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogout_HomeActionPerformed
