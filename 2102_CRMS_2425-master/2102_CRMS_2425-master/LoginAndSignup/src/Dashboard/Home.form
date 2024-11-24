@@ -84,15 +84,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-<<<<<<< HEAD
-              <EmptySpace min="-2" pref="337" max="-2" attributes="0"/>
-              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-=======
               <EmptySpace min="-2" pref="346" max="-2" attributes="0"/>
               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="450" max="32767" attributes="0"/>
->>>>>>> 6317bd5ccbc31fcfc1fb0ed5b45efa1c6b3eaf68
           </Group>
           <Component id="jPanel4" max="32767" attributes="0"/>
       </Group>
@@ -101,15 +95,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
-<<<<<<< HEAD
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="187" max="-2" attributes="0"/>
-=======
               <EmptySpace min="-2" pref="385" max="-2" attributes="0"/>
               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="27" max="32767" attributes="0"/>
->>>>>>> 6317bd5ccbc31fcfc1fb0ed5b45efa1c6b3eaf68
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
@@ -134,11 +122,7 @@
                   <Component id="btnMenu_Home" min="-2" pref="32" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-<<<<<<< HEAD
-                  <EmptySpace pref="669" max="32767" attributes="0"/>
-=======
                   <EmptySpace max="32767" attributes="0"/>
->>>>>>> 6317bd5ccbc31fcfc1fb0ed5b45efa1c6b3eaf68
                   <Component id="btnAddClass_Home" min="-2" pref="32" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               </Group>
@@ -226,13 +210,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="btnTeach_Home" pref="0" max="32767" attributes="0"/>
                       <Component id="btnHome_Home" alignment="1" pref="0" max="32767" attributes="0"/>
-<<<<<<< HEAD
                       <Component id="btnClasswork_Home" alignment="1" pref="0" max="32767" attributes="0"/>
-=======
-                      <Component id="btnCalendar_Home" alignment="1" pref="0" max="32767" attributes="0"/>
->>>>>>> 6317bd5ccbc31fcfc1fb0ed5b45efa1c6b3eaf68
                       <Component id="btnLogout_Home" pref="0" max="32767" attributes="0"/>
-                      <Component id="btnStudents_Teach" pref="0" max="32767" attributes="0"/>
+                      <Component id="btnStudents_Home" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -246,20 +226,12 @@
                   <EmptySpace min="-2" pref="115" max="-2" attributes="0"/>
                   <Component id="btnHome_Home" min="-2" pref="34" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-<<<<<<< HEAD
                   <Component id="btnClasswork_Home" min="-2" pref="34" max="-2" attributes="0"/>
-=======
-                  <Component id="btnCalendar_Home" min="-2" pref="34" max="-2" attributes="0"/>
->>>>>>> 6317bd5ccbc31fcfc1fb0ed5b45efa1c6b3eaf68
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btnTeach_Home" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="btnStudents_Teach" min="-2" max="-2" attributes="0"/>
-<<<<<<< HEAD
-                  <EmptySpace pref="62" max="32767" attributes="0"/>
-=======
+                  <Component id="btnStudents_Home" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
->>>>>>> 6317bd5ccbc31fcfc1fb0ed5b45efa1c6b3eaf68
                   <Component id="btnLogout_Home" min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -282,11 +254,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHome_HomeActionPerformed"/>
           </Events>
         </Component>
-<<<<<<< HEAD
         <Component class="rojeru_san.complementos.RSButtonHover" name="btnClasswork_Home">
-=======
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnCalendar_Home">
->>>>>>> 6317bd5ccbc31fcfc1fb0ed5b45efa1c6b3eaf68
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -295,19 +263,11 @@
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-<<<<<<< HEAD
               <Image iconType="3" name="/Dashboard/Classwork.png"/>
             </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClasswork_HomeActionPerformed"/>
-=======
-              <Image iconType="3" name="/Dashboard/calendar.png"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCalendar_HomeActionPerformed"/>
->>>>>>> 6317bd5ccbc31fcfc1fb0ed5b45efa1c6b3eaf68
           </Events>
         </Component>
         <Component class="rojeru_san.complementos.RSButtonHover" name="btnTeach_Home">
@@ -365,7 +325,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogout_HomeActionPerformed"/>
           </Events>
         </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnStudents_Teach">
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnStudents_Home">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -378,18 +338,14 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStudents_TeachActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStudents_HomeActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
-<<<<<<< HEAD
-        <Property name="text" type="java.lang.String" value="teach"/>
-=======
         <Property name="text" type="java.lang.String" value="Home"/>
->>>>>>> 6317bd5ccbc31fcfc1fb0ed5b45efa1c6b3eaf68
       </Properties>
     </Component>
   </SubComponents>
