@@ -57,8 +57,6 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="rojeru_san.componentes.RSCalendarBeanInfo" name="rSCalendarBeanInfo1">
-    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -82,17 +80,11 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-<<<<<<< HEAD
-              <EmptySpace min="-2" pref="337" max="-2" attributes="0"/>
-              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-=======
-              <EmptySpace min="-2" pref="346" max="-2" attributes="0"/>
-              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="450" max="32767" attributes="0"/>
->>>>>>> 6317bd5ccbc31fcfc1fb0ed5b45efa1c6b3eaf68
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel2" pref="861" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Component id="jPanel4" max="32767" attributes="0"/>
       </Group>
@@ -101,15 +93,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
-<<<<<<< HEAD
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="187" max="-2" attributes="0"/>
-=======
-              <EmptySpace min="-2" pref="385" max="-2" attributes="0"/>
-              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="27" max="32767" attributes="0"/>
->>>>>>> 6317bd5ccbc31fcfc1fb0ed5b45efa1c6b3eaf68
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel2" pref="2296" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
@@ -131,16 +117,14 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                  <Component id="btnMenu_Home" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="btnMenu_Calendar" min="-2" pref="32" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-<<<<<<< HEAD
-                  <EmptySpace pref="669" max="32767" attributes="0"/>
-=======
                   <EmptySpace max="32767" attributes="0"/>
->>>>>>> 6317bd5ccbc31fcfc1fb0ed5b45efa1c6b3eaf68
-                  <Component id="btnAddClass_Home" min="-2" pref="32" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                  <Component id="btnAddClass_Calendar" min="-2" pref="32" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="btnUser_Calendar" min="-2" pref="32" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -149,9 +133,12 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace pref="20" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnAddClass_Home" min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="btnMenu_Home" min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnUser_Calendar" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="btnAddClass_Calendar" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="btnMenu_Calendar" min="-2" pref="32" max="-2" attributes="0"/>
+                          <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               </Group>
@@ -173,7 +160,17 @@
             <Property name="text" type="java.lang.String" value="Classroom"/>
           </Properties>
         </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnMenu_Home">
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnUser_Calendar">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="66" green="66" red="0" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Dashboard/user.png"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnMenu_Calendar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="66" green="66" red="0" type="rgb"/>
@@ -182,21 +179,18 @@
               <Image iconType="3" name="/Dashboard/menu.png"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMenu_HomeActionPerformed"/>
-          </Events>
         </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnAddClass_Home">
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnAddClass_Calendar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="66" green="66" red="0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Dashboard/plus (1).png"/>
+              <Image iconType="3" name="/Calendar/plus (1).png"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddClass_HomeActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddClass_CalendarActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -217,24 +211,13 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                  <Component id="btnUser_Home" min="-2" pref="32" max="-2" attributes="0"/>
-                  <EmptySpace pref="35" max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnTeach_Home" pref="0" max="32767" attributes="0"/>
-                      <Component id="btnHome_Home" alignment="1" pref="0" max="32767" attributes="0"/>
-<<<<<<< HEAD
-                      <Component id="btnClasswork_Home" alignment="1" pref="0" max="32767" attributes="0"/>
-=======
-                      <Component id="btnCalendar_Home" alignment="1" pref="0" max="32767" attributes="0"/>
->>>>>>> 6317bd5ccbc31fcfc1fb0ed5b45efa1c6b3eaf68
-                      <Component id="btnLogout_Home" pref="0" max="32767" attributes="0"/>
-                      <Component id="btnStudents_Teach" pref="0" max="32767" attributes="0"/>
+                      <Component id="btnHome_Calendar" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="btnCalendar_Calendar" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="btnTeach_Calendar" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -242,31 +225,18 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnUser_Home" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="115" max="-2" attributes="0"/>
-                  <Component id="btnHome_Home" min="-2" pref="34" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-<<<<<<< HEAD
-                  <Component id="btnClasswork_Home" min="-2" pref="34" max="-2" attributes="0"/>
-=======
-                  <Component id="btnCalendar_Home" min="-2" pref="34" max="-2" attributes="0"/>
->>>>>>> 6317bd5ccbc31fcfc1fb0ed5b45efa1c6b3eaf68
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="btnTeach_Home" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="btnStudents_Teach" min="-2" max="-2" attributes="0"/>
-<<<<<<< HEAD
-                  <EmptySpace pref="62" max="32767" attributes="0"/>
-=======
-                  <EmptySpace max="32767" attributes="0"/>
->>>>>>> 6317bd5ccbc31fcfc1fb0ed5b45efa1c6b3eaf68
-                  <Component id="btnLogout_Home" min="-2" pref="20" max="-2" attributes="0"/>
+                  <Component id="btnHome_Calendar" min="-2" pref="40" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btnCalendar_Calendar" min="-2" pref="40" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btnTeach_Calendar" min="-2" pref="40" max="-2" attributes="0"/>
+                  <EmptySpace pref="2169" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnHome_Home">
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnHome_Calendar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -279,14 +249,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHome_HomeActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHome_CalendarActionPerformed"/>
           </Events>
         </Component>
-<<<<<<< HEAD
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnClasswork_Home">
-=======
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnCalendar_Home">
->>>>>>> 6317bd5ccbc31fcfc1fb0ed5b45efa1c6b3eaf68
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnCalendar_Calendar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -295,22 +261,14 @@
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-<<<<<<< HEAD
-              <Image iconType="3" name="/Dashboard/Classwork.png"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClasswork_HomeActionPerformed"/>
-=======
               <Image iconType="3" name="/Dashboard/calendar.png"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCalendar_HomeActionPerformed"/>
->>>>>>> 6317bd5ccbc31fcfc1fb0ed5b45efa1c6b3eaf68
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCalendar_CalendarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnTeach_Home">
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnTeach_Calendar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -323,74 +281,17 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTeach_HomeActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnUser_Home">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Dashboard/user.png"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUser_HomeActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnLogout_Home">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Logout"/>
-            <Property name="colorHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="cc" green="cc" red="cc" type="rgb"/>
-            </Property>
-            <Property name="colorText" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
-            </Property>
-            <Property name="colorTextHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogout_HomeActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnStudents_Teach">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Dashboard/Students.png"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStudents_TeachActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTeach_CalendarActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="jLabel5">
-      <Properties>
-<<<<<<< HEAD
-        <Property name="text" type="java.lang.String" value="teach"/>
-=======
-        <Property name="text" type="java.lang.String" value="Home"/>
->>>>>>> 6317bd5ccbc31fcfc1fb0ed5b45efa1c6b3eaf68
-      </Properties>
-    </Component>
+    <Container class="javax.swing.JPanel" name="jPanel2">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+        <Property name="columns" type="int" value="7"/>
+        <Property name="rows" type="int" value="7"/>
+      </Layout>
+    </Container>
   </SubComponents>
 </Form>
