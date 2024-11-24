@@ -2,13 +2,15 @@ package Dashboard;
 
 import java.awt.Color;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -24,8 +26,22 @@ public class addclasses extends javax.swing.JFrame {
         initComponents();
         setButtonStyles();
         this.setLocationRelativeTo(null); //to make it centralized
-    }
+        setupEnterKeyNavigation();
 
+    }
+    private void setupEnterKeyNavigation() {
+    // When Enter is pressed in the first text field, move to the second field
+    jCTextField1.addActionListener(e -> jCTextField2.requestFocus());
+    
+    // When Enter is pressed in the second text field, move to the third field
+    jCTextField2.addActionListener(e -> jCTextField3.requestFocus());
+    
+    // When Enter is pressed in the third text field, move to the fourth field
+    jCTextField3.addActionListener(e -> jCTextField4.requestFocus());
+    
+    // When Enter is pressed in the last text field, click the Create button
+    jCTextField4.addActionListener(e -> CreateButton.doClick());
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

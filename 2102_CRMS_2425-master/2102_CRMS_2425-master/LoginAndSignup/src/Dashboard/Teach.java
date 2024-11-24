@@ -18,7 +18,6 @@ public class Teach extends javax.swing.JFrame {
     private void initComponents() {
 
         rSButtonHover1 = new rojeru_san.complementos.RSButtonHover();
-        rSButtonHover2 = new rojeru_san.complementos.RSButtonHover();
         rSButtonHover3 = new rojeru_san.complementos.RSButtonHover();
         jLabel3 = new javax.swing.JLabel();
         rSCalendarBeanInfo1 = new rojeru_san.componentes.RSCalendarBeanInfo();
@@ -41,15 +40,6 @@ public class Teach extends javax.swing.JFrame {
         rSButtonHover1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonHover1ActionPerformed(evt);
-            }
-        });
-
-        rSButtonHover2.setBackground(new java.awt.Color(255, 255, 255));
-        rSButtonHover2.setForeground(new java.awt.Color(0, 0, 0));
-        rSButtonHover2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/calendar.png"))); // NOI18N
-        rSButtonHover2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonHover2ActionPerformed(evt);
             }
         });
 
@@ -216,7 +206,7 @@ public class Teach extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(337, 337, 337)
+                .addGap(647, 647, 647)
                 .addComponent(jLabel5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -239,10 +229,6 @@ public class Teach extends javax.swing.JFrame {
     private void rSButtonHover1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rSButtonHover1ActionPerformed
-
-    private void rSButtonHover2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rSButtonHover2ActionPerformed
 
     private void rSButtonHover3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover3ActionPerformed
         // TODO add your handling code here:
@@ -491,7 +477,6 @@ public class Teach extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private rojeru_san.complementos.RSButtonHover rSButtonHover1;
-    private rojeru_san.complementos.RSButtonHover rSButtonHover2;
     private rojeru_san.complementos.RSButtonHover rSButtonHover3;
     private rojeru_san.componentes.RSCalendarBeanInfo rSCalendarBeanInfo1;
     // End of variables declaration//GEN-END:variables
