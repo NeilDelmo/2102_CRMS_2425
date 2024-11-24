@@ -3,16 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
-package Dashboard;
 import java.awt.Color;
-import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.*;
 
 /**
  *
@@ -27,9 +27,59 @@ public class addclasses extends javax.swing.JFrame {
     public addclasses() {
         initComponents();
         setButtonStyles();
-        this.setLocationRelativeTo(null); //to make it centralized
+        this.setLocationRelativeTo(null);//to make it centralized
+        setupEnterKeyNavigation(); 
+        
     }
 
+    private void setupEnterKeyNavigation() {
+        // Add key listeners to text fields for Enter key navigation
+        jCTextField1.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    jCTextField2.requestFocusInWindow();
+                }
+            }
+        });
+
+        jCTextField2.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    jCTextField3.requestFocusInWindow();
+                }
+            }
+        });
+
+        jCTextField3.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    jCTextField4.requestFocusInWindow();
+                }
+            }
+        });
+
+        jCTextField4.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    CreateButton.requestFocusInWindow(); // Focus on Create button
+                }
+            }
+        });
+
+        CreateButton.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    CreateButtonActionPerformed(null); // Trigger the Create button action
+                }
+            }
+        });
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
