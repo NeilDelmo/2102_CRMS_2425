@@ -271,7 +271,6 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
          addclasses addclassesFrame = new addclasses();
          addclassesFrame.setVisible(true);
-         this.dispose();
     }//GEN-LAST:event_btnAddClass_HomeActionPerformed
 
     private void btnMenu_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu_HomeActionPerformed
