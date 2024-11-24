@@ -1,7 +1,6 @@
 package Dashboard;
 
 import javax.swing.JOptionPane;
-import Calendar.CalendarMain;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import loginandsignup.Login;
@@ -29,7 +28,7 @@ public class Home extends javax.swing.JFrame {
         btnAddClass_Home = new rojeru_san.complementos.RSButtonHover();
         jPanel1 = new javax.swing.JPanel();
         btnHome_Home = new rojeru_san.complementos.RSButtonHover();
-        btnCalendar_Home = new rojeru_san.complementos.RSButtonHover();
+        btnClasswork_Home = new rojeru_san.complementos.RSButtonHover();
         btnTeach_Home = new rojeru_san.complementos.RSButtonHover();
         btnUser_Home = new rojeru_san.complementos.RSButtonHover();
         btnLogout_Home = new rojeru_san.complementos.RSButtonHover();
@@ -126,12 +125,12 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        btnCalendar_Home.setBackground(new java.awt.Color(255, 255, 255));
-        btnCalendar_Home.setForeground(new java.awt.Color(0, 0, 0));
-        btnCalendar_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/calendar.png"))); // NOI18N
-        btnCalendar_Home.addActionListener(new java.awt.event.ActionListener() {
+        btnClasswork_Home.setBackground(new java.awt.Color(255, 255, 255));
+        btnClasswork_Home.setForeground(new java.awt.Color(0, 0, 0));
+        btnClasswork_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/Classwork.png"))); // NOI18N
+        btnClasswork_Home.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalendar_HomeActionPerformed(evt);
+                btnClasswork_HomeActionPerformed(evt);
             }
         });
 
@@ -187,7 +186,7 @@ public class Home extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnTeach_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnHome_Home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnCalendar_Home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnClasswork_Home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnLogout_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnStudents_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
@@ -200,7 +199,7 @@ public class Home extends javax.swing.JFrame {
                 .addGap(115, 115, 115)
                 .addComponent(btnHome_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCalendar_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnClasswork_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnTeach_Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -253,12 +252,12 @@ public class Home extends javax.swing.JFrame {
     JOptionPane.showMessageDialog(new JFrame(), "You are already in the home window.", "Error", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_btnHome_HomeActionPerformed
 
-    private void btnCalendar_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendar_HomeActionPerformed
-    CalendarMain calendarFrame = new CalendarMain();
-    calendarFrame.setExtendedState(CalendarMain.MAXIMIZED_BOTH); // Set full screen
-    calendarFrame.setVisible(true);
-    this.dispose();
-    }//GEN-LAST:event_btnCalendar_HomeActionPerformed
+    private void btnClasswork_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClasswork_HomeActionPerformed
+        Classwork classworkFrame = new Classwork();
+        classworkFrame.setExtendedState(Classwork.MAXIMIZED_BOTH); // Set full screen
+        classworkFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnClasswork_HomeActionPerformed
 
     private void btnTeach_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeach_HomeActionPerformed
     Teach teachFrame = new Teach();
@@ -271,7 +270,6 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
          addclasses addclassesFrame = new addclasses();
          addclassesFrame.setVisible(true);
-         this.dispose();
     }//GEN-LAST:event_btnAddClass_HomeActionPerformed
 
     private void btnMenu_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu_HomeActionPerformed
@@ -378,7 +376,7 @@ public class Home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rojeru_san.complementos.RSButtonHover btnAddClass_Home;
-    private rojeru_san.complementos.RSButtonHover btnCalendar_Home;
+    private rojeru_san.complementos.RSButtonHover btnClasswork_Home;
     private rojeru_san.complementos.RSButtonHover btnHome_Home;
     private rojeru_san.complementos.RSButtonHover btnLogout_Home;
     private rojeru_san.complementos.RSButtonHover btnMenu_Home;
