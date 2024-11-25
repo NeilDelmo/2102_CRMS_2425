@@ -1,16 +1,18 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package Dashboard;
-
 import java.awt.Color;
-import javax.swing.*;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.*;
 
 /**
  *
@@ -25,23 +27,59 @@ public class addclasses extends javax.swing.JFrame {
     public addclasses() {
         initComponents();
         setButtonStyles();
-        this.setLocationRelativeTo(null); //to make it centralized
-        setupEnterKeyNavigation();
-
+        this.setLocationRelativeTo(null);//to make it centralized
+        setupEnterKeyNavigation(); 
+        
     }
+
     private void setupEnterKeyNavigation() {
-    // When Enter is pressed in the first text field, move to the second field
-    jCTextField1.addActionListener(e -> jCTextField2.requestFocus());
+        // Add key listeners to text fields for Enter key navigation
+        jCTextField1.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    jCTextField2.requestFocusInWindow();
+                }
+            }
+        });
+
+        jCTextField2.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    jCTextField3.requestFocusInWindow();
+                }
+            }
+        });
+
+        jCTextField3.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    jCTextField4.requestFocusInWindow();
+                }
+            }
+        });
+
+        jCTextField4.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    CreateButton.requestFocusInWindow(); // Focus on Create button
+                }
+            }
+        });
+
+        CreateButton.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    CreateButtonActionPerformed(null); // Trigger the Create button action
+                }
+            }
+        });
+    }
     
-    // When Enter is pressed in the second text field, move to the third field
-    jCTextField2.addActionListener(e -> jCTextField3.requestFocus());
-    
-    // When Enter is pressed in the third text field, move to the fourth field
-    jCTextField3.addActionListener(e -> jCTextField4.requestFocus());
-    
-    // When Enter is pressed in the last text field, click the Create button
-    jCTextField4.addActionListener(e -> CreateButton.doClick());
-}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
