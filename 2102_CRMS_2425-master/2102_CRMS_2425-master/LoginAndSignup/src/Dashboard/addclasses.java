@@ -16,21 +16,31 @@ import java.sql.PreparedStatement;
  */
 public class addclasses extends javax.swing.JFrame {
     private Home homeFrame;
+    private int loggedInTeacherId; // Store the ID of the logged-in teacher
+    
+    // Add setter/getter
+    public void setLoggedInTeacherId(int teacherId) {
+        this.loggedInTeacherId = teacherId;
+    }
+    
+    public int getLoggedInTeacherId() {
+        return this.loggedInTeacherId;
+    }
     
     private static final String DB_URL = "jdbc:mysql://localhost:3306/crms"; // Change to your database name
     private static final String USER = "root"; // Change to your MySQL username
     private static final String PASS = ""; // Change to your MySQL password
     
-     public addclasses(Home homeFrame) {
-        this.homeFrame = homeFrame;
+     public addclasses(Home homeFrame, int teacherId) {
+        this.homeFrame = homeFrame; // Store reference to Home frame
+        this.loggedInTeacherId = teacherId; // Store teacher ID
         initComponents();
         setButtonStyles();
-        setupKeyNavigation(); // Call to set up key navigation
+        setupKeyNavigation();
         this.setLocationRelativeTo(null);
-        
-        // Set default button
         getRootPane().setDefaultButton(CreateButton);
     }
+
      public addclasses() {
         initComponents();
         setButtonStyles();
@@ -233,7 +243,7 @@ public class addclasses extends javax.swing.JFrame {
             return;
         }
         
-        String insertSQL = "INSERT INTO classes(class_name,section,subject,room) VALUES(?,?,?,?)"; 
+        String insertSQL = "INSERT INTO classes(class_name, section, subject, room, teacher_id) VALUES(?, ?, ?, ?, ?)"; 
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
              PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
          
@@ -241,18 +251,16 @@ public class addclasses extends javax.swing.JFrame {
             pstmt.setString(2, section);
             pstmt.setString(3, subject);
             pstmt.setString(4, room);
+            pstmt.setInt(5, loggedInTeacherId); // Use the stored teacher ID
             
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(this, "Class added successfully!");
-            
-            // Ensure homeFrame is not null before calling loadClasses
-            if (homeFrame != null) {
-                System.out.println("Refreshing classes in Home frame");
-                homeFrame.loadClasses();
-            } else {
-                System.out.println("Warning: homeFrame is null");
-            }
+                JOptionPane.showMessageDialog(this, "Class added successfully!");
+                
+                // Refresh classes in the Home frame
+                if (homeFrame != null) {
+                    homeFrame.loadClasses(); // Call loadClasses to refresh the table
+                }
                 
                 // Optionally clear the fields
                 jCTextField1.setText("");

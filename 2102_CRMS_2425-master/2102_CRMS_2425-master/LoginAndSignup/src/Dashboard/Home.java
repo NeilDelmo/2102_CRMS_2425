@@ -25,12 +25,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
+import loginandsignup.Login;
 
 
 
 public class Home extends javax.swing.JFrame {
+   private static int currentTeacherId;
 
-    public Home() {
+    // Static method to set the current teacher ID
+    public static void setCurrentTeacherId(int teacherId) {
+        currentTeacherId = teacherId;
+    }
+
+    // Static method to get the current teacher ID (optional, but can be useful)
+    public static int getCurrentTeacherId() {
+        return currentTeacherId;
+    }
+    
+    public Home(){
         initComponents();
         setupTableWithCheckboxes();
         loadClasses();
@@ -38,6 +50,16 @@ public class Home extends javax.swing.JFrame {
         logResourcePaths();
         this.setExtendedState(Home.MAXIMIZED_BOTH);
     }
+    
+public Home(int teacherId) {
+    currentTeacherId = teacherId;
+    initComponents();
+    setupTableWithCheckboxes();
+    loadClasses();
+    setButtonStyles();
+    logResourcePaths();
+    this.setExtendedState(Home.MAXIMIZED_BOTH);
+}
     
 
     private void logResourcePaths() {
@@ -324,14 +346,12 @@ public class Home extends javax.swing.JFrame {
 
     @Override
     public Class<?> getColumnClass(int column) {
-        switch(column) {
-            case 0: return Boolean.class;  // Checkbox column
-            case 1: return Integer.class;  // Class ID
-            case 2: return String.class;   // Class Name
-            case 3: return String.class;   // Section
-            case 4: return String.class;   // Room
-            case 5: return String.class;   // Subject
-            default: return Object.class;
+        if (column == 0) {
+            return Boolean.class; // Checkbox column
+        } else if (column == 1) {
+            return Integer.class; // Class ID
+        } else {
+            return String.class; // Other columns
         }
     }
 
@@ -341,37 +361,35 @@ public class Home extends javax.swing.JFrame {
     }
 
     @Override
+    public Object getValueAt(int row, int column) {
+        if (column == 0) {
+            return selection.get(row);
+        }
+        // Adjust column index for data Vector (subtract 1 because column 0 is checkbox)
+        return data.get(row).get(column - 1);
+    }
+
+    @Override
     public void setValueAt(Object value, int row, int column) {
         if (column == 0) {
-            // Ensure the selection vector is large enough
-            while (selection.size() <= row) {
-                selection.add(Boolean.FALSE);
-            }
             selection.set(row, (Boolean) value);
+            fireTableCellUpdated(row, column);
+        } else {
+            // Adjust column index for data Vector
+            data.get(row).set(column - 1, value);
             fireTableCellUpdated(row, column);
         }
     }
 
-    @Override
-    public Object getValueAt(int row, int column) {
-        // For checkbox column, return the selection status
-        if (column == 0) {
-            while (selection.size() <= row) {
-                selection.add(Boolean.FALSE);
-            }
-            return selection.get(row);
-        }
-        // For other columns, return the data
-        return data.get(row).get(column - 1);
-    }
-
     public void addRow(Object[] rowData) {
         Vector<Object> row = new Vector<>();
-        for (Object obj : rowData) {
-            row.add(obj);
+        // Skip the first element (checkbox state) when adding to data vector
+        for (int i = 1; i < rowData.length; i++) {
+            row.add(rowData[i]);
         }
         data.add(row);
-        selection.add(Boolean.FALSE); // Add false for new rows
+        // Add checkbox state to selection vector
+        selection.add((Boolean) rowData[0]);
         fireTableRowsInserted(data.size() - 1, data.size() - 1);
     }
 
@@ -379,26 +397,6 @@ public class Home extends javax.swing.JFrame {
         data.clear();
         selection.clear();
         fireTableDataChanged();
-    }
-
-    public Vector<Boolean> getSelection() {
-        return selection;
-    }
-
-    public String getClassNameAtRow(int row) {
-        // Ensure this returns the class name from the correct column
-        return (String) data.get(row).get(1);
-    }
-
-    // New method to get the count of selected rows
-    public int getSelectedRowCount() {
-        int count = 0;
-        for (Boolean selected : selection) {
-            if (selected) {
-                count++;
-            }
-        }
-        return count;
     }
 }
 
@@ -461,69 +459,72 @@ public class Home extends javax.swing.JFrame {
         }
     });
 }
-    public void loadClasses() {
-    System.out.println("Starting loadClasses() method"); // Debug print
-    jTable1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-    String query = "SELECT class_id, class_name, section, subject, room FROM classes";
-    try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/crms", "root", "");
-         Statement stmt = conn.createStatement();
-         ResultSet rs = stmt.executeQuery(query)) {
-        
+
+public void loadClasses() {
+    System.out.println("Current Teacher ID: " + currentTeacherId);
+    String url = "jdbc:mysql://localhost:3306/crms";
+    String user = "root";
+    String password = "";
+
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+
+    try {
+        conn = DriverManager.getConnection(url, user, password);
+    
+        // Modify query to filter classes by teacher ID
+        String query = "SELECT class_id, class_name, section, subject, room " +
+                       "FROM classes " +
+                       "WHERE teacher_id = ?";
+    
+        pstmt = conn.prepareStatement(query);
+        pstmt.setInt(1, currentTeacherId);
+    
+        rs = pstmt.executeQuery();
+    
         CheckboxTableModel model = (CheckboxTableModel) jTable1.getModel();
         model.clear(); // Clear existing rows
 
-        int rowCount = 0;
         while (rs.next()) {
-            int classId = rs.getInt("class_id");
+            Boolean checkboxState = false; // Initialize checkbox state to false
+            Integer classId = rs.getInt("class_id");
             String className = rs.getString("class_name");
             String section = rs.getString("section");
             String subject = rs.getString("subject");
             String room = rs.getString("room");
-            
-            
-            // Detailed debug print
-            System.out.println("Loading class: ID=" + classId + 
-                               ", Name=" + className + 
-                               ", Section=" + section + 
-                                ", Subject=" + subject+
-                               ", Room=" + room );
-                               
-            
-            // Use addRow method with an array matching the column order
-            model.addRow(new Object[]{
-                classId,         // Class ID
-                className,       // Class Name
-                section,         // Section 
-                subject,          // Subject
-                room            // Room
-               
-            });
-            rowCount++;
+
+            System.out.println("Adding row: " + checkboxState + ", " + classId + ", " + className + ", " + section + ", " + subject + ", " + room);
+
+            Object[] rowData = {
+                checkboxState, // Checkbox initially unchecked
+                classId,       // Class ID
+                className,     // Class Name
+                section,       // Section
+                subject,       // Subject
+                room           // Room
+            };
+            model.addRow(rowData);
         }
-        
-        System.out.println("Total classes loaded: " + rowCount); // Debug print
-        
-        // Adjust column widths
-        jTable1.getColumnModel().getColumn(0).setPreferredWidth(50);  // Checkbox column
-        jTable1.getColumnModel().getColumn(1).setPreferredWidth(50);  // Class ID
-        jTable1.getColumnModel().getColumn(2).setPreferredWidth(150); // Class Name
-        jTable1.getColumnModel().getColumn(3).setPreferredWidth(100); // Section
-        jTable1.getColumnModel().getColumn(5).setPreferredWidth(100); // Subject
-        jTable1.getColumnModel().getColumn(4).setPreferredWidth(100); // Room
-        
-        
-        // Force table update
-        model.fireTableDataChanged();
-        
+    
     } catch (SQLException e) {
-        System.err.println("Error in loadClasses(): " + e.getMessage());
-        e.printStackTrace(); // Print full stack trace
+        e.printStackTrace();
         JOptionPane.showMessageDialog(this, 
-            "Error loading classes: " + e.getMessage(), 
-            "Database Error", 
+            "Database error: " + e.getMessage(), 
+            "Error", 
             JOptionPane.ERROR_MESSAGE);
+    } finally {
+        // Properly close resources
+        try {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-    }
+}
+
     private void btnTeach_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeach_HomeActionPerformed
     Teach teachFrame = new Teach();
     teachFrame.setExtendedState(Teach.MAXIMIZED_BOTH); // Set full screen
@@ -533,8 +534,9 @@ public class Home extends javax.swing.JFrame {
 
     private void btnAddClass_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClass_HomeActionPerformed
         // TODO add your handling code here:
-          addclasses addclassesFrame = new addclasses(this);
-    addclassesFrame.setVisible(true);
+     // Pass the current teacher ID to the addclasses frame
+    addclasses addClassesFrame = new addclasses(this,currentTeacherId);
+    addClassesFrame.setVisible(true);
     }//GEN-LAST:event_btnAddClass_HomeActionPerformed
 
     private void btnMenu_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu_HomeActionPerformed
