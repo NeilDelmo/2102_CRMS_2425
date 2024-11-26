@@ -1,5 +1,6 @@
 package loginandsignup;
 import Dashboard.Home;
+import Dashboard.Home;
 
 import java.sql.SQLException;
 import java.sql.ResultSet;
@@ -251,44 +252,54 @@ LoginPass.getActionMap().put("doLogin", new AbstractAction() {
 
     private void conLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conLoginActionPerformed
         // TODO add your handling code here:
-         String email,password, query,passDb = null;
-       String URL, USER, PASS;
-       URL = "jdbc:mysql://localhost:3306/crms";
-       USER = "root";
-       PASS = "";
-       int notFound = 0;
-       
-       try{
-           Class.forName("com.mysql.cj.jdbc.Driver");
-           Connection con = DriverManager.getConnection(URL,USER,PASS);
-           Statement st = con.createStatement();
-            if("".equals(EmailLogin.getText())){
-           JOptionPane.showMessageDialog(new JFrame(), "Email Address is required", "Error", JOptionPane.ERROR_MESSAGE);
-           }else if("".equals(LoginPass.getText())){
+       String email, password, query, passDb = null;
+    String URL, USER, PASS;
+    URL = "jdbc:mysql://localhost:3306/crms";
+    USER = "root";
+    PASS = "";
+    int teacherId = -1; // Initialize outside the loop
+    
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection(URL, USER, PASS);
+        Statement st = con.createStatement();
+        
+        if ("".equals(EmailLogin.getText())) {
+            JOptionPane.showMessageDialog(new JFrame(), "Email Address is required", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if ("".equals(LoginPass.getText())) {
             JOptionPane.showMessageDialog(new JFrame(), "Password is required", "Error", JOptionPane.ERROR_MESSAGE);   
-           }else{
-               email = EmailLogin.getText();
-               password = LoginPass.getText();
-               
-               query = "SELECT * FROM teachers WHERE email = '"+ email+"'";
-               ResultSet rs = st.executeQuery(query);
-               while(rs.next()){
-               passDb = rs.getString("password");
-               notFound = 1;
-               }
-               if (notFound == 1 && password.equals(passDb)){
-                    Home dashboard = new Home();
-                    dashboard.setVisible(true);
-                    this.dispose(); 
-                   
-               }else{
-                   JOptionPane.showMessageDialog(new JFrame(), "Incorrect Email or Password", "Error", JOptionPane.ERROR_MESSAGE);  
-               }
-               LoginPass.setText("");
-           }
-       }catch(Exception e){
-           System.out.println("Error! "+ e.getMessage());
-       }
+        } else {
+            email = EmailLogin.getText();
+            password = LoginPass.getText();
+            
+            query = "SELECT * FROM teachers WHERE email = '" + email + "'";
+            ResultSet rs = st.executeQuery(query);
+            
+            if (rs.next()) { // Use if instead of while, and check first
+    passDb = rs.getString("password");
+    
+    if (password.equals(passDb)) {
+        teacherId = rs.getInt("teacher_id");
+        
+        // Create Home with the teacher ID instead of using static method
+        Home dashboard = new Home(teacherId);
+        dashboard.setVisible(true);
+        this.dispose(); 
+    } else {
+        JOptionPane.showMessageDialog(new JFrame(), "Incorrect Email or Password", "Error", JOptionPane.ERROR_MESSAGE);  
+    }
+            } else {
+                JOptionPane.showMessageDialog(new JFrame(), "Incorrect Email or Password", "Error", JOptionPane.ERROR_MESSAGE);  
+            }
+            
+            LoginPass.setText("");
+        }
+        
+        con.close(); // Always good practice to close the connection
+    } catch (Exception e) {
+        System.out.println("Error! " + e.getMessage());
+        e.printStackTrace(); // This will print the full stack trace for better debugging
+    }
     }//GEN-LAST:event_conLoginActionPerformed
 
     private void LoginPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginPassActionPerformed
