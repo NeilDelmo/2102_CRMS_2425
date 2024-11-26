@@ -1,84 +1,70 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Dashboard;
+
 import java.awt.Color;
+import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import javax.swing.*;
+import java.sql.PreparedStatement;
 
 /**
  *
  * @author L E N O V O
  */
 public class addclasses extends javax.swing.JFrame {
+    private Home homeFrame;
     
     private static final String DB_URL = "jdbc:mysql://localhost:3306/crms"; // Change to your database name
     private static final String USER = "root"; // Change to your MySQL username
     private static final String PASS = ""; // Change to your MySQL password
-
-    public addclasses() {
+    
+     public addclasses(Home homeFrame) {
+        this.homeFrame = homeFrame;
         initComponents();
         setButtonStyles();
-        this.setLocationRelativeTo(null);//to make it centralized
-        setupEnterKeyNavigation(); 
+        setupKeyNavigation(); // Call to set up key navigation
+        this.setLocationRelativeTo(null);
         
+        // Set default button
+        getRootPane().setDefaultButton(CreateButton);
     }
+     public addclasses() {
+        initComponents();
+        setButtonStyles();
+        setupKeyNavigation(); // Call to set up key navigation
+        this.setLocationRelativeTo(null);
+        
+        // Set default button
+        getRootPane().setDefaultButton(CreateButton);
+    }
+     
+      private void setupKeyNavigation() {
+        // Set up focus traversal
+        // Add key listener to allow moving between text fields using Enter key
+        jCTextField1.addActionListener(evt -> jCTextField2.requestFocusInWindow());
+        jCTextField2.addActionListener(evt -> jCTextField3.requestFocusInWindow());
+        jCTextField3.addActionListener(evt -> jCTextField4.requestFocusInWindow());
+        jCTextField4.addActionListener(evt -> CreateButtonActionPerformed(null));
 
-    private void setupEnterKeyNavigation() {
-        // Add key listeners to text fields for Enter key navigation
-        jCTextField1.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    jCTextField2.requestFocusInWindow();
-                }
-            }
-        });
+        // Add action listener for Cancel button
+        CancelButton.addActionListener(evt -> dispose());
+        
+        // Add action listener for Create button
+        CreateButton.addActionListener(evt -> CreateButtonActionPerformed(null));
 
-        jCTextField2.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    jCTextField3.requestFocusInWindow();
-                }
-            }
-        });
-
-        jCTextField3.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    jCTextField4.requestFocusInWindow();
-                }
-            }
-        });
-
-        jCTextField4.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    CreateButton.requestFocusInWindow(); // Focus on Create button
-                }
-            }
-        });
-
-        CreateButton.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    CreateButtonActionPerformed(null); // Trigger the Create button action
+        // Global key listener for ESC to close the window
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ESCAPE) {
+                    dispose();
                 }
             }
         });
     }
+
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -243,29 +229,43 @@ public class addclasses extends javax.swing.JFrame {
         String room = jCTextField4.getText().trim();
         
         if (className.isEmpty() || section.isEmpty() || subject.isEmpty() || room.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-        String insertSQL = "INSERT INTO classes(class_name,section,subject,room) VALUES(?,?,?,?)"; 
-         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-         PreparedStatement pstmt = conn.prepareStatement(insertSQL)){
-         
-             pstmt.setString(1,className);
-             pstmt.setString(2, section);
-             pstmt.setString(3,subject);
-             pstmt.setString(4,room);
-             int rowsAffected = pstmt.executeUpdate();
-             if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(this, "Class added successfully!");
-        } else {
-            JOptionPane.showMessageDialog(this, "Failed to add class.", "Database Error", JOptionPane.ERROR_MESSAGE);
-         }
-              } catch (SQLException ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error adding class: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-    }
-
+            JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         
+        String insertSQL = "INSERT INTO classes(class_name,section,subject,room) VALUES(?,?,?,?)"; 
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
+         
+            pstmt.setString(1, className);
+            pstmt.setString(2, section);
+            pstmt.setString(3, subject);
+            pstmt.setString(4, room);
+            
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(this, "Class added successfully!");
+            
+            // Ensure homeFrame is not null before calling loadClasses
+            if (homeFrame != null) {
+                System.out.println("Refreshing classes in Home frame");
+                homeFrame.loadClasses();
+            } else {
+                System.out.println("Warning: homeFrame is null");
+            }
+                
+                // Optionally clear the fields
+                jCTextField1.setText("");
+                jCTextField2.setText("");
+                jCTextField3.setText("");
+                jCTextField4.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to add class.", "Database Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error adding class: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_CreateButtonActionPerformed
 
    
