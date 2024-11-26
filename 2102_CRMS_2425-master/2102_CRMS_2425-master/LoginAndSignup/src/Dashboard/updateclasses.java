@@ -14,26 +14,30 @@ import java.sql.PreparedStatement;
  *
  * @author L E N O V O
  */
-public class addclasses extends javax.swing.JFrame {
+public class updateclasses extends javax.swing.JFrame {
     private Home homeFrame;
-    private int loggedInteachers_id; // Store the ID of the logged-in teacher
+    private int loggedInTeacherId; // Store the ID of the logged-in teacher
+
+    updateclasses(Home aThis, int currentTeacherId) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     // Add setter/getter
-    public void setLoggedInTeacherId(int teachers_Id) {
-        this.loggedInteachers_id = teachers_Id;
+    public void setLoggedInTeacherId(int teacherId) {
+        this.loggedInTeacherId = teacherId;
     }
     
     public int getLoggedInTeacherId() {
-        return this.loggedInteachers_id;
+        return this.loggedInTeacherId;
     }
     
     private static final String DB_URL = "jdbc:mysql://localhost:3306/crms"; // Change to your database name
     private static final String USER = "root"; // Change to your MySQL username
     private static final String PASS = ""; // Change to your MySQL password
     
-     public addclasses(Home homeFrame, int teacherId) {
+     public updateclasses(int teacherId) {
         this.homeFrame = homeFrame; // Store reference to Home frame
-        this.loggedInteachers_id= teacherId; // Store teacher ID
+        this.loggedInTeacherId = teacherId; // Store teacher ID
         initComponents();
         setButtonStyles();
         setupKeyNavigation();
@@ -41,7 +45,7 @@ public class addclasses extends javax.swing.JFrame {
         getRootPane().setDefaultButton(CreateButton);
     }
 
-     public addclasses() {
+     public updateclasses() {
         initComponents();
         setButtonStyles();
         setupKeyNavigation(); // Call to set up key navigation
@@ -102,7 +106,7 @@ public class addclasses extends javax.swing.JFrame {
         jPanel1.setMinimumSize(new java.awt.Dimension(500, 600));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Create Class");
+        jLabel1.setText("Update Classses");
 
         ClassName.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Class Name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
         ClassName.addActionListener(new java.awt.event.ActionListener() {
@@ -117,7 +121,7 @@ public class addclasses extends javax.swing.JFrame {
 
         Room.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Room", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
 
-        CreateButton.setText("Create");
+        CreateButton.setText("Update");
         CreateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CreateButtonActionPerformed(evt);
@@ -146,8 +150,8 @@ public class addclasses extends javax.swing.JFrame {
                         .addComponent(ClassName, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
                         .addComponent(Section, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Subject, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Room, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(Room, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -242,7 +246,7 @@ public class addclasses extends javax.swing.JFrame {
             return;
         }
         
-        String insertSQL = "INSERT INTO classes(class_name, section, subject, room, teachers_id) VALUES(?, ?, ?, ?, ?)"; 
+        String insertSQL = "INSERT INTO classes(class_name, section, subject, room, teacher_id) VALUES(?, ?, ?, ?, ?)"; 
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
              PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
          
@@ -250,7 +254,7 @@ public class addclasses extends javax.swing.JFrame {
             pstmt.setString(2, section);
             pstmt.setString(3, subject);
             pstmt.setString(4, room);
-            pstmt.setInt(5, this.loggedInteachers_id); // Use the stored teacher ID
+            pstmt.setInt(5, loggedInTeacherId); // Use the stored teacher ID
             
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
@@ -290,21 +294,23 @@ public class addclasses extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(addclasses.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(updateclasses.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(addclasses.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(updateclasses.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(addclasses.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(updateclasses.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(addclasses.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(updateclasses.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new addclasses().setVisible(true);
+                new updateclasses().setVisible(true);
             }
         });
     }
