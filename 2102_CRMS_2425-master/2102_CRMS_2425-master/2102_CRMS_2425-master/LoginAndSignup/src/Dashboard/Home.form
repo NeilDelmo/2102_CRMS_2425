@@ -185,7 +185,7 @@
                       <Component id="btnHome_Home" alignment="1" pref="0" max="32767" attributes="0"/>
                       <Component id="btnLogout_Home" pref="0" max="32767" attributes="0"/>
                       <Component id="btnStudents_Home" pref="0" max="32767" attributes="0"/>
-                      <Component id="btnSections_Home" alignment="1" pref="0" max="32767" attributes="0"/>
+                      <Component id="btnSubjects_Home" alignment="1" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -203,7 +203,7 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btnStudents_Home" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="btnSections_Home" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnSubjects_Home" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="63" max="32767" attributes="0"/>
                   <Component id="btnLogout_Home" min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
@@ -298,7 +298,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStudents_HomeActionPerformed"/>
           </Events>
         </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnSections_Home">
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnSubjects_Home">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -307,11 +307,11 @@
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icons/section.png"/>
+              <Image iconType="3" name="/icons/Subjects.png"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSections_HomeActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSubjects_HomeActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

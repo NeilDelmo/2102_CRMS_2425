@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2024 at 12:27 AM
+-- Generation Time: Nov 27, 2024 at 12:31 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -67,26 +67,6 @@ CREATE TABLE `classwork` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sections`
---
-
-CREATE TABLE `sections` (
-  `section_id` int(11) NOT NULL,
-  `section_name` varchar(255) DEFAULT NULL,
-  `section_code` int(11) DEFAULT NULL,
-  `student_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `sections`
---
-
-INSERT INTO `sections` (`section_id`, `section_name`, `section_code`, `student_id`) VALUES
-(1, 'BSIT - 101', 101, 2);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `students`
 --
 
@@ -130,6 +110,18 @@ CREATE TABLE `student_classwork` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `subjects`
+--
+
+CREATE TABLE `subjects` (
+  `subject_id` int(11) NOT NULL,
+  `subject_name` varchar(255) NOT NULL,
+  `subject_code` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `teachers`
 --
 
@@ -167,12 +159,6 @@ ALTER TABLE `classwork`
   ADD KEY `class_id` (`class_id`);
 
 --
--- Indexes for table `sections`
---
-ALTER TABLE `sections`
-  ADD PRIMARY KEY (`section_id`);
-
---
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
@@ -186,6 +172,12 @@ ALTER TABLE `student_classwork`
   ADD PRIMARY KEY (`student_classwork_id`),
   ADD KEY `student_id` (`student_id`),
   ADD KEY `classwork_id` (`classwork_id`);
+
+--
+-- Indexes for table `subjects`
+--
+ALTER TABLE `subjects`
+  ADD PRIMARY KEY (`subject_id`);
 
 --
 -- Indexes for table `teachers`

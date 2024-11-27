@@ -27,7 +27,7 @@ public class AccountManagement extends javax.swing.JFrame {
         btnUser_AccountManagement = new rojeru_san.complementos.RSButtonHover();
         btnLogout_AccountManagement = new rojeru_san.complementos.RSButtonHover();
         btnStudents_AccountManagement = new rojeru_san.complementos.RSButtonHover();
-        btnSections_Home = new rojeru_san.complementos.RSButtonHover();
+        btnSubjects_Home = new rojeru_san.complementos.RSButtonHover();
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -130,12 +130,12 @@ public class AccountManagement extends javax.swing.JFrame {
             }
         });
 
-        btnSections_Home.setBackground(new java.awt.Color(255, 255, 255));
-        btnSections_Home.setForeground(new java.awt.Color(0, 0, 0));
-        btnSections_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/section.png"))); // NOI18N
-        btnSections_Home.addActionListener(new java.awt.event.ActionListener() {
+        btnSubjects_Home.setBackground(new java.awt.Color(255, 255, 255));
+        btnSubjects_Home.setForeground(new java.awt.Color(0, 0, 0));
+        btnSubjects_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Subjects.png"))); // NOI18N
+        btnSubjects_Home.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSections_HomeActionPerformed(evt);
+                btnSubjects_HomeActionPerformed(evt);
             }
         });
 
@@ -154,7 +154,7 @@ public class AccountManagement extends javax.swing.JFrame {
                     .addComponent(btnHome_AccountManagement, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnLogout_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnStudents_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnSections_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(btnSubjects_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -169,7 +169,7 @@ public class AccountManagement extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnStudents_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSections_Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSubjects_Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(btnLogout_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -259,12 +259,12 @@ public class AccountManagement extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(new JFrame(), "You are already in the Account Management window.", "Error", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_btnUser_AccountManagementActionPerformed
 
-    private void btnSections_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSections_HomeActionPerformed
-        Sections sectionsFrame = new Sections();
-        sectionsFrame.setExtendedState(Sections.MAXIMIZED_BOTH);
-        sectionsFrame.setVisible(true);
+    private void btnSubjects_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubjects_HomeActionPerformed
+        Subjects subjectsFrame = new Subjects();
+        subjectsFrame.setExtendedState(Students.MAXIMIZED_BOTH);
+        subjectsFrame.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnSections_HomeActionPerformed
+    }//GEN-LAST:event_btnSubjects_HomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -433,8 +433,8 @@ public class AccountManagement extends javax.swing.JFrame {
     private rojeru_san.complementos.RSButtonHover btnHome_AccountManagement;
     private rojeru_san.complementos.RSButtonHover btnLogout_AccountManagement;
     private rojeru_san.complementos.RSButtonHover btnMenu_AccountManagement;
-    private rojeru_san.complementos.RSButtonHover btnSections_Home;
     private rojeru_san.complementos.RSButtonHover btnStudents_AccountManagement;
+    private rojeru_san.complementos.RSButtonHover btnSubjects_Home;
     private rojeru_san.complementos.RSButtonHover btnTeach_AccountManagement;
     private rojeru_san.complementos.RSButtonHover btnUser_AccountManagement;
     private javax.swing.JLabel jLabel1;

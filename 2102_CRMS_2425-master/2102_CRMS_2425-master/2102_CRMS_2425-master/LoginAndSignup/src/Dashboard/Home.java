@@ -94,7 +94,7 @@ public Home(int teachers_id) {
         btnUser_Home = new rojeru_san.complementos.RSButtonHover();
         btnLogout_Home = new rojeru_san.complementos.RSButtonHover();
         btnStudents_Home = new rojeru_san.complementos.RSButtonHover();
-        btnSections_Home = new rojeru_san.complementos.RSButtonHover();
+        btnSubjects_Home = new rojeru_san.complementos.RSButtonHover();
         jScrollPane1 = new javax.swing.JScrollPane();
         ClassTable = new javax.swing.JTable();
 
@@ -220,12 +220,12 @@ public Home(int teachers_id) {
             }
         });
 
-        btnSections_Home.setBackground(new java.awt.Color(255, 255, 255));
-        btnSections_Home.setForeground(new java.awt.Color(0, 0, 0));
-        btnSections_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/section.png"))); // NOI18N
-        btnSections_Home.addActionListener(new java.awt.event.ActionListener() {
+        btnSubjects_Home.setBackground(new java.awt.Color(255, 255, 255));
+        btnSubjects_Home.setForeground(new java.awt.Color(0, 0, 0));
+        btnSubjects_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Subjects.png"))); // NOI18N
+        btnSubjects_Home.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSections_HomeActionPerformed(evt);
+                btnSubjects_HomeActionPerformed(evt);
             }
         });
 
@@ -244,7 +244,7 @@ public Home(int teachers_id) {
                     .addComponent(btnHome_Home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnLogout_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnStudents_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnSections_Home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(btnSubjects_Home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -259,7 +259,7 @@ public Home(int teachers_id) {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnStudents_Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSections_Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSubjects_Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(btnLogout_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -551,12 +551,12 @@ public void loadClasses() {
          this.dispose();
     }//GEN-LAST:event_btnStudents_HomeActionPerformed
 
-    private void btnSections_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSections_HomeActionPerformed
-        Sections sectionsFrame = new Sections();
-        sectionsFrame.setExtendedState(Sections.MAXIMIZED_BOTH);
-        sectionsFrame.setVisible(true);
+    private void btnSubjects_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubjects_HomeActionPerformed
+        Subjects subjectsFrame = new Subjects();
+        subjectsFrame.setExtendedState(Students.MAXIMIZED_BOTH);
+        subjectsFrame.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnSections_HomeActionPerformed
+    }//GEN-LAST:event_btnSubjects_HomeActionPerformed
 
     private void btnRemoveClass_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveClass_HomeActionPerformed
     CheckboxTableModel model = (CheckboxTableModel) ClassTable.getModel();
@@ -795,8 +795,8 @@ public void loadClasses() {
     private rojeru_san.complementos.RSButtonHover btnLogout_Home;
     private rojeru_san.complementos.RSButtonHover btnMenu_Home;
     private rojeru_san.complementos.RSButtonHover btnRemoveClass_Home;
-    private rojeru_san.complementos.RSButtonHover btnSections_Home;
     private rojeru_san.complementos.RSButtonHover btnStudents_Home;
+    private rojeru_san.complementos.RSButtonHover btnSubjects_Home;
     private rojeru_san.complementos.RSButtonHover btnTeach_Home;
     private rojeru_san.complementos.RSButtonHover btnUpdateclass_Home;
     private rojeru_san.complementos.RSButtonHover btnUser_Home;

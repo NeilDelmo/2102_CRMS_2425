@@ -132,7 +132,7 @@ public class Teach extends javax.swing.JFrame {
 
         btnSubjects_Teach.setBackground(new java.awt.Color(255, 255, 255));
         btnSubjects_Teach.setForeground(new java.awt.Color(0, 0, 0));
-        btnSubjects_Teach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/section.png"))); // NOI18N
+        btnSubjects_Teach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Subjects.png"))); // NOI18N
         btnSubjects_Teach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSubjects_TeachActionPerformed(evt);
@@ -262,9 +262,9 @@ public class Teach extends javax.swing.JFrame {
     }//GEN-LAST:event_btnStudents_TeachActionPerformed
 
     private void btnSubjects_TeachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubjects_TeachActionPerformed
-        Sections sectionsFrame = new Sections();
-        sectionsFrame.setExtendedState(Sections.MAXIMIZED_BOTH);
-        sectionsFrame.setVisible(true);
+        Subjects subjectsFrame = new Subjects();
+        subjectsFrame.setExtendedState(Students.MAXIMIZED_BOTH);
+        subjectsFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSubjects_TeachActionPerformed
 

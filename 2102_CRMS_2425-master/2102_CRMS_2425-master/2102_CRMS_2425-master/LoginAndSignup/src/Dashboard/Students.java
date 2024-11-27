@@ -63,7 +63,7 @@ public class Students extends javax.swing.JFrame {
         btnUser_Students = new rojeru_san.complementos.RSButtonHover();
         btnLogout_Students = new rojeru_san.complementos.RSButtonHover();
         btnStudents_Students = new rojeru_san.complementos.RSButtonHover();
-        btnSections_Students = new rojeru_san.complementos.RSButtonHover();
+        btnSubjects_Students = new rojeru_san.complementos.RSButtonHover();
         jScrollPane2 = new javax.swing.JScrollPane();
         Students_Table = new javax.swing.JTable();
 
@@ -178,12 +178,12 @@ public class Students extends javax.swing.JFrame {
             }
         });
 
-        btnSections_Students.setBackground(new java.awt.Color(255, 255, 255));
-        btnSections_Students.setForeground(new java.awt.Color(0, 0, 0));
-        btnSections_Students.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/section.png"))); // NOI18N
-        btnSections_Students.addActionListener(new java.awt.event.ActionListener() {
+        btnSubjects_Students.setBackground(new java.awt.Color(255, 255, 255));
+        btnSubjects_Students.setForeground(new java.awt.Color(0, 0, 0));
+        btnSubjects_Students.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Subjects.png"))); // NOI18N
+        btnSubjects_Students.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSections_StudentsActionPerformed(evt);
+                btnSubjects_StudentsActionPerformed(evt);
             }
         });
 
@@ -201,7 +201,7 @@ public class Students extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnTeach_Students, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnLogout_Students, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnSections_Students, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnSubjects_Students, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnStudents_Students, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -217,7 +217,7 @@ public class Students extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnStudents_Students, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSections_Students, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSubjects_Students, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
                 .addComponent(btnLogout_Students, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -327,12 +327,12 @@ public class Students extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(new JFrame(), "You are already in the Students window.", "Error", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_btnStudents_StudentsActionPerformed
 
-    private void btnSections_StudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSections_StudentsActionPerformed
-        Sections sectionsFrame = new Sections();
-        sectionsFrame.setExtendedState(Sections.MAXIMIZED_BOTH);
-        sectionsFrame.setVisible(true);
+    private void btnSubjects_StudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubjects_StudentsActionPerformed
+        Subjects subjectsFrame = new Subjects();
+        subjectsFrame.setExtendedState(Students.MAXIMIZED_BOTH);
+        subjectsFrame.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnSections_StudentsActionPerformed
+    }//GEN-LAST:event_btnSubjects_StudentsActionPerformed
 
     private void btnAddStudent_StudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddStudent_StudentsActionPerformed
         // TODO add your handling code here:
@@ -509,8 +509,8 @@ public class Students extends javax.swing.JFrame {
     private rojeru_san.complementos.RSButtonHover btnLogout_Students;
     private rojeru_san.complementos.RSButtonHover btnMenu_Students;
     private rojeru_san.complementos.RSButtonHover btnRemoveStudent_Students;
-    private rojeru_san.complementos.RSButtonHover btnSections_Students;
     private rojeru_san.complementos.RSButtonHover btnStudents_Students;
+    private rojeru_san.complementos.RSButtonHover btnSubjects_Students;
     private rojeru_san.complementos.RSButtonHover btnTeach_Students;
     private rojeru_san.complementos.RSButtonHover btnUser_Students;
     private javax.swing.JLabel jLabel1;
