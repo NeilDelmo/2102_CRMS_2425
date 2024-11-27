@@ -298,12 +298,12 @@ public Home(int teachers_id) {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 828, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,7 +311,7 @@ public Home(int teachers_id) {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(230, 230, 230))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(67, 67, 67)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -497,11 +497,17 @@ public void loadClasses() {
     }
 }
 
+private Teach teachFrame; // Add a reference to the Teach frame
     private void btnTeach_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeach_HomeActionPerformed
-    Teach teachFrame = new Teach();
-    teachFrame.setExtendedState(Teach.MAXIMIZED_BOTH); // Set full screen
-    teachFrame.setVisible(true);
-    this.dispose();
+      int selectedRow = ClassTable.getSelectedRow();
+
+    if (selectedRow != -1) {
+        Integer classId = (Integer) ClassTable.getValueAt(selectedRow, 1); // Assuming Class ID is in the second column
+        Teach teachFrame = Teach.getInstance(currentTeachers_Id, classId); // Use the Singleton method
+        teachFrame.setVisible(true); // Show the Teach frame
+    } else {
+        JOptionPane.showMessageDialog(this, "Please select a class to teach.", "No Selection", JOptionPane.WARNING_MESSAGE);
+    }
     }//GEN-LAST:event_btnTeach_HomeActionPerformed
 
     private void btnAddClass_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClass_HomeActionPerformed

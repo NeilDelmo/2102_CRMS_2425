@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2024 at 12:27 AM
+-- Generation Time: Nov 27, 2024 at 07:08 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `crms`
 --
+CREATE DATABASE IF NOT EXISTS `crms` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `crms`;
 
 -- --------------------------------------------------------
 
@@ -44,7 +46,7 @@ INSERT INTO `classes` (`class_id`, `class_name`, `section`, `subject`, `room`, `
 (1, 'Joed\'s Class', '2102', 'Object-Oriented-Programming', 'HEB 210', NULL),
 (2, 'DSA - 121', '1102', 'Data Structures and Algorithm', 'heb 201', NULL),
 (6, 'data', '101', 'data', 'heb 211', 1),
-(7, 'math', '102', 'mathe', 'heb 111', 1);
+(8, 'prog', '21303', 'Python', 'heb21', 1);
 
 -- --------------------------------------------------------
 
@@ -63,6 +65,60 @@ CREATE TABLE `classwork` (
   `status` enum('active','completed','archived') DEFAULT 'active',
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rooms`
+--
+
+CREATE TABLE `rooms` (
+  `room_id` int(11) NOT NULL,
+  `room_name` varchar(50) NOT NULL,
+  `capacity` int(11) DEFAULT NULL,
+  `building` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `rooms`
+--
+
+INSERT INTO `rooms` (`room_id`, `room_name`, `capacity`, `building`) VALUES
+(1, 'Heb-201', 50, 'CICS '),
+(2, 'Heb-202', 50, 'CICS '),
+(3, 'Heb-203', 50, 'CICS'),
+(4, 'Heb-204', 50, 'CICS'),
+(5, 'Heb-205', 50, 'CICS');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `schedules`
+--
+
+CREATE TABLE `schedules` (
+  `schedule_id` int(11) NOT NULL,
+  `class_id` int(11) DEFAULT NULL,
+  `room_id` int(11) DEFAULT NULL,
+  `day_of_week` enum('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') DEFAULT NULL,
+  `start_time` time DEFAULT NULL,
+  `end_time` time DEFAULT NULL,
+  `subject` varchar(100) DEFAULT NULL,
+  `class_name` varchar(255) DEFAULT NULL,
+  `room` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `schedules`
+--
+
+INSERT INTO `schedules` (`schedule_id`, `class_id`, `room_id`, `day_of_week`, `start_time`, `end_time`, `subject`, `class_name`, `room`) VALUES
+(1, 8, 1, 'Monday', '08:00:00', '10:00:00', 'Python', NULL, NULL),
+(2, 8, 1, 'Monday', '09:00:00', '11:00:00', 'data', NULL, NULL),
+(3, 6, 1, 'Tuesday', '08:00:00', '09:00:00', 'Python', NULL, NULL),
+(4, 6, 2, 'Monday', '08:00:00', '11:11:00', 'python', NULL, NULL),
+(5, 6, 3, 'Monday', '07:00:00', '09:00:00', 'data', NULL, NULL),
+(6, 8, 2, 'Monday', '03:00:00', '04:00:00', 'data', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -167,6 +223,20 @@ ALTER TABLE `classwork`
   ADD KEY `class_id` (`class_id`);
 
 --
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`room_id`);
+
+--
+-- Indexes for table `schedules`
+--
+ALTER TABLE `schedules`
+  ADD PRIMARY KEY (`schedule_id`),
+  ADD UNIQUE KEY `room_id` (`room_id`,`day_of_week`,`start_time`,`end_time`),
+  ADD KEY `class_id` (`class_id`);
+
+--
 -- Indexes for table `sections`
 --
 ALTER TABLE `sections`
@@ -203,13 +273,25 @@ ALTER TABLE `teachers`
 -- AUTO_INCREMENT for table `classes`
 --
 ALTER TABLE `classes`
-  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `classwork`
 --
 ALTER TABLE `classwork`
   MODIFY `classwork_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `rooms`
+--
+ALTER TABLE `rooms`
+  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `schedules`
+--
+ALTER TABLE `schedules`
+  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -244,6 +326,13 @@ ALTER TABLE `classes`
 --
 ALTER TABLE `classwork`
   ADD CONSTRAINT `classwork_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `classes` (`class_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `schedules`
+--
+ALTER TABLE `schedules`
+  ADD CONSTRAINT `schedules_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `classes` (`class_id`),
+  ADD CONSTRAINT `schedules_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`);
 
 --
 -- Constraints for table `students`
