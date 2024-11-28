@@ -150,7 +150,7 @@ public Home(int teachers_id) {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnRemoveClass_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
                 .addComponent(btnUpdateclass_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAddClass_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -691,9 +691,27 @@ private Teach teachFrame; // Add a reference to the Teach frame
     }//GEN-LAST:event_btnRemoveClass_HomeActionPerformed
 
     private void btnUpdateclass_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateclass_HomeActionPerformed
-        // TODO add your handling code here:
-         updateclasses updateClassesFrame = new updateclasses(this,currentTeachers_Id);
-         updateClassesFrame.setVisible(true);
+       CheckboxTableModel model = (CheckboxTableModel) ClassTable.getModel();
+    List<Integer> selectedClassIds = new ArrayList<>();
+
+    // Collect selected classes
+    for (int i = 0; i < model.getRowCount(); i++) {
+        Boolean isSelected = (Boolean) model.getValueAt(i, 0);
+        if (Boolean.TRUE.equals(isSelected)) {
+            Integer classId = (Integer) model.getValueAt(i, 1);
+            selectedClassIds.add(classId);
+        }
+    }
+
+    // Check if any classes are selected
+    if (selectedClassIds.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please select at least one class to update.", "No Selection", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Pass the selected class IDs and the JTable to the updateclasses frame
+    updateclasses updateClassesFrame = new updateclasses(this, currentTeachers_Id, selectedClassIds, ClassTable);
+    updateClassesFrame.setVisible(true);
     }//GEN-LAST:event_btnUpdateclass_HomeActionPerformed
 
     /**
