@@ -15,13 +15,13 @@ import java.awt.event.KeyEvent;;
  *
  * @author L E N O V O
  */
-public class RemoveStudent extends javax.swing.JFrame {
+public class RemoveSection extends javax.swing.JFrame {
     
     private static final String DB_URL = "jdbc:mysql://localhost:3306/crms"; // Change to your database name
     private static final String USER = "root"; // Change to your MySQL username
     private static final String PASS = ""; // Change to your MySQL password
 
-    public RemoveStudent() {
+    public RemoveSection() {
         initComponents();
         setButtonStyles();
         this.setLocationRelativeTo(null); //to make it centralized
@@ -30,69 +30,58 @@ public class RemoveStudent extends javax.swing.JFrame {
     }
     private void setupEnterKeyNavigation() {
      // Add key listeners to each text field
-        firstName.addKeyListener(new KeyAdapter() {
+        sectionName.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    lastName.requestFocus();
+                    sectionCode.requestFocus();
                 }
             }
         });
 
-        lastName.addKeyListener(new KeyAdapter() {
+        sectionCode.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    section_code.requestFocus();
-                }
-            }
-        });
-
-        section_code.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    validateAndCreateStudent();
+                    validateAndCreateSection();
                 }
             }
         });
 }
-     private void validateAndCreateStudent() {
-        String firstNameText = firstName.getText().trim();
-        String lastNameText = lastName.getText().trim();
-        String section_codeText = section_code.getText().trim();
+     private void validateAndCreateSection() {
+        String sectionNameText = sectionName.getText().trim();
+        String sectionCodeText = sectionCode.getText().trim();
         
-        if (firstNameText.isEmpty() || lastNameText.isEmpty() || section_codeText .isEmpty()) {
+        if (sectionNameText.isEmpty() || sectionCodeText.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // If validation passes, proceed with creating the student
-        createStudent(firstNameText, lastNameText, section_codeText );
+     CreateSection(sectionNameText, sectionCodeText);
     }
-     private void createStudent(String firstNameText, String lastNameText, String section_codeText) {
+     private void CreateSection(String sectionNameText, String sectionCodeText) {
     // SQL insert statement for the students table
-    String insertSQL = "DELETE FROM students WHERE student_firstname = ? AND student_lastname = ?";
-    String insertSection = "DELETE FROM sections WHERE section_code = ?";
+    
+  String insertSQL = "INSERT INTO sections (section_name, section_code) VALUES (?,?)";
     
     try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-         PreparedStatement pstmt = conn.prepareStatement(insertSQL); PreparedStatement ps = conn.prepareStatement(insertSection)) {
+         PreparedStatement pstmt = conn.prepareStatement(insertSQL)){
          
-        pstmt.setString(1, firstNameText);
-        pstmt.setString(2, lastNameText);
-        ps.setString(1, section_codeText);
+        pstmt.setString(1, sectionNameText);
+        pstmt.setString(2, sectionCodeText);
         
         int rowsAffected = pstmt.executeUpdate();
         if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(this, "Student Removed successfully!");
+            JOptionPane.showMessageDialog(this, "Section Removed successfully!");
             clearFields();
         } else {
-            JOptionPane.showMessageDialog(this, "Failed to Remove student.", 
+            JOptionPane.showMessageDialog(this, "Failed to Create Section.", 
                 "Database Error", JOptionPane.ERROR_MESSAGE);
         }
     } catch (SQLException ex) {
         ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error Removing student: " + ex.getMessage(), 
+        JOptionPane.showMessageDialog(this, "Error Removing Section: " + ex.getMessage(), 
             "Database Error", JOptionPane.ERROR_MESSAGE);
     }
 }
@@ -109,11 +98,10 @@ public class RemoveStudent extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        firstName = new app.bolivia.swing.JCTextField();
-        lastName = new app.bolivia.swing.JCTextField();
+        sectionName = new app.bolivia.swing.JCTextField();
+        sectionCode = new app.bolivia.swing.JCTextField();
         CancelButton = new javax.swing.JButton();
         CreateButton = new javax.swing.JButton();
-        section_code = new app.bolivia.swing.JCTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -121,18 +109,22 @@ public class RemoveStudent extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setMinimumSize(new java.awt.Dimension(500, 600));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Remove Student");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 18, -1, -1));
 
-        firstName.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "First Name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
-        firstName.addActionListener(new java.awt.event.ActionListener() {
+        sectionName.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Section Name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
+        sectionName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                firstNameActionPerformed(evt);
+                sectionNameActionPerformed(evt);
             }
         });
+        jPanel1.add(sectionName, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 61, 467, 50));
 
-        lastName.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Last Name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
+        sectionCode.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Section Code", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
+        jPanel1.add(sectionCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 129, 467, 50));
 
         CancelButton.setText("Cancel");
         CancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -140,6 +132,7 @@ public class RemoveStudent extends javax.swing.JFrame {
                 CancelButtonActionPerformed(evt);
             }
         });
+        jPanel1.add(CancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(328, 191, -1, -1));
 
         CreateButton.setText("Remove");
         CreateButton.addActionListener(new java.awt.event.ActionListener() {
@@ -147,61 +140,19 @@ public class RemoveStudent extends javax.swing.JFrame {
                 CreateButtonActionPerformed(evt);
             }
         });
-
-        section_code.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Section Code", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
-        section_code.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                section_codeActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(CancelButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(CreateButton))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(firstName, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
-                            .addComponent(lastName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(section_code, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1))))
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(firstName, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lastName, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(section_code, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CancelButton)
-                    .addComponent(CreateButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel1.add(CreateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(412, 191, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -246,27 +197,22 @@ public class RemoveStudent extends javax.swing.JFrame {
             }
         });
     }
-    private void firstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstNameActionPerformed
+    private void sectionNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sectionNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_firstNameActionPerformed
+    }//GEN-LAST:event_sectionNameActionPerformed
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void CreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateButtonActionPerformed
-validateAndCreateStudent();
+validateAndCreateSection();
         
     }//GEN-LAST:event_CreateButtonActionPerformed
-
-    private void section_codeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_section_codeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_section_codeActionPerformed
 private void clearFields() {
-    firstName.setText("");
-    lastName.setText("");
-    section_code.setText("");
-    firstName.requestFocus(); // Set focus back to first name field
+    sectionName.setText("");
+    sectionCode.setText("");
+    sectionName.requestFocus(); // Set focus back to first name field
 }
    
     public static void main(String args[]) {
@@ -283,14 +229,70 @@ private void clearFields() {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RemoveStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RemoveSection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RemoveStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RemoveSection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RemoveStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RemoveSection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RemoveStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RemoveSection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -303,7 +305,7 @@ private void clearFields() {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RemoveStudent().setVisible(true);
+                new RemoveSection().setVisible(true);
             }
         });
     }
@@ -311,10 +313,9 @@ private void clearFields() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CancelButton;
     private javax.swing.JButton CreateButton;
-    private app.bolivia.swing.JCTextField firstName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private app.bolivia.swing.JCTextField lastName;
-    private app.bolivia.swing.JCTextField section_code;
+    private app.bolivia.swing.JCTextField sectionCode;
+    private app.bolivia.swing.JCTextField sectionName;
     // End of variables declaration//GEN-END:variables
 }

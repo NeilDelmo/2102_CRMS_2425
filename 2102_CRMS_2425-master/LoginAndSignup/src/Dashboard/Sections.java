@@ -1,17 +1,82 @@
 package Dashboard;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import loginandsignup.Login;
+import java.sql.Statement;
 
 public class Sections extends javax.swing.JFrame {
 
     public Sections() {
         initComponents();
          this.setExtendedState(Sections.MAXIMIZED_BOTH);
+         LoadSections();
+    }
+    
+private void LoadSections() { 
+    String URL, USER, PASS; 
+    URL = "jdbc:mysql://localhost:3306/crms"; 
+    USER = "root"; 
+    PASS = ""; 
+    DefaultTableModel model = (DefaultTableModel) Sections_Table.getModel(); 
+    model.setRowCount(0); // Clear existing rows
+
+    // Updated query to count students in each section
+String query = "SELECT sections.section_name, sections.section_code, COUNT(students.student_id) AS student_count FROM sections JOIN students ON sections.section_code = sections.section_code GROUP BY sections.section_name, sections.section_code";
+
+    try (Connection con = DriverManager.getConnection(URL, USER, PASS);
+         Statement stmt = con.createStatement();
+         ResultSet rs = stmt.executeQuery(query)) {
+
+        while (rs.next()) {
+            String sectionName = rs.getString("section_name");
+            int sectionCode = rs.getInt("section_code");
+            int studentCount = rs.getInt("student_count");
+
+            // Add the retrieved row to the table model
+            model.addRow(new Object[]{sectionName, sectionCode, studentCount});
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace(); // Print the stack trace for debugging
+        JOptionPane.showMessageDialog(this, "Error loading Sections: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+// Method to count the number of students in a specific section
+public int countStudentsInSection(int section_code) {
+    String URL, USER, PASS; 
+    URL = "jdbc:mysql://localhost:3306/crms"; 
+    USER = "root"; 
+    PASS = ""; 
+    int studentCount = 0;
+
+    // Construct the SQL query with the sectionCode directly
+    String query = "SELECT COUNT(students_id) AS student_count " +
+                   "FROM students " +
+                   "WHERE section_Code = " + section_code + ";";
+
+    try (Connection con = DriverManager.getConnection(URL, USER, PASS);
+         Statement stmt = con.createStatement();
+         ResultSet rs = stmt.executeQuery(query)) {
+
+        if (rs.next()) {
+            studentCount = rs.getInt("student_count");
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace(); // Print the stack trace for debugging
+        JOptionPane.showMessageDialog(this, "Error counting students: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
 
+    return studentCount;
+}
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -20,7 +85,8 @@ public class Sections extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnMenu_Subjects = new rojeru_san.complementos.RSButtonHover();
-        btnAddClass_Subjects = new rojeru_san.complementos.RSButtonHover();
+        btnAddSections_Sections = new rojeru_san.complementos.RSButtonHover();
+        btnRemoveSection_Sections = new rojeru_san.complementos.RSButtonHover();
         jPanel1 = new javax.swing.JPanel();
         btnHome_Subjects = new rojeru_san.complementos.RSButtonHover();
         btnTeach_Subjects = new rojeru_san.complementos.RSButtonHover();
@@ -28,7 +94,10 @@ public class Sections extends javax.swing.JFrame {
         btnLogout_Subjects = new rojeru_san.complementos.RSButtonHover();
         btnStudents_Subjects = new rojeru_san.complementos.RSButtonHover();
         btnSections_Sections = new rojeru_san.complementos.RSButtonHover();
-        jLabel5 = new javax.swing.JLabel();
+        btnRooms_Sections = new rojeru_san.complementos.RSButtonHover();
+        btnClasswork_Subjects = new rojeru_san.complementos.RSButtonHover();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Sections_Table = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,11 +116,19 @@ public class Sections extends javax.swing.JFrame {
             }
         });
 
-        btnAddClass_Subjects.setBackground(new java.awt.Color(0, 102, 102));
-        btnAddClass_Subjects.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/plus.png"))); // NOI18N
-        btnAddClass_Subjects.addActionListener(new java.awt.event.ActionListener() {
+        btnAddSections_Sections.setBackground(new java.awt.Color(0, 102, 102));
+        btnAddSections_Sections.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/plus.png"))); // NOI18N
+        btnAddSections_Sections.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddClass_SubjectsActionPerformed(evt);
+                btnAddSections_SectionsActionPerformed(evt);
+            }
+        });
+
+        btnRemoveSection_Sections.setBackground(new java.awt.Color(0, 102, 102));
+        btnRemoveSection_Sections.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/minus.png"))); // NOI18N
+        btnRemoveSection_Sections.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveSection_SectionsActionPerformed(evt);
             }
         });
 
@@ -64,8 +141,10 @@ public class Sections extends javax.swing.JFrame {
                 .addComponent(btnMenu_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 573, Short.MAX_VALUE)
-                .addComponent(btnAddClass_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnRemoveSection_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAddSections_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
         jPanel4Layout.setVerticalGroup(
@@ -73,7 +152,8 @@ public class Sections extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAddClass_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRemoveSection_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddSections_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMenu_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(16, 16, 16))
@@ -139,6 +219,24 @@ public class Sections extends javax.swing.JFrame {
             }
         });
 
+        btnRooms_Sections.setBackground(new java.awt.Color(255, 255, 255));
+        btnRooms_Sections.setForeground(new java.awt.Color(0, 0, 0));
+        btnRooms_Sections.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/classroom.png"))); // NOI18N
+        btnRooms_Sections.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRooms_SectionsActionPerformed(evt);
+            }
+        });
+
+        btnClasswork_Subjects.setBackground(new java.awt.Color(255, 255, 255));
+        btnClasswork_Subjects.setForeground(new java.awt.Color(0, 0, 0));
+        btnClasswork_Subjects.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Classwork.png"))); // NOI18N
+        btnClasswork_Subjects.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClasswork_SubjectsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -154,7 +252,9 @@ public class Sections extends javax.swing.JFrame {
                     .addComponent(btnHome_Subjects, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnLogout_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnStudents_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnSections_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(btnSections_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnRooms_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnClasswork_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -162,19 +262,42 @@ public class Sections extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnUser_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(69, 69, 69)
+                .addGap(18, 18, 18)
                 .addComponent(btnHome_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnTeach_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addComponent(btnClasswork_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnStudents_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnSections_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnRooms_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogout_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jLabel5.setText("Subjects");
+        Sections_Table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Program", "Section_Code", "Student_Count"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(Sections_Table);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -182,17 +305,17 @@ public class Sections extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(358, 358, 358)
-                .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+                .addContainerGap())
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(134, 134, 134)
-                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(67, 67, 67)
@@ -216,11 +339,11 @@ public class Sections extends javax.swing.JFrame {
     this.dispose();
     }//GEN-LAST:event_btnTeach_SubjectsActionPerformed
 
-    private void btnAddClass_SubjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClass_SubjectsActionPerformed
+    private void btnAddSections_SectionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSections_SectionsActionPerformed
         // TODO add your handling code here:
-         addclasses addclassesFrame = new addclasses();
-         addclassesFrame.setVisible(true);
-    }//GEN-LAST:event_btnAddClass_SubjectsActionPerformed
+         AddSection addsectionFrame = new AddSection();
+         addsectionFrame.setVisible(true);
+    }//GEN-LAST:event_btnAddSections_SectionsActionPerformed
 
     private void btnMenu_SubjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu_SubjectsActionPerformed
         // TODO add your handling code here:
@@ -264,8 +387,30 @@ public class Sections extends javax.swing.JFrame {
     }//GEN-LAST:event_btnStudents_SubjectsActionPerformed
 
     private void btnSections_SectionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSections_SectionsActionPerformed
-         JOptionPane.showMessageDialog(new JFrame(), "You are already in the sections window.", "Error", JOptionPane.ERROR_MESSAGE);
+         JOptionPane.showMessageDialog(new JFrame(), "You are already in the Sections window.", "Error", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_btnSections_SectionsActionPerformed
+
+    private void btnRemoveSection_SectionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveSection_SectionsActionPerformed
+        // TODO add your handling code here:\
+        RemoveSection removesectionFrame  = new RemoveSection();
+        removesectionFrame.setVisible(true);
+    }//GEN-LAST:event_btnRemoveSection_SectionsActionPerformed
+
+    private void btnRooms_SectionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRooms_SectionsActionPerformed
+        // TODO add your handling code here:
+        Rooms roomsFrame = new Rooms();
+        roomsFrame.setExtendedState(Rooms.MAXIMIZED_BOTH);
+        roomsFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRooms_SectionsActionPerformed
+
+    private void btnClasswork_SubjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClasswork_SubjectsActionPerformed
+        // TODO add your handling code here:
+        Classwork classworkFrame = new Classwork();
+        classworkFrame.setExtendedState(Classwork.MAXIMIZED_BOTH);
+        classworkFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnClasswork_SubjectsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -814,18 +959,22 @@ public class Sections extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private rojeru_san.complementos.RSButtonHover btnAddClass_Subjects;
+    private javax.swing.JTable Sections_Table;
+    private rojeru_san.complementos.RSButtonHover btnAddSections_Sections;
+    private rojeru_san.complementos.RSButtonHover btnClasswork_Subjects;
     private rojeru_san.complementos.RSButtonHover btnHome_Subjects;
     private rojeru_san.complementos.RSButtonHover btnLogout_Subjects;
     private rojeru_san.complementos.RSButtonHover btnMenu_Subjects;
+    private rojeru_san.complementos.RSButtonHover btnRemoveSection_Sections;
+    private rojeru_san.complementos.RSButtonHover btnRooms_Sections;
     private rojeru_san.complementos.RSButtonHover btnSections_Sections;
     private rojeru_san.complementos.RSButtonHover btnStudents_Subjects;
     private rojeru_san.complementos.RSButtonHover btnTeach_Subjects;
     private rojeru_san.complementos.RSButtonHover btnUser_Subjects;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
 }

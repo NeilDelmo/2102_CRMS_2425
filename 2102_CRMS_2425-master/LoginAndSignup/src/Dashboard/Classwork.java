@@ -5,11 +5,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import loginandsignup.Login;
 
-public class AccountManagement extends javax.swing.JFrame {
+public class Classwork extends javax.swing.JFrame {
 
-    public AccountManagement() {
+    public Classwork() {
         initComponents();
-         this.setExtendedState(AccountManagement.MAXIMIZED_BOTH);
+         this.setExtendedState(Classwork.MAXIMIZED_BOTH);
     }
 
 
@@ -20,16 +20,16 @@ public class AccountManagement extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnMenu_AccountManagement = new rojeru_san.complementos.RSButtonHover();
-        btnAddClass_AccountManagement = new rojeru_san.complementos.RSButtonHover();
+        btnAddClasswork_Classwork = new rojeru_san.complementos.RSButtonHover();
         jPanel1 = new javax.swing.JPanel();
         btnHome_AccountManagement = new rojeru_san.complementos.RSButtonHover();
         btnTeach_AccountManagement = new rojeru_san.complementos.RSButtonHover();
-        btnUser_AccountManagement = new rojeru_san.complementos.RSButtonHover();
+        btnUser__Classwork = new rojeru_san.complementos.RSButtonHover();
         btnLogout_AccountManagement = new rojeru_san.complementos.RSButtonHover();
         btnStudents_AccountManagement = new rojeru_san.complementos.RSButtonHover();
         btnSections_AccountManagement = new rojeru_san.complementos.RSButtonHover();
         btnRooms_AccountManagement = new rojeru_san.complementos.RSButtonHover();
-        btnClasswork_AccountManagement = new rojeru_san.complementos.RSButtonHover();
+        btnClasswork_Classwork = new rojeru_san.complementos.RSButtonHover();
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -49,11 +49,11 @@ public class AccountManagement extends javax.swing.JFrame {
             }
         });
 
-        btnAddClass_AccountManagement.setBackground(new java.awt.Color(0, 102, 102));
-        btnAddClass_AccountManagement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/plus.png"))); // NOI18N
-        btnAddClass_AccountManagement.addActionListener(new java.awt.event.ActionListener() {
+        btnAddClasswork_Classwork.setBackground(new java.awt.Color(0, 102, 102));
+        btnAddClasswork_Classwork.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/plus.png"))); // NOI18N
+        btnAddClasswork_Classwork.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddClass_AccountManagementActionPerformed(evt);
+                btnAddClasswork_ClassworkActionPerformed(evt);
             }
         });
 
@@ -67,7 +67,7 @@ public class AccountManagement extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 605, Short.MAX_VALUE)
-                .addComponent(btnAddClass_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAddClasswork_Classwork, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
         jPanel4Layout.setVerticalGroup(
@@ -75,7 +75,7 @@ public class AccountManagement extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAddClass_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddClasswork_Classwork, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMenu_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(16, 16, 16))
@@ -102,11 +102,11 @@ public class AccountManagement extends javax.swing.JFrame {
             }
         });
 
-        btnUser_AccountManagement.setBackground(new java.awt.Color(255, 255, 255));
-        btnUser_AccountManagement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user.png"))); // NOI18N
-        btnUser_AccountManagement.addActionListener(new java.awt.event.ActionListener() {
+        btnUser__Classwork.setBackground(new java.awt.Color(255, 255, 255));
+        btnUser__Classwork.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user.png"))); // NOI18N
+        btnUser__Classwork.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUser_AccountManagementActionPerformed(evt);
+                btnUser__ClassworkActionPerformed(evt);
             }
         });
 
@@ -150,12 +150,12 @@ public class AccountManagement extends javax.swing.JFrame {
             }
         });
 
-        btnClasswork_AccountManagement.setBackground(new java.awt.Color(255, 255, 255));
-        btnClasswork_AccountManagement.setForeground(new java.awt.Color(0, 0, 0));
-        btnClasswork_AccountManagement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Classwork.png"))); // NOI18N
-        btnClasswork_AccountManagement.addActionListener(new java.awt.event.ActionListener() {
+        btnClasswork_Classwork.setBackground(new java.awt.Color(255, 255, 255));
+        btnClasswork_Classwork.setForeground(new java.awt.Color(0, 0, 0));
+        btnClasswork_Classwork.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Classwork.png"))); // NOI18N
+        btnClasswork_Classwork.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClasswork_AccountManagementActionPerformed(evt);
+                btnClasswork_ClassworkActionPerformed(evt);
             }
         });
 
@@ -164,37 +164,37 @@ public class AccountManagement extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(btnUser__Classwork, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnTeach_AccountManagement, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                    .addComponent(btnTeach_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnHome_AccountManagement, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnLogout_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnStudents_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnSections_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnRooms_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnClasswork_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(btnRooms_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnUser_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+            .addComponent(btnClasswork_Classwork, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnUser_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUser__Classwork, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnHome_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnTeach_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnClasswork_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addComponent(btnClasswork_Classwork, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnStudents_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnSections_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnRooms_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogout_AccountManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -228,11 +228,11 @@ public class AccountManagement extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAddClass_AccountManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClass_AccountManagementActionPerformed
+    private void btnAddClasswork_ClassworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClasswork_ClassworkActionPerformed
         // TODO add your handling code here:
          addclasses addclassesFrame = new addclasses();
          addclassesFrame.setVisible(true);
-    }//GEN-LAST:event_btnAddClass_AccountManagementActionPerformed
+    }//GEN-LAST:event_btnAddClasswork_ClassworkActionPerformed
 
     private void btnMenu_AccountManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu_AccountManagementActionPerformed
         // TODO add your handling code here:
@@ -280,10 +280,14 @@ public class AccountManagement extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnHome_AccountManagementActionPerformed
 
-    private void btnUser_AccountManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUser_AccountManagementActionPerformed
+    private void btnUser__ClassworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUser__ClassworkActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(new JFrame(), "You are already in the Account Management window.", "Error", JOptionPane.ERROR_MESSAGE);
-    }//GEN-LAST:event_btnUser_AccountManagementActionPerformed
+        AccountManagement AccManageFrame = new AccountManagement();
+        AccManageFrame.setExtendedState(AccountManagement.MAXIMIZED_BOTH); // Set full screen
+        AccManageFrame.setVisible(true);
+        this.dispose();
+       
+    }//GEN-LAST:event_btnUser__ClassworkActionPerformed
 
     private void btnSections_AccountManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSections_AccountManagementActionPerformed
         Sections sectionsFrame = new Sections();
@@ -300,13 +304,10 @@ public class AccountManagement extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnRooms_AccountManagementActionPerformed
 
-    private void btnClasswork_AccountManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClasswork_AccountManagementActionPerformed
-        // TODO add your handling code here:
-        Classwork classworkFrame = new Classwork();
-        classworkFrame.setExtendedState(Classwork.MAXIMIZED_BOTH);
-        classworkFrame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnClasswork_AccountManagementActionPerformed
+    private void btnClasswork_ClassworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClasswork_ClassworkActionPerformed
+        // TODO add your handling code here: 
+       JOptionPane.showMessageDialog(new JFrame(), "You are already in the Classwork window.", "Error", JOptionPane.ERROR_MESSAGE);
+    }//GEN-LAST:event_btnClasswork_ClassworkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -325,14 +326,142 @@ public class AccountManagement extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AccountManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Classwork.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AccountManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Classwork.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AccountManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Classwork.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AccountManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Classwork.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -465,14 +594,14 @@ public class AccountManagement extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AccountManagement().setVisible(true);
+                new Classwork().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private rojeru_san.complementos.RSButtonHover btnAddClass_AccountManagement;
-    private rojeru_san.complementos.RSButtonHover btnClasswork_AccountManagement;
+    private rojeru_san.complementos.RSButtonHover btnAddClasswork_Classwork;
+    private rojeru_san.complementos.RSButtonHover btnClasswork_Classwork;
     private rojeru_san.complementos.RSButtonHover btnHome_AccountManagement;
     private rojeru_san.complementos.RSButtonHover btnLogout_AccountManagement;
     private rojeru_san.complementos.RSButtonHover btnMenu_AccountManagement;
@@ -480,7 +609,7 @@ public class AccountManagement extends javax.swing.JFrame {
     private rojeru_san.complementos.RSButtonHover btnSections_AccountManagement;
     private rojeru_san.complementos.RSButtonHover btnStudents_AccountManagement;
     private rojeru_san.complementos.RSButtonHover btnTeach_AccountManagement;
-    private rojeru_san.complementos.RSButtonHover btnUser_AccountManagement;
+    private rojeru_san.complementos.RSButtonHover btnUser__Classwork;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;

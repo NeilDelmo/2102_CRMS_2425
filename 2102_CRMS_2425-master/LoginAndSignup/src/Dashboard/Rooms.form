@@ -26,7 +26,7 @@
           <Group type="102" attributes="0">
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="752" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="720" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Component id="jPanel4" max="32767" attributes="0"/>
@@ -37,8 +37,8 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
@@ -60,16 +60,16 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                  <Component id="btnMenu_Students" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="btnMenu_Subjects" min="-2" pref="32" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="btnRefresh_Students" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="btnRefresh_Rooms" min="-2" pref="32" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnRemoveStudent_Students" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="btnRemoveRoom_Rooms" min="-2" pref="32" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnAddStudent_Students" min="-2" pref="32" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                  <Component id="btnAddRooms_Rooms" min="-2" pref="32" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -78,11 +78,11 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace pref="20" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnRefresh_Students" min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="btnRemoveStudent_Students" min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="btnMenu_Students" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="btnRefresh_Rooms" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="btnRemoveRoom_Rooms" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="btnAddRooms_Rooms" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="btnMenu_Subjects" min="-2" pref="32" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnAddStudent_Students" alignment="0" min="-2" pref="32" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               </Group>
@@ -104,7 +104,7 @@
             <Property name="text" type="java.lang.String" value="Classroom"/>
           </Properties>
         </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnMenu_Students">
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnMenu_Subjects">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="66" green="66" red="0" type="rgb"/>
@@ -114,23 +114,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMenu_StudentsActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMenu_SubjectsActionPerformed"/>
           </Events>
         </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnRemoveStudent_Students">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="66" green="66" red="0" type="rgb"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icons/minus.png"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemoveStudent_StudentsActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnAddStudent_Students">
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnAddRooms_Rooms">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="66" green="66" red="0" type="rgb"/>
@@ -140,10 +127,23 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddStudent_StudentsActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddRooms_RoomsActionPerformed"/>
           </Events>
         </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnRefresh_Students">
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnRemoveRoom_Rooms">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="66" green="66" red="0" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icons/minus.png"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemoveRoom_RoomsActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnRefresh_Rooms">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="66" green="66" red="0" type="rgb"/>
@@ -153,7 +153,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRefresh_StudentsActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRefresh_RoomsActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -175,19 +175,19 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                  <Component id="btnUser_Students" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="btnUser_Subjects" min="-2" pref="32" max="-2" attributes="0"/>
                   <EmptySpace pref="35" max="32767" attributes="0"/>
               </Group>
-              <Component id="btnHome_Students" alignment="1" pref="0" max="32767" attributes="0"/>
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnTeach_Students" pref="0" max="32767" attributes="0"/>
-                      <Component id="btnLogout_Students" pref="0" max="32767" attributes="0"/>
-                      <Component id="btnSections_Students" alignment="1" pref="0" max="32767" attributes="0"/>
-                      <Component id="btnStudents_Students" alignment="1" pref="0" max="32767" attributes="0"/>
-                      <Component id="btnRooms_Students" alignment="1" pref="0" max="32767" attributes="0"/>
-                      <Component id="btnClasswork_Students" pref="0" max="32767" attributes="0"/>
+                      <Component id="btnTeach_Subjects" pref="0" max="32767" attributes="0"/>
+                      <Component id="btnHome_Subjects" alignment="1" pref="0" max="32767" attributes="0"/>
+                      <Component id="btnLogout_Subjects" pref="0" max="32767" attributes="0"/>
+                      <Component id="btnStudents_Subjects" pref="0" max="32767" attributes="0"/>
+                      <Component id="btnSections_Sections" alignment="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="btnRooms_Rooms" alignment="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="btnClasswork_Subjects" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -197,27 +197,27 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnUser_Students" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnUser_Subjects" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnHome_Students" min="-2" pref="34" max="-2" attributes="0"/>
+                  <Component id="btnHome_Subjects" min="-2" pref="34" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnTeach_Students" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnTeach_Subjects" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnClasswork_Students" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnClasswork_Subjects" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnStudents_Students" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnStudents_Subjects" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnSections_Students" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnSections_Sections" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnRooms_Students" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="19" max="32767" attributes="0"/>
-                  <Component id="btnLogout_Students" min="-2" pref="20" max="-2" attributes="0"/>
+                  <Component id="btnRooms_Rooms" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="btnLogout_Subjects" min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnHome_Students">
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnHome_Subjects">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -230,10 +230,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHome_StudentsActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHome_SubjectsActionPerformed"/>
           </Events>
         </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnTeach_Students">
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnTeach_Subjects">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -246,10 +246,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTeach_StudentsActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTeach_SubjectsActionPerformed"/>
           </Events>
         </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnUser_Students">
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnUser_Subjects">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -259,10 +259,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUser_StudentsActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUser_SubjectsActionPerformed"/>
           </Events>
         </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnLogout_Students">
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnLogout_Subjects">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -285,10 +285,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogout_StudentsActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogout_SubjectsActionPerformed"/>
           </Events>
         </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnStudents_Students">
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnStudents_Subjects">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -301,10 +301,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStudents_StudentsActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStudents_SubjectsActionPerformed"/>
           </Events>
         </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnSections_Students">
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnSections_Sections">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -317,10 +317,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSections_StudentsActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSections_SectionsActionPerformed"/>
           </Events>
         </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnRooms_Students">
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnRooms_Rooms">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -333,10 +333,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRooms_StudentsActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRooms_RoomsActionPerformed"/>
           </Events>
         </Component>
-        <Component class="rojeru_san.complementos.RSButtonHover" name="btnClasswork_Students">
+        <Component class="rojeru_san.complementos.RSButtonHover" name="btnClasswork_Subjects">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -349,35 +349,29 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClasswork_StudentsActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClasswork_SubjectsActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="Students_Table">
+        <Component class="javax.swing.JTable" name="Rooms_Table">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="4">
-                <Column editable="false" title="ID" type="java.lang.Object"/>
-                <Column editable="false" title="Last_Name" type="java.lang.Object"/>
-                <Column editable="false" title="First_Name" type="java.lang.Object"/>
-                <Column editable="false" title="Section" type="java.lang.Object"/>
+              <Table columnCount="3" rowCount="4">
+                <Column editable="false" title="Room_Number" type="java.lang.Object"/>
+                <Column editable="false" title="Room_Name" type="java.lang.Object"/>
+                <Column editable="false" title="Room_Code" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
