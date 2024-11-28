@@ -94,8 +94,9 @@ public Home(int teachers_id) {
         btnUser_Home = new rojeru_san.complementos.RSButtonHover();
         btnLogout_Home = new rojeru_san.complementos.RSButtonHover();
         btnStudents_Home = new rojeru_san.complementos.RSButtonHover();
-        btnSubjects_Home = new rojeru_san.complementos.RSButtonHover();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        btnRooms_Home = new rojeru_san.complementos.RSButtonHover();
+        btnClasswork_Home = new rojeru_san.complementos.RSButtonHover();
+        btnSections_Home = new rojeru_san.complementos.RSButtonHover();
         jScrollPane1 = new javax.swing.JScrollPane();
         ClassTable = new javax.swing.JTable();
 
@@ -149,11 +150,11 @@ public Home(int teachers_id) {
                 .addComponent(btnMenu_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 603, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnRemoveClass_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnUpdateclass_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAddClass_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
@@ -221,12 +222,30 @@ public Home(int teachers_id) {
             }
         });
 
-        btnSubjects_Home.setBackground(new java.awt.Color(255, 255, 255));
-        btnSubjects_Home.setForeground(new java.awt.Color(0, 0, 0));
-        btnSubjects_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Subjects.png"))); // NOI18N
-        btnSubjects_Home.addActionListener(new java.awt.event.ActionListener() {
+        btnRooms_Home.setBackground(new java.awt.Color(255, 255, 255));
+        btnRooms_Home.setForeground(new java.awt.Color(0, 0, 0));
+        btnRooms_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/classroom.png"))); // NOI18N
+        btnRooms_Home.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubjects_HomeActionPerformed(evt);
+                btnRooms_HomeActionPerformed(evt);
+            }
+        });
+
+        btnClasswork_Home.setBackground(new java.awt.Color(255, 255, 255));
+        btnClasswork_Home.setForeground(new java.awt.Color(0, 0, 0));
+        btnClasswork_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Classwork.png"))); // NOI18N
+        btnClasswork_Home.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClasswork_HomeActionPerformed(evt);
+            }
+        });
+
+        btnSections_Home.setBackground(new java.awt.Color(255, 255, 255));
+        btnSections_Home.setForeground(new java.awt.Color(0, 0, 0));
+        btnSections_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/section.png"))); // NOI18N
+        btnSections_Home.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSections_HomeActionPerformed(evt);
             }
         });
 
@@ -245,7 +264,9 @@ public Home(int teachers_id) {
                     .addComponent(btnHome_Home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnLogout_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnStudents_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnSubjects_Home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(btnClasswork_Home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnSections_Home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnRooms_Home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -253,15 +274,19 @@ public Home(int teachers_id) {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnUser_Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(115, 115, 115)
+                .addGap(18, 18, 18)
                 .addComponent(btnHome_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnTeach_Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addComponent(btnClasswork_Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnStudents_Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSubjects_Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnSections_Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnRooms_Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogout_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -295,8 +320,6 @@ public Home(int teachers_id) {
         });
         jScrollPane1.setViewportView(ClassTable);
 
-        jScrollPane2.setViewportView(jScrollPane1);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -304,18 +327,18 @@ public Home(int teachers_id) {
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2)
-                .addGap(7, 7, 7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 828, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                .addGap(230, 230, 230))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(67, 67, 67)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -421,8 +444,7 @@ public Home(int teachers_id) {
         }
 
         @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, 
-                boolean isSelected, boolean hasFocus, int row, int column) {
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             if (isSelected) {
                 setForeground(table.getSelectionForeground());
                 setBackground(table.getSelectionBackground());
@@ -496,7 +518,6 @@ public void loadClasses() {
                 e.printStackTrace();
             }
         }
-   
 }
 
 private Teach teachFrame; // Add a reference to the Teach frame
@@ -560,9 +581,9 @@ private Teach teachFrame; // Add a reference to the Teach frame
     }//GEN-LAST:event_btnStudents_HomeActionPerformed
 
     private void btnSubjects_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubjects_HomeActionPerformed
-        Subjects subjectsFrame = new Subjects();
-        subjectsFrame.setExtendedState(Students.MAXIMIZED_BOTH);
-        subjectsFrame.setVisible(true);
+        Sections sectionsFrame = new Sections();
+        sectionsFrame.setExtendedState(Students.MAXIMIZED_BOTH);
+        sectionsFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSubjects_HomeActionPerformed
 
@@ -693,7 +714,7 @@ private Teach teachFrame; // Add a reference to the Teach frame
     }//GEN-LAST:event_btnRemoveClass_HomeActionPerformed
 
     private void btnUpdateclass_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateclass_HomeActionPerformed
-          CheckboxTableModel model = (CheckboxTableModel) ClassTable.getModel();
+       CheckboxTableModel model = (CheckboxTableModel) ClassTable.getModel();
     List<Integer> selectedClassIds = new ArrayList<>();
 
     // Collect selected classes
@@ -714,9 +735,23 @@ private Teach teachFrame; // Add a reference to the Teach frame
     // Pass the selected class IDs and the JTable to the updateclasses frame
     updateclasses updateClassesFrame = new updateclasses(this, currentTeachers_Id, selectedClassIds, ClassTable);
     updateClassesFrame.setVisible(true);
-    //GEN-LAST:event_btnUpdateclass_HomeActionPerformed
     }//GEN-LAST:event_btnUpdateclass_HomeActionPerformed
 
+    private void btnSections_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSections_HomeActionPerformed
+        // TODO add your handling code here:
+        Sections sectionsFrame = new Sections();
+        sectionsFrame.setExtendedState(Sections.MAXIMIZED_BOTH);
+        sectionsFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnSections_HomeActionPerformed
+
+    private void btnClasswork_HomeActionPerformed(java.awt.event.ActionEvent evt){
+        
+    }
+    
+    private void btnRooms_HomeActionPerformed(java.awt.event.ActionEvent evt){
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -818,12 +853,14 @@ private Teach teachFrame; // Add a reference to the Teach frame
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable ClassTable;
     private rojeru_san.complementos.RSButtonHover btnAddClass_Home;
+    private rojeru_san.complementos.RSButtonHover btnClasswork_Home;
     private rojeru_san.complementos.RSButtonHover btnHome_Home;
     private rojeru_san.complementos.RSButtonHover btnLogout_Home;
     private rojeru_san.complementos.RSButtonHover btnMenu_Home;
     private rojeru_san.complementos.RSButtonHover btnRemoveClass_Home;
+    private rojeru_san.complementos.RSButtonHover btnRooms_Home;
+    private rojeru_san.complementos.RSButtonHover btnSections_Home;
     private rojeru_san.complementos.RSButtonHover btnStudents_Home;
-    private rojeru_san.complementos.RSButtonHover btnSubjects_Home;
     private rojeru_san.complementos.RSButtonHover btnTeach_Home;
     private rojeru_san.complementos.RSButtonHover btnUpdateclass_Home;
     private rojeru_san.complementos.RSButtonHover btnUser_Home;
@@ -831,6 +868,5 @@ private Teach teachFrame; // Add a reference to the Teach frame
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

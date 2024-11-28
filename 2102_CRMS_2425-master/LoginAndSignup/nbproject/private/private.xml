@@ -3,10 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/johne/Desktop/OOP-GIT/2102_CRMS_2425-master/LoginAndSignup/src/Dashboard/ScheduleManager.java</file>
+            <file>file:/C:/Users/johne/Desktop/OOP-GIT/2102_CRMS_2425-master/LoginAndSignup/src/Dashboard/Sections.java</file>
+            <file>file:/C:/Users/johne/Desktop/OOP-GIT/2102_CRMS_2425-master/LoginAndSignup/src/Dashboard/AddStudents.java</file>
+            <file>file:/C:/Users/johne/Desktop/OOP-GIT/2102_CRMS_2425-master/LoginAndSignup/src/Dashboard/RemoveStudent.java</file>
             <file>file:/C:/Users/johne/Desktop/OOP-GIT/2102_CRMS_2425-master/LoginAndSignup/src/Dashboard/AddSchedule.java</file>
-            <file>file:/C:/Users/johne/Desktop/OOP-GIT/2102_CRMS_2425-master/LoginAndSignup/src/Dashboard/Schedule.java</file>
+            <file>file:/C:/Users/johne/Desktop/OOP-GIT/2102_CRMS_2425-master/LoginAndSignup/src/Dashboard/Students.java</file>
+            <file>file:/C:/Users/johne/Desktop/OOP-GIT/2102_CRMS_2425-master/LoginAndSignup/src/Dashboard/Rooms.java</file>
             <file>file:/C:/Users/johne/Desktop/OOP-GIT/2102_CRMS_2425-master/LoginAndSignup/src/Dashboard/Teach.java</file>
+            <file>file:/C:/Users/johne/Desktop/OOP-GIT/2102_CRMS_2425-master/LoginAndSignup/src/Dashboard/UpdateSchedule.java</file>
+            <file>file:/C:/Users/johne/Desktop/OOP-GIT/2102_CRMS_2425-master/LoginAndSignup/src/Dashboard/addclasses.java</file>
             <file>file:/C:/Users/johne/Desktop/OOP-GIT/2102_CRMS_2425-master/LoginAndSignup/src/Dashboard/Home.java</file>
         </group>
     </open-files>
