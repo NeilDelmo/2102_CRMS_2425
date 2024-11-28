@@ -148,7 +148,7 @@ public Home(int teachers_id) {
                 .addComponent(btnMenu_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 603, Short.MAX_VALUE)
                 .addComponent(btnRemoveClass_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(btnUpdateclass_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -267,21 +267,21 @@ public Home(int teachers_id) {
         ClassTable.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         ClassTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "ClassID", "Class Name", "Section", "Room", "Teachers_ID"
+                "ClassID", "Class Name", "Section"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -333,7 +333,7 @@ public Home(int teachers_id) {
 
     public static class CheckboxTableModel extends AbstractTableModel {
      private Vector<Vector<Object>> data;
-    private String[] columnNames = {"Selected", "Class ID", "Class Name", "Section", "Subject", "Room"};
+    private String[] columnNames = {"Selected", "Class ID", "Class Name", "Section", "Subject"};
     private Vector<Boolean> selection;
 
     public CheckboxTableModel() {
@@ -418,7 +418,8 @@ public Home(int teachers_id) {
         }
 
         @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        public Component getTableCellRendererComponent(JTable table, Object value, 
+                boolean isSelected, boolean hasFocus, int row, int column) {
             if (isSelected) {
                 setForeground(table.getSelectionForeground());
                 setBackground(table.getSelectionBackground());
@@ -434,67 +435,65 @@ public Home(int teachers_id) {
 
 public void loadClasses() {
     System.out.println("Current Teacher ID: " + currentTeachers_Id);
-    String url = "jdbc:mysql://localhost:3306/crms";
-    String user = "root";
-    String password = "";
+        String url = "jdbc:mysql://localhost:3306/crms";
+        String user = "root";
+        String password = "";
 
-    Connection conn = null;
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
 
-    try {
-        conn = DriverManager.getConnection(url, user, password);
-    
-        // Modify query to filter classes by teacher ID
-        String query = "SELECT class_id, class_name, section, subject, room " +
-                       "FROM classes " +
-                       "WHERE teachers_id = ?";
-    
-        pstmt = conn.prepareStatement(query);
-        pstmt.setInt(1, currentTeachers_Id);
-    
-        rs = pstmt.executeQuery();
-    
-        CheckboxTableModel model = (CheckboxTableModel) ClassTable.getModel();
-        model.clear(); // Clear existing rows
-
-        while (rs.next()) {
-            Boolean checkboxState = false; // Initialize checkbox state to false
-            Integer classId = rs.getInt("class_id");
-            String className = rs.getString("class_name");
-            String section = rs.getString("section");
-            String subject = rs.getString("subject");
-            String room = rs.getString("room");
-
-            System.out.println("Adding row: " + checkboxState + ", " + classId + ", " + className + ", " + section + ", " + subject + ", " + room);
-
-            Object[] rowData = {
-                checkboxState, // Checkbox initially unchecked
-                classId,       // Class ID
-                className,     // Class Name
-                section,       // Section
-                subject,       // Subject
-                room           // Room
-            };
-            model.addRow(rowData);
-        }
-    
-    } catch (SQLException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, 
-            "Database error: " + e.getMessage(), 
-            "Error", 
-            JOptionPane.ERROR_MESSAGE);
-    } finally {
-        // Properly close resources
         try {
-            if (rs != null) rs.close();
-            if (pstmt != null) pstmt.close();
-            if (conn != null) conn.close();
+            conn = DriverManager.getConnection(url, user, password);
+    
+            // Modify query to filter classes by teacher ID and exclude room
+            String query = "SELECT class_id, class_name, section, subject " +
+                           "FROM classes " +
+                           "WHERE teachers_id = ?";
+    
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, currentTeachers_Id);
+    
+            rs = pstmt.executeQuery();
+    
+            CheckboxTableModel model = (CheckboxTableModel) ClassTable.getModel();
+            model.clear(); // Clear existing rows
+
+            while (rs.next()) {
+                Boolean checkboxState = false; // Initialize checkbox state to false
+                Integer classId = rs.getInt("class_id");
+                String className = rs.getString("class_name");
+                String section = rs.getString("section");
+                String subject = rs.getString("subject");
+
+                Object[] rowData = {
+                    checkboxState, // Checkbox initially unchecked
+                    classId,       // Class ID
+                    className,     // Class Name
+                    section,       // Section
+                    subject        // Subject
+                    // Room is excluded
+                };
+                model.addRow(rowData);
+            }
+    
         } catch (SQLException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, 
+                "Database error: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        } finally {
+            // Properly close resources
+            try {
+                if (rs != null) rs.close();
+                if (pstmt != null) pstmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-    }
+   
 }
 
 private Teach teachFrame; // Add a reference to the Teach frame

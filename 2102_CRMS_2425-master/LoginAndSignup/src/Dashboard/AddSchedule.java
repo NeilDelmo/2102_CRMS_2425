@@ -53,42 +53,77 @@ public class AddSchedule extends javax.swing.JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
     private void populateClassComboBox() {
-    try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
-        String query = "SELECT class_id, class_name FROM classes WHERE teachers_id = ?";
-        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, loggedInteachers_id);
-            
-            try (ResultSet rs = pstmt.executeQuery()) {
-                DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-                classNameToIdMap.clear();
-                
-                System.out.println("Selected Class ID: " + selectedClassId); // Debug
-                
-                while (rs.next()) {
-                    String className = rs.getString("class_name");
-                    int classId = rs.getInt("class_id");
-                    model.addElement(className);
-                    classNameToIdMap.put(className, classId);
-                    System.out.println("Added class: " + className + " with ID: " + classId); // Debug
-                }
-                
-                classComboBox.setModel(model);
-            }
-        }
+     try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
+            String query = "SELECT class_id, class_name FROM classes WHERE teachers_id = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setInt(1, loggedInteachers_id);
 
-        System.out.println("Looking for class with ID: " + selectedClassId); // Debug
-        for (Map.Entry<String, Integer> entry : classNameToIdMap.entrySet()) {
-            System.out.println("Checking: " + entry.getKey() + " with ID: " + entry.getValue()); // Debug
-            if (entry.getValue() == selectedClassId) {
-                classComboBox.setSelectedItem(entry.getKey());
-                System.out.println("Found and selected class: " + entry.getKey()); // Debug
-                break;
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+                    classNameToIdMap.clear();
+
+                    while (rs.next()) {
+                        String className = rs.getString("class_name");
+                        int classId = rs.getInt("class_id");
+                        model.addElement(className);
+                        classNameToIdMap.put(className, classId);
+                    }
+
+                    classComboBox.setModel(model);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+        }
+    }
+    
+     private String getSubjectByClassId(int classId) throws SQLException {
+        String subject = null;
+        String query = "SELECT subject FROM classes WHERE class_id = ?";
+        
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, classId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                subject = rs.getString("subject");
             }
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace(); // Debug
-        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+        
+        return subject;
     }
+     
+     private String getClassNameById(int classId) throws SQLException {
+        String className = null;
+        String query = "SELECT class_name FROM classes WHERE class_id = ?";
+        
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, classId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                className = rs.getString("class_name");
+            }
+        }
+        
+        return className;
+    }
+     
+     private String getRoomNameById(int roomId) throws SQLException {
+        String roomName = null;
+        String query = "SELECT room_name FROM rooms WHERE room_id = ?";
+        
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, roomId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                roomName = rs.getString("room_name");
+            }
+        }
+        
+        return roomName;
     }
 
         
@@ -104,8 +139,6 @@ public class AddSchedule extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        Section = new app.bolivia.swing.JCTextField();
-        Subject = new app.bolivia.swing.JCTextField();
         Room = new app.bolivia.swing.JCTextField();
         CreateButton = new javax.swing.JButton();
         CancelButton = new javax.swing.JButton();
@@ -121,10 +154,6 @@ public class AddSchedule extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Add Schedule");
-
-        Section.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Class Name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
-
-        Subject.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Subject", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
 
         Room.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Room", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
 
@@ -164,29 +193,19 @@ public class AddSchedule extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(CancelButton)
-                            .addGap(33, 33, 33)
-                            .addComponent(CreateButton))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(Section, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(Subject, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(Subject1, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(Room, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(Subject2, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(Subject1, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Room, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Subject2, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(34, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(CancelButton)
+                .addGap(34, 34, 34)
+                .addComponent(CreateButton)
+                .addGap(69, 69, 69))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,20 +214,16 @@ public class AddSchedule extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(16, 16, 16)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Section, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Subject, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(Subject1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(Subject2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Room, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(48, 48, 48)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CreateButton)
-                    .addComponent(CancelButton))
+                    .addComponent(CancelButton)
+                    .addComponent(CreateButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -227,19 +242,17 @@ public class AddSchedule extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateButtonActionPerformed
-     Integer selectedClassId = this.selectedClassId; // Already passed to the constructor
+    Integer selectedClassId = this.selectedClassId; // Already passed to the constructor
 
-    String subject = Subject.getText().trim();
     String roomText = Room.getText().trim();
     String startTimeText = Subject1.getText().trim();
     String endTimeText = Subject2.getText().trim();
     String dayOfWeek = (String) jComboBox1.getSelectedItem();
 
     // Validate inputs
-    if (subject.isEmpty() || roomText.isEmpty() || startTimeText.isEmpty() || 
-        endTimeText.isEmpty() || dayOfWeek == null) {
-        JOptionPane.showMessageDialog(this, "Please fill in all fields.", 
-            "Input Error", JOptionPane.ERROR_MESSAGE);
+    if (roomText.isEmpty() || startTimeText.isEmpty() || endTimeText.isEmpty() || dayOfWeek == null) {
+        JOptionPane.showMessageDialog(this, "Please fill in all fields.",
+                "Input Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
@@ -248,13 +261,13 @@ public class AddSchedule extends javax.swing.JFrame {
     try {
         roomId = getRoomId(roomText);
         if (roomId == -1) {
-            JOptionPane.showMessageDialog(this, "Invalid room specified.", 
-                "Input Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid room specified.",
+                    "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Error validating room: " + 
-            ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Error validating room: " +
+                ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
@@ -263,29 +276,29 @@ public class AddSchedule extends javax.swing.JFrame {
     try {
         startTime = validateAndParseTime(startTimeText);
         endTime = validateAndParseTime(endTimeText);
-        
+
         if (startTime.after(endTime)) {
-            JOptionPane.showMessageDialog(this, "Start time must be before end time.", 
-                "Input Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Start time must be before end time.",
+                    "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
     } catch (ParseException ex) {
-        JOptionPane.showMessageDialog(this, "Invalid time format. Please use HH:mm format (e.g., 09:30)", 
-            "Input Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Invalid time format. Please use HH:mm format (e.g., 09:30)",
+                "Input Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
     // Check for schedule conflicts
     if (hasScheduleConflict(roomId, dayOfWeek, startTime, endTime)) {
-        JOptionPane.showMessageDialog(this, "Schedule conflict detected. Please choose a different time.", 
-            "Conflict Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Schedule conflict detected. Please choose a different time.",
+                "Conflict Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
     // Insert the schedule
-    String insertSQL = "INSERT INTO schedules (class_id, room_id, day_of_week, start_time, end_time, subject) " +
-                      "VALUES (?, ?, ?, ?, ?, ?)";
-    
+    String insertSQL = "INSERT INTO schedules (class_id, room_id, day_of_week, start_time, end_time) " +
+            "VALUES (?, ?, ?, ?, ?)";
+
     try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
          PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
 
@@ -294,28 +307,31 @@ public class AddSchedule extends javax.swing.JFrame {
         pstmt.setString(3, dayOfWeek);
         pstmt.setTime(4, startTime);
         pstmt.setTime(5, endTime);
-        pstmt.setString(6, subject);
 
         int rowsAffected = pstmt.executeUpdate();
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(this, "Schedule added successfully!");
 
+            // Retrieve the subject and class name for the newly added schedule
+            String subject = getSubjectByClassId(selectedClassId);
+            String className = getClassNameById(selectedClassId);
+            String roomName = getRoomNameById(roomId);
+
             // Update the ClassTable in the Teach class
-            teachFrame.addScheduleToTable(dayOfWeek, subject, Section.getText(), startTimeText, endTimeText, roomText);
-            
-            // Clear the fields
-            Subject.setText("");
+            teachFrame.addScheduleToTable(dayOfWeek, subject, className, startTime, endTime, roomName);
+
+            // // Clear the fields
             Room.setText("");
             Subject1.setText("");
             Subject2.setText("");
         } else {
-            JOptionPane.showMessageDialog(this, "Failed to add schedule.", 
-                "Database Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Failed to add schedule.",
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
         }
     } catch (SQLException ex) {
         ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error adding schedule: " + 
-            ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Error adding schedule: " +
+                ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_CreateButtonActionPerformed
 
@@ -326,46 +342,46 @@ public class AddSchedule extends javax.swing.JFrame {
         return new Time(date.getTime());
     }
     private int getRoomId(String roomText) throws SQLException {
-         String query = "SELECT room_id FROM rooms WHERE room_name = ? OR room_id = ?";
-    
-    try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-         PreparedStatement pstmt = conn.prepareStatement(query)) {
-        
-        pstmt.setString(1, roomText);
-        try {
-            pstmt.setInt(2, Integer.parseInt(roomText));
-        } catch (NumberFormatException e) {
-            pstmt.setInt(2, -1);
+       String query = "SELECT room_id FROM rooms WHERE room_name = ? OR room_id = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, roomText);
+            try {
+                pstmt.setInt(2, Integer.parseInt(roomText));
+            } catch (NumberFormatException e) {
+                pstmt.setInt(2, -1);
+            }
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("room_id");
+            }
         }
-        
-        ResultSet rs = pstmt.executeQuery();
-        if (rs.next()) {
-            return rs.getInt("room_id");
-        }
-    }
-    return -1;
+        return -1;
     }
 
     private boolean hasScheduleConflict(int roomId, String dayOfWeek, Time startTime, Time endTime) {
-         String query = "SELECT 1 FROM schedules WHERE room_id = ? AND day_of_week = ? " +
-                  "AND ((start_time < ? AND end_time > ?) OR (start_time < ? AND end_time > ?))";
-    
-    try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-         PreparedStatement pstmt = conn.prepareStatement(query)) {
-        
-        pstmt.setInt(1, roomId);
-        pstmt.setString(2, dayOfWeek);
-        pstmt.setTime(3, endTime);
-        pstmt.setTime(4, startTime);
-        pstmt.setTime(5, endTime);
-        pstmt.setTime(6, startTime);
-        
-        ResultSet rs = pstmt.executeQuery();
-        return rs.next();  // Returns true if there's a conflict
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        return true;  // Assume conflict in case of error
-    }
+        String query = "SELECT 1 FROM schedules WHERE room_id = ? AND day_of_week = ? " +
+                "AND ((start_time < ? AND end_time > ?) OR (start_time < ? AND end_time > ?))";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, roomId);
+            pstmt.setString(2, dayOfWeek);
+            pstmt.setTime(3, endTime);
+            pstmt.setTime(4, startTime);
+            pstmt.setTime(5, endTime);
+            pstmt.setTime(6, startTime);
+
+            ResultSet rs = pstmt.executeQuery();
+            return rs.next();  // Returns true if there's a conflict
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return true;  // Assume conflict in case of error
+        }
     }
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         this.dispose();
@@ -414,8 +430,6 @@ public class AddSchedule extends javax.swing.JFrame {
     private javax.swing.JButton CancelButton;
     private javax.swing.JButton CreateButton;
     private app.bolivia.swing.JCTextField Room;
-    private app.bolivia.swing.JCTextField Section;
-    private app.bolivia.swing.JCTextField Subject;
     private app.bolivia.swing.JCTextField Subject1;
     private app.bolivia.swing.JCTextField Subject2;
     private javax.swing.JComboBox<String> jComboBox1;

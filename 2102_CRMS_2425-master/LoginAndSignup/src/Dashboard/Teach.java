@@ -2,7 +2,6 @@ package Dashboard;
 
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
-import javax.swing.table.DefaultTableModel;
 import loginandsignup.Login;
 import javax.swing.JTable;
 import java.sql.Connection;
@@ -10,12 +9,15 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import javax.swing.table.DefaultTableModel;
 
 public class Teach extends javax.swing.JFrame {
      private static Teach instance; // The single instance
     private int currentTeachers_Id;
     private int classId; // Store the class ID
     private JTable classTable; // Your JTable
+    private JTable scheduleTable;
 
     
      private Teach(int teacherId, int classId) {
@@ -23,6 +25,7 @@ public class Teach extends javax.swing.JFrame {
     this.classId = classId;
     initComponents();
     loadClassData(); // Load class data based on the classId
+     scheduleTable = new JTable(new DefaultTableModel(new Object[]{"Day", "Subject", "Class Name", "Start Time", "End Time", "Room"}, 0));
     }
      public Teach() {
     initComponents();
@@ -31,10 +34,15 @@ public class Teach extends javax.swing.JFrame {
 }
      private void loadClassData() {
         // Logic to load data into ClassTable based on the classId
-        DefaultTableModel model = (DefaultTableModel) ClassTable.getModel();
+    DefaultTableModel model = (DefaultTableModel) ClassTable.getModel();
     model.setRowCount(0); // Clear existing data
 
-    String query = "SELECT day_of_week, subject, class_name, start_time, end_time, room FROM schedules WHERE class_id = ?";
+    String query = "SELECT s.day_of_week, c.subject, c.class_name, s.start_time, s.end_time, r.room_name " +
+                   "FROM schedules s " +
+                   "INNER JOIN classes c ON s.class_id = c.class_id " +
+                   "INNER JOIN rooms r ON s.room_id = r.room_id " +
+                   "WHERE s.class_id = ?";
+
     try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/crms", "root", "");
          PreparedStatement pstmt = conn.prepareStatement(query)) {
         pstmt.setInt(1, classId);
@@ -50,7 +58,7 @@ public class Teach extends javax.swing.JFrame {
             String className = rs.getString("class_name");
             String startTime = rs.getString("start_time");
             String endTime = rs.getString("end_time");
-            String room = rs.getString("room");
+            String room = rs.getString("room_name");
 
             model.addRow(new Object[]{day, subject, className, startTime, endTime, room});
         }
@@ -87,6 +95,7 @@ public class Teach extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnMenu_Teach = new rojeru_san.complementos.RSButtonHover();
         btnAddClass_Teach = new rojeru_san.complementos.RSButtonHover();
+        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         btnHome_Teach = new rojeru_san.complementos.RSButtonHover();
         btnTeach_Teach = new rojeru_san.complementos.RSButtonHover();
@@ -122,6 +131,13 @@ public class Teach extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Refresh");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -131,7 +147,9 @@ public class Teach extends javax.swing.JFrame {
                 .addComponent(btnMenu_Teach, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 572, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(35, 35, 35)
                 .addComponent(btnAddClass_Teach, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -142,8 +160,10 @@ public class Teach extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAddClass_Teach, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMenu_Teach, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(16, 16, 16))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(jButton1)))
+                .addGap(14, 14, 14))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -309,9 +329,10 @@ public class Teach extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnAddClass_TeachActionPerformed
 
-    public void addScheduleToTable(String day, String subject, String className, String startTime, String endTime, String room) {
-    DefaultTableModel model = (DefaultTableModel) ClassTable.getModel();
-    model.addRow(new Object[]{day, subject, className, startTime, endTime, room});
+   public void addScheduleToTable(String dayOfWeek, String subject, String className, Time startTime, Time endTime, String roomName) {
+    // Assuming you have a JTable named scheduleTable
+    DefaultTableModel model = (DefaultTableModel) scheduleTable.getModel();
+    model.addRow(new Object[]{dayOfWeek, subject, className, startTime, endTime, roomName});
 }
     private void btnMenu_TeachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu_TeachActionPerformed
         // TODO add your handling code here:
@@ -360,6 +381,11 @@ public class Teach extends javax.swing.JFrame {
         subjectsFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSubjects_TeachActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        loadClassData();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -661,6 +687,7 @@ public class Teach extends javax.swing.JFrame {
     private rojeru_san.complementos.RSButtonHover btnSubjects_Teach;
     private rojeru_san.complementos.RSButtonHover btnTeach_Teach;
     private rojeru_san.complementos.RSButtonHover btnUser_Teach;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;

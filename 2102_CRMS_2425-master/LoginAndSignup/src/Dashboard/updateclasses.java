@@ -301,55 +301,56 @@ public class updateclasses extends javax.swing.JFrame {
 
     private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
         String className = ClassName.getText().trim();
-        String section = Section.getText().trim();
-        String subject = Subject.getText().trim();
-        String room = Room.getText().trim();
+    String section = Section.getText().trim();
+    String subject = Subject.getText().trim();
+    String room = Room.getText().trim();
 
-        // Assuming you have a way to get the class ID to update
-        int classId = getClassIdToUpdate(); // Implement this method to retrieve the class ID
+    // Check if any fields are empty first
+    if (className.isEmpty() || section.isEmpty() || subject.isEmpty() || room.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        if (classId < 0) {
-            JOptionPane.showMessageDialog(this, "No class selected for update.", "Selection Error", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+    // Get the class ID before updating
+    int classId = -1;
+    if (!selectedClassIds.isEmpty()) {
+        classId = selectedClassIds.get(0); // Get the first selected class ID
+    }
 
-        if (className.isEmpty() || section.isEmpty() || subject.isEmpty() || room.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
+    if (classId < 0) {
+        JOptionPane.showMessageDialog(this, "No class selected for update.", "Selection Error", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
-        // Update the SQL statement with the correct column name
-        String updateSQL = "UPDATE classes SET class_name = ?, section = ?, subject = ?, room = ? WHERE class_id = ?";
-        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); PreparedStatement pstmt = conn.prepareStatement(updateSQL)) {
+    // Update the SQL statement with the correct column name
+    String updateSQL = "UPDATE classes SET class_name = ?, section = ?, subject = ?, room = ? WHERE class_id = ?";
+    try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); 
+         PreparedStatement pstmt = conn.prepareStatement(updateSQL)) {
 
-            pstmt.setString(1, className);
-            pstmt.setString(2, section);
-            pstmt.setString(3, subject);
-            pstmt.setString(4, room);
-            pstmt.setInt(5, classId); // Use the class ID to identify the record to update
+        pstmt.setString(1, className);
+        pstmt.setString(2, section);
+        pstmt.setString(3, subject);
+        pstmt.setString(4, room);
+        pstmt.setInt(5, classId);
 
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(this, "Class updated successfully!");
+        int rowsAffected = pstmt.executeUpdate();
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(this, "Class updated successfully!");
 
-                // Refresh classes in the Home frame
-                if (homeFrame != null) {
-                    homeFrame.loadClasses(); // Call loadClasses to refresh the table
-                }
-
-                // Optionally clear the fields
-                ClassName.setText("");
-                Section.setText("");
-                Subject.setText("");
-                Room.setText("");
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to update class.", "Database Error", JOptionPane.ERROR_MESSAGE);
+            // Refresh classes in the Home frame
+            if (homeFrame != null) {
+                homeFrame.loadClasses(); // Call loadClasses to refresh the table
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error updating class: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+
+            // Close the update window after successful update
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to update class.", "Database Error", JOptionPane.ERROR_MESSAGE);
         }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error updating class: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_UpdateActionPerformed
 
     private int getClassIdToUpdate() {
