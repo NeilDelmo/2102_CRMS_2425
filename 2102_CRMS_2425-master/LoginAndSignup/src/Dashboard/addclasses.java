@@ -9,6 +9,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -31,18 +34,23 @@ public class addclasses extends javax.swing.JFrame {
     private static final String USER = "root"; // Change to your MySQL username
     private static final String PASS = ""; // Change to your MySQL password
     
-     public addclasses(Home homeFrame, int teacherId) {
-        this.homeFrame = homeFrame; // Store reference to Home frame
-        this.loggedInteachers_id= teacherId; // Store teacher ID
+    private Map<String, Integer> sectionIdMap; // To store section_code -> section_id mapping
+    
+    public addclasses(Home homeFrame, int teacherId) {
+        this.homeFrame = homeFrame;
+        this.loggedInteachers_id = teacherId;
+        sectionIdMap = new HashMap<>(); // Initialize the map
         initComponents();
+        loadSections(); // Load sections after components are initialized
         setButtonStyles();
         setupKeyNavigation();
         this.setLocationRelativeTo(null);
         getRootPane().setDefaultButton(CreateButton);
     }
 
-     public addclasses() {
+    public addclasses() {
         initComponents();
+        loadSections(); // Load sections after components are initialized
         setButtonStyles();
         setupKeyNavigation(); // Call to set up key navigation
         this.setLocationRelativeTo(null);
@@ -52,12 +60,9 @@ public class addclasses extends javax.swing.JFrame {
     }
      
       private void setupKeyNavigation() {
-        // Set up focus traversal
-        // Add key listener to allow moving between text fields using Enter key
-        ClassName.addActionListener(evt -> Section.requestFocusInWindow());
-        Section.addActionListener(evt -> Subject.requestFocusInWindow());
-        Subject.addActionListener(evt -> Room.requestFocusInWindow());
-        Room.addActionListener(evt -> CreateButtonActionPerformed(null));
+       // Set up focus traversal
+        ClassName.addActionListener(evt -> Section.requestFocus());
+        Subject.addActionListener(evt -> CreateButtonActionPerformed(null));
 
         // Add action listener for Cancel button
         CancelButton.addActionListener(evt -> dispose());
@@ -75,6 +80,27 @@ public class addclasses extends javax.swing.JFrame {
         });
     }
 
+    private void loadSections() {
+        String query = "SELECT section_id, section_name, section_code FROM sections";
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            
+            ResultSet rs = pstmt.executeQuery();
+            Section.removeAllItems(); // Clear existing items
+            Section.addItem("Select Section"); // Add default option
+            
+            while (rs.next()) {
+                String sectionCode = rs.getString("section_code");
+                int sectionId = rs.getInt("section_id");
+                sectionIdMap.put(sectionCode, sectionId);
+                Section.addItem(sectionCode);
+            }
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading sections: " + ex.getMessage());
+        }
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -88,11 +114,10 @@ public class addclasses extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         ClassName = new app.bolivia.swing.JCTextField();
-        Section = new app.bolivia.swing.JCTextField();
         Subject = new app.bolivia.swing.JCTextField();
-        Room = new app.bolivia.swing.JCTextField();
         CreateButton = new javax.swing.JButton();
         CancelButton = new javax.swing.JButton();
+        Section = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -111,11 +136,7 @@ public class addclasses extends javax.swing.JFrame {
             }
         });
 
-        Section.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Section", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
-
         Subject.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Subject", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
-
-        Room.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Room", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
 
         CreateButton.setText("Create");
         CreateButton.addActionListener(new java.awt.event.ActionListener() {
@@ -131,23 +152,27 @@ public class addclasses extends javax.swing.JFrame {
             }
         });
 
+        Section.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Section", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14)));
+        Section.setPreferredSize(new java.awt.Dimension(467, 50));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(CancelButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(CreateButton)
+                .addGap(22, 22, 22))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(CancelButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(CreateButton))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(ClassName, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
-                        .addComponent(Section, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Subject, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Room, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Section, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -158,15 +183,13 @@ public class addclasses extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(ClassName, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(Section, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(Section, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
                 .addComponent(Subject, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Room, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CreateButton)
-                    .addComponent(CancelButton))
+                    .addComponent(CancelButton)
+                    .addComponent(CreateButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -233,24 +256,29 @@ public class addclasses extends javax.swing.JFrame {
 
     private void CreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateButtonActionPerformed
         String className = ClassName.getText().trim();
-        String section = Section.getText().trim();
+        String selectedSection = (String) Section.getSelectedItem();
         String subject = Subject.getText().trim();
-        String room = Room.getText().trim();
         
-        if (className.isEmpty() || section.isEmpty() || subject.isEmpty() || room.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        if (className.isEmpty() || selectedSection == null || selectedSection.equals("Select Section") || subject.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all fields and select a section.", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
-        String insertSQL = "INSERT INTO classes(class_name, section, subject, room, teachers_id) VALUES(?, ?, ?, ?, ?)"; 
+        Integer sectionId = sectionIdMap.get(selectedSection);
+        if (sectionId == null) {
+            JOptionPane.showMessageDialog(this, "Invalid section selected.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Update SQL insert statement to include section_id
+        String insertSQL = "INSERT INTO classes(class_name, section, subject, teachers_id) VALUES(?, ?, ?, ?)"; 
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
              PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
          
             pstmt.setString(1, className);
-            pstmt.setString(2, section);
+            pstmt.setString(2, selectedSection); // Use the section code
             pstmt.setString(3, subject);
-            pstmt.setString(4, room);
-            pstmt.setInt(5, this.loggedInteachers_id); // Use the stored teacher ID
+            pstmt.setInt(4, this.loggedInteachers_id);
             
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
@@ -258,14 +286,13 @@ public class addclasses extends javax.swing.JFrame {
                 
                 // Refresh classes in the Home frame
                 if (homeFrame != null) {
-                    homeFrame.loadClasses(); // Call loadClasses to refresh the table
+                    homeFrame.loadClasses();
                 }
                 
-                // Optionally clear the fields
+                // Clear the fields
                 ClassName.setText("");
-                Section.setText("");
+                Section.setSelectedIndex(0);
                 Subject.setText("");
-                Room.setText("");
             } else {
                 JOptionPane.showMessageDialog(this, "Failed to add class.", "Database Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -275,7 +302,6 @@ public class addclasses extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_CreateButtonActionPerformed
 
-   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -313,8 +339,7 @@ public class addclasses extends javax.swing.JFrame {
     private javax.swing.JButton CancelButton;
     private app.bolivia.swing.JCTextField ClassName;
     private javax.swing.JButton CreateButton;
-    private app.bolivia.swing.JCTextField Room;
-    private app.bolivia.swing.JCTextField Section;
+    private javax.swing.JComboBox<String> Section;
     private app.bolivia.swing.JCTextField Subject;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

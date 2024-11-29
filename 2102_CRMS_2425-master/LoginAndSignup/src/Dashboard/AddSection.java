@@ -26,7 +26,8 @@ public class AddSection extends javax.swing.JFrame {
         setButtonStyles();
         this.setLocationRelativeTo(null); //to make it centralized
         setupEnterKeyNavigation();
-
+        CreateButton.setText("Create"); // Fix button text
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Fix close operation
     }
     private void setupEnterKeyNavigation() {
      // Add key listeners to each text field
@@ -83,9 +84,19 @@ public class AddSection extends javax.swing.JFrame {
 
         int rowsAffected = pstmt.executeUpdate();
         if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(this, "Section created successfully!");
-            clearFields();
-        } else {
+        JOptionPane.showMessageDialog(this, "Section created successfully!");
+        clearFields();
+        
+        // Find and refresh the Sections window
+        for (java.awt.Window window : java.awt.Window.getWindows()) {
+            if (window instanceof Sections && window.isVisible()) {
+                ((Sections) window).LoadSections();
+                break;
+            }
+        }
+        
+        dispose(); // Close the add section window
+    } else {
             JOptionPane.showMessageDialog(this, "Failed to create section.",
                     "Database Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -149,7 +160,7 @@ public class AddSection extends javax.swing.JFrame {
         });
         jPanel1.add(CancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(328, 191, -1, -1));
 
-        CreateButton.setText("Remove");
+        CreateButton.setText("Add");
         CreateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CreateButtonActionPerformed(evt);
@@ -252,6 +263,8 @@ private void clearFields() {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(AddSection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

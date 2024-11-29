@@ -10,71 +10,103 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import loginandsignup.Login;
 import java.sql.Statement;
+import javax.swing.JComboBox;
+import java.sql.PreparedStatement;
+
 
 public class Sections extends javax.swing.JFrame {
-
-    public Sections() {
-        initComponents();
-         this.setExtendedState(Sections.MAXIMIZED_BOTH);
-         LoadSections();
+    private JComboBox<String> sectionFilterComboBox;
+    
+    public void setupSectionFilter() {
+    sectionFilterComboBox = new JComboBox<>();
+    sectionFilterComboBox.addItem("All Sections");
+    
+    // Load section codes
+    try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/crms", "root", "");
+         Statement stmt = con.createStatement();
+         ResultSet rs = stmt.executeQuery("SELECT DISTINCT section_code FROM sections ORDER BY section_code")) {
+        
+        while (rs.next()) {
+            sectionFilterComboBox.addItem(rs.getString("section_code"));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
     
-private void LoadSections() { 
-    String URL, USER, PASS; 
-    URL = "jdbc:mysql://localhost:3306/crms"; 
-    USER = "root"; 
-    PASS = ""; 
-    DefaultTableModel model = (DefaultTableModel) Sections_Table.getModel(); 
-    model.setRowCount(0); // Clear existing rows
+    jPanel1.add(sectionFilterComboBox);
+    sectionFilterComboBox.setBounds(30, 15, 150, 25);
+    sectionFilterComboBox.addActionListener(e -> LoadSections());
+}
 
-    // Updated query to count students in each section
-String query = "SELECT sections.section_name, sections.section_code, COUNT(students.student_id) AS student_count FROM sections JOIN students ON sections.section_code = sections.section_code GROUP BY sections.section_name, sections.section_code";
+    public Sections() {
+    initComponents();
+    this.setExtendedState(Sections.MAXIMIZED_BOTH);
+    setupSectionFilter();  // Add this line
+    LoadSections();
+}
+    
+    
+public void LoadSections() { 
+   DefaultTableModel model = (DefaultTableModel) Sections_Table.getModel();
+   model.setRowCount(0);
 
-    try (Connection con = DriverManager.getConnection(URL, USER, PASS);
-         Statement stmt = con.createStatement();
-         ResultSet rs = stmt.executeQuery(query)) {
+   String selectedSection = (String) sectionFilterComboBox.getSelectedItem();
+   String query = "SELECT s.section_name, s.section_code, COUNT(st.student_id) AS student_count " +
+               "FROM sections s " +
+               "LEFT JOIN students st ON st.section_id = s.section_id " +
+               (!"All Sections".equals(selectedSection) ? "WHERE s.section_code = ? " : "") +
+               "GROUP BY s.section_name, s.section_code " +
+               "ORDER BY s.section_code";
 
-        while (rs.next()) {
-            String sectionName = rs.getString("section_name");
-            int sectionCode = rs.getInt("section_code");
-            int studentCount = rs.getInt("student_count");
-
-            // Add the retrieved row to the table model
-            model.addRow(new Object[]{sectionName, sectionCode, studentCount});
-        }
-
-    } catch (SQLException e) {
-        e.printStackTrace(); // Print the stack trace for debugging
-        JOptionPane.showMessageDialog(this, "Error loading Sections: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
+   try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/crms", "root", "");
+        PreparedStatement pstmt = con.prepareStatement(query)) {
+       
+       if (!"All Sections".equals(selectedSection)) {
+           // Assuming section_code is an integer, parse it from the selectedSection
+           int sectionCode = Integer.parseInt(selectedSection);
+           pstmt.setInt(1, sectionCode); // Use setInt for section_code
+       }
+       
+       ResultSet rs = pstmt.executeQuery();
+       while (rs.next()) {
+           model.addRow(new Object[]{
+               rs.getString("section_name"),
+               rs.getInt("section_code"), // Assuming section_code is an int in the database
+               rs.getInt("student_count")
+           });
+       }
+   } catch (SQLException e) {
+       e.printStackTrace();
+       JOptionPane.showMessageDialog(this, "Error loading Sections: " + e.getMessage(),
+               "Error", JOptionPane.ERROR_MESSAGE);
+   } catch (NumberFormatException e) {
+       e.printStackTrace();
+       JOptionPane.showMessageDialog(this, "Invalid section code format: " + e.getMessage(),
+               "Error", JOptionPane.ERROR_MESSAGE);
+   }
 }
 
 // Method to count the number of students in a specific section
 public int countStudentsInSection(int section_code) {
-    String URL, USER, PASS; 
-    URL = "jdbc:mysql://localhost:3306/crms"; 
-    USER = "root"; 
-    PASS = ""; 
+   String URL = "jdbc:mysql://localhost:3306/crms"; 
+    String USER = "root"; 
+    String PASS = ""; 
     int studentCount = 0;
 
-    // Construct the SQL query with the sectionCode directly
-    String query = "SELECT COUNT(students_id) AS student_count " +
-                   "FROM students " +
-                   "WHERE section_Code = " + section_code + ";";
+    String query = "SELECT COUNT(students_id) AS student_count FROM students WHERE section_code = ?"; // Ensure consistency
 
     try (Connection con = DriverManager.getConnection(URL, USER, PASS);
-         Statement stmt = con.createStatement();
-         ResultSet rs = stmt.executeQuery(query)) {
-
-        if (rs.next()) {
-            studentCount = rs.getInt("student_count");
+         PreparedStatement pstmt = con.prepareStatement(query)) {
+        
+        pstmt.setInt(1, section_code); // Use setInt for section_code
+        try (ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                studentCount = rs.getInt("student_count");
+            }
         }
-
     } catch (SQLException e) {
-        e.printStackTrace(); // Print the stack trace for debugging
-        JOptionPane.showMessageDialog(this, "Error counting students: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
     }
-
     return studentCount;
 }
 
@@ -87,10 +119,9 @@ public int countStudentsInSection(int section_code) {
         btnMenu_Subjects = new rojeru_san.complementos.RSButtonHover();
         btnAddSections_Sections = new rojeru_san.complementos.RSButtonHover();
         btnRemoveSection_Sections = new rojeru_san.complementos.RSButtonHover();
+        updatesection = new rojeru_san.complementos.RSButtonHover();
         jPanel1 = new javax.swing.JPanel();
         btnHome_Subjects = new rojeru_san.complementos.RSButtonHover();
-        btnTeach_Subjects = new rojeru_san.complementos.RSButtonHover();
-        btnUser_Subjects = new rojeru_san.complementos.RSButtonHover();
         btnLogout_Subjects = new rojeru_san.complementos.RSButtonHover();
         btnStudents_Subjects = new rojeru_san.complementos.RSButtonHover();
         btnSections_Sections = new rojeru_san.complementos.RSButtonHover();
@@ -132,6 +163,14 @@ public int countStudentsInSection(int section_code) {
             }
         });
 
+        updatesection.setBackground(new java.awt.Color(0, 102, 102));
+        updatesection.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/update.png"))); // NOI18N
+        updatesection.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updatesectionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -143,6 +182,8 @@ public int countStudentsInSection(int section_code) {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnRemoveSection_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(updatesection, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAddSections_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
@@ -152,6 +193,7 @@ public int countStudentsInSection(int section_code) {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(updatesection, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRemoveSection_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAddSections_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMenu_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -168,23 +210,6 @@ public int countStudentsInSection(int section_code) {
         btnHome_Subjects.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHome_SubjectsActionPerformed(evt);
-            }
-        });
-
-        btnTeach_Subjects.setBackground(new java.awt.Color(255, 255, 255));
-        btnTeach_Subjects.setForeground(new java.awt.Color(0, 0, 0));
-        btnTeach_Subjects.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Teach.png"))); // NOI18N
-        btnTeach_Subjects.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTeach_SubjectsActionPerformed(evt);
-            }
-        });
-
-        btnUser_Subjects.setBackground(new java.awt.Color(255, 255, 255));
-        btnUser_Subjects.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user.png"))); // NOI18N
-        btnUser_Subjects.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUser_SubjectsActionPerformed(evt);
             }
         });
 
@@ -242,14 +267,9 @@ public int countStudentsInSection(int section_code) {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(btnUser_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnTeach_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnHome_Subjects, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnHome_Subjects, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
                     .addComponent(btnLogout_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnStudents_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnSections_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -260,13 +280,9 @@ public int countStudentsInSection(int section_code) {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnUser_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(118, 118, 118)
                 .addComponent(btnHome_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnTeach_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(29, 29, 29)
                 .addComponent(btnClasswork_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnStudents_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -325,20 +341,6 @@ public int countStudentsInSection(int section_code) {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnHome_SubjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHome_SubjectsActionPerformed
-         Home homeFrame = new Home();
-        homeFrame.setExtendedState(Home.MAXIMIZED_BOTH); // Set full screen
-        homeFrame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnHome_SubjectsActionPerformed
-
-    private void btnTeach_SubjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeach_SubjectsActionPerformed
-    Teach teachFrame = new Teach();
-    teachFrame.setExtendedState(Teach.MAXIMIZED_BOTH); // Set full screen
-    teachFrame.setVisible(true);
-    this.dispose();
-    }//GEN-LAST:event_btnTeach_SubjectsActionPerformed
-
     private void btnAddSections_SectionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSections_SectionsActionPerformed
         // TODO add your handling code here:
          AddSection addsectionFrame = new AddSection();
@@ -348,15 +350,6 @@ public int countStudentsInSection(int section_code) {
     private void btnMenu_SubjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu_SubjectsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnMenu_SubjectsActionPerformed
-
-    private void btnUser_SubjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUser_SubjectsActionPerformed
-        // TODO add your handling code here:
-        AccountManagement AccManageFrame = new AccountManagement();
-        AccManageFrame.setExtendedState(AccountManagement.MAXIMIZED_BOTH); // Set full screen
-        AccManageFrame.setVisible(true);
-        this.dispose();
-                
-    }//GEN-LAST:event_btnUser_SubjectsActionPerformed
 
     private void btnLogout_SubjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogout_SubjectsActionPerformed
         // TODO add your handling code here:                                    
@@ -411,6 +404,35 @@ public int countStudentsInSection(int section_code) {
         classworkFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnClasswork_SubjectsActionPerformed
+
+    private void btnHome_SubjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHome_SubjectsActionPerformed
+        Home homeFrame = new Home();
+        homeFrame.setExtendedState(Home.MAXIMIZED_BOTH); // Set full screen
+        homeFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnHome_SubjectsActionPerformed
+
+    private void updatesectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatesectionActionPerformed
+         // Get selected row from table
+   int selectedRow = Sections_Table.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, 
+            "Please select a section to update.", 
+            "Selection Required", 
+            JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    // Get section details from selected row
+    String sectionName = Sections_Table.getValueAt(selectedRow, 0).toString();
+    String sectionCode = Sections_Table.getValueAt(selectedRow, 1).toString();
+    int sectionId = (int) Sections_Table.getValueAt(selectedRow, 2); // Assuming section ID is in the third column
+    
+    // Open update form with section details
+    UpdateSection updateFrame = new UpdateSection(sectionId, sectionName, sectionCode, this);
+    updateFrame.setLocationRelativeTo(this);
+    updateFrame.setVisible(true);
+    }//GEN-LAST:event_updatesectionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -969,12 +991,11 @@ public int countStudentsInSection(int section_code) {
     private rojeru_san.complementos.RSButtonHover btnRooms_Sections;
     private rojeru_san.complementos.RSButtonHover btnSections_Sections;
     private rojeru_san.complementos.RSButtonHover btnStudents_Subjects;
-    private rojeru_san.complementos.RSButtonHover btnTeach_Subjects;
-    private rojeru_san.complementos.RSButtonHover btnUser_Subjects;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private rojeru_san.complementos.RSButtonHover updatesection;
     // End of variables declaration//GEN-END:variables
 
 }

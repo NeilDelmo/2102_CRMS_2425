@@ -30,62 +30,79 @@ public class RemoveSection extends javax.swing.JFrame {
     }
     private void setupEnterKeyNavigation() {
      // Add key listeners to each text field
-        sectionName.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    sectionCode.requestFocus();
-                }
-            }
-        });
-
         sectionCode.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    validateAndCreateSection();
+                    validateAndRemoveSection();
                 }
             }
         });
-}
-     private void validateAndCreateSection() {
-        String sectionNameText = sectionName.getText().trim();
+
+    }
+     private void validateAndRemoveSection() {
         String sectionCodeText = sectionCode.getText().trim();
         
-        if (sectionNameText.isEmpty() || sectionCodeText.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        if (sectionCodeText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a section code.", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // If validation passes, proceed with creating the student
-     CreateSection(sectionNameText, sectionCodeText);
+        // If validation passes, proceed with removing the section
+        removeSection(sectionCodeText);
     }
-     private void CreateSection(String sectionNameText, String sectionCodeText) {
-    // SQL insert statement for the students table
-    
-  String insertSQL = "INSERT INTO sections (section_name, section_code) VALUES (?,?)";
-    
-    try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-         PreparedStatement pstmt = conn.prepareStatement(insertSQL)){
-         
-        pstmt.setString(1, sectionNameText);
-        pstmt.setString(2, sectionCodeText);
+     private void removeSection(String sectionCode) {
+        // First check if the section exists and has no students
+        String checkSQL = "SELECT COUNT(*) as student_count FROM students st " +
+                         "JOIN sections s ON st.section_id = s.section_id " +
+                         "WHERE s.section_code = ?";
         
-        int rowsAffected = pstmt.executeUpdate();
-        if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(this, "Section Removed successfully!");
-            clearFields();
-        } else {
-            JOptionPane.showMessageDialog(this, "Failed to Create Section.", 
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
+            // Check for students
+            try (PreparedStatement checkStmt = conn.prepareStatement(checkSQL)) {
+                checkStmt.setString(1, sectionCode);
+                var rs = checkStmt.executeQuery();
+                if (rs.next() && rs.getInt("student_count") > 0) {
+                    JOptionPane.showMessageDialog(this, 
+                        "Cannot remove section: It still has students assigned to it. " +
+                        "Please reassign or remove the students first.", 
+                        "Warning", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            }
+            
+            // If no students, proceed with deletion
+            String deleteSQL = "DELETE FROM sections WHERE section_code = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(deleteSQL)) {
+                pstmt.setString(1, sectionCode);
+                
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(this, "Section removed successfully!");
+                    clearFields();
+                    
+                    // Refresh the sections table
+                    for (java.awt.Window window : java.awt.Window.getWindows()) {
+                        if (window instanceof Sections && window.isVisible()) {
+                            ((Sections) window).LoadSections();
+                            break;
+                        }
+                    }
+                    
+                    dispose(); // Close the remove section window
+                } else {
+                    JOptionPane.showMessageDialog(this, 
+                        "Section not found with code: " + sectionCode, 
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, 
+                "Error removing section: " + ex.getMessage(), 
                 "Database Error", JOptionPane.ERROR_MESSAGE);
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error Removing Section: " + ex.getMessage(), 
-            "Database Error", JOptionPane.ERROR_MESSAGE);
     }
-}
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -98,7 +115,6 @@ public class RemoveSection extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        sectionName = new app.bolivia.swing.JCTextField();
         sectionCode = new app.bolivia.swing.JCTextField();
         CancelButton = new javax.swing.JButton();
         CreateButton = new javax.swing.JButton();
@@ -112,19 +128,11 @@ public class RemoveSection extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Remove Student");
+        jLabel1.setText("Remove Section");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 18, -1, -1));
 
-        sectionName.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Section Name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
-        sectionName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sectionNameActionPerformed(evt);
-            }
-        });
-        jPanel1.add(sectionName, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 61, 467, 50));
-
         sectionCode.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Section Code", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
-        jPanel1.add(sectionCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 129, 467, 50));
+        jPanel1.add(sectionCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 61, 467, 50));
 
         CancelButton.setText("Cancel");
         CancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -197,22 +205,17 @@ public class RemoveSection extends javax.swing.JFrame {
             }
         });
     }
-    private void sectionNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sectionNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sectionNameActionPerformed
-
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void CreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateButtonActionPerformed
-validateAndCreateSection();
+        validateAndRemoveSection();
         
     }//GEN-LAST:event_CreateButtonActionPerformed
 private void clearFields() {
-    sectionName.setText("");
     sectionCode.setText("");
-    sectionName.requestFocus(); // Set focus back to first name field
+    sectionCode.requestFocus(); // Set focus back to first name field
 }
    
     public static void main(String args[]) {
@@ -301,6 +304,10 @@ private void clearFields() {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -316,6 +323,5 @@ private void clearFields() {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private app.bolivia.swing.JCTextField sectionCode;
-    private app.bolivia.swing.JCTextField sectionName;
     // End of variables declaration//GEN-END:variables
 }

@@ -51,7 +51,37 @@ public class AddSchedule extends javax.swing.JFrame {
     public AddSchedule() {
         initComponents();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setupKeyNavigation();
     }
+
+    private void setupKeyNavigation() {
+        // Set up focus traversal using Enter key
+        Subject1.addActionListener(evt -> Subject2.requestFocus());
+        Subject2.addActionListener(evt -> Room.requestFocus());
+        Room.addActionListener(evt -> jComboBox1.requestFocus());
+        
+        // Add action listener for Cancel button
+        CancelButton.addActionListener(evt -> dispose());
+        
+        // Add action listener for Create button
+        CreateButton.addActionListener(evt -> CreateButtonActionPerformed(null));
+
+        // Set default button (responds to Enter key when form has focus)
+        getRootPane().setDefaultButton(CreateButton);
+
+        // Add ESC key listener to close the window
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ESCAPE) {
+                    dispose();
+                }
+            }
+        });
+        
+        // Make sure the frame can receive key events
+        setFocusable(true);
+    }
+
     private void populateClassComboBox() {
      try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
             String query = "SELECT class_id, class_name FROM classes WHERE teachers_id = ?";

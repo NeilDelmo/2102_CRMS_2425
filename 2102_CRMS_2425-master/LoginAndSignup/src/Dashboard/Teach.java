@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
 public class Teach extends javax.swing.JFrame {
@@ -19,15 +20,19 @@ public class Teach extends javax.swing.JFrame {
     private int classId; // Store the class ID
     private JTable classTable; // Your JTable
     private JTable scheduleTable;
+    private JComboBox<String> dayFilterComboBox;
 
     
      private Teach(int teacherId, int classId) {
     this.loggedInteachers_id = teacherId;
     this.classId = classId;
     initComponents();
-    loadClassData(); // Load class data based on the classId
-     scheduleTable = new JTable(new DefaultTableModel(new Object[]{"Day", "Subject", "Class Name", "Start Time", "End Time", "Room"}, 0));
-    }
+    setupDayFilter();  // Add this line
+    loadClassData();
+    scheduleTable = new JTable(new DefaultTableModel(
+        new Object[]{"Day", "Subject", "Class Name", "Start Time", "End Time", "Room"}, 0
+    ));
+}
      public Teach() {
     initComponents();
     this.setExtendedState(Teach.MAXIMIZED_BOTH);
@@ -38,36 +43,41 @@ public class Teach extends javax.swing.JFrame {
     DefaultTableModel model = (DefaultTableModel) ClassTable.getModel();
     model.setRowCount(0); // Clear existing data
 
-    String query = "SELECT s.day_of_week, c.subject, c.class_name, s.start_time, s.end_time, r.room_name " +
-                   "FROM schedules s " +
-                   "INNER JOIN classes c ON s.class_id = c.class_id " +
-                   "INNER JOIN rooms r ON s.room_id = r.room_id " +
-                   "WHERE s.class_id = ?";
+    String selectedDay = (String) dayFilterComboBox.getSelectedItem();
+    
+    String query = "SELECT s.schedule_id, s.day_of_week, c.subject, c.class_name, s.start_time, s.end_time, r.room_name " +
+                  "FROM schedules s " +
+                  "INNER JOIN classes c ON s.class_id = c.class_id " +
+                  "INNER JOIN rooms r ON s.room_id = r.room_id " +
+                  "WHERE s.class_id = ?" +
+                  (!"All Days".equals(selectedDay) ? " AND s.day_of_week = ?" : "") +
+                  " ORDER BY FIELD(s.day_of_week, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), s.start_time";
 
     try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/crms", "root", "");
          PreparedStatement pstmt = conn.prepareStatement(query)) {
+        
         pstmt.setInt(1, classId);
-        
-        // Debugging: log the classId being used
-        System.out.println("Loading data for classId: " + classId);
-        
-        ResultSet rs = pstmt.executeQuery();
-
-        while (rs.next()) {
-            String day = rs.getString("day_of_week");
-            String subject = rs.getString("subject");
-            String className = rs.getString("class_name");
-            String startTime = rs.getString("start_time");
-            String endTime = rs.getString("end_time");
-            String room = rs.getString("room_name");
-
-            model.addRow(new Object[]{day, subject, className, startTime, endTime, room});
+        if (!"All Days".equals(selectedDay)) {
+            pstmt.setString(2, selectedDay);
         }
-        
-        // Debugging: check how many rows were loaded
-        System.out.println("Rows loaded: " + model.getRowCount());
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Error loading class data: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getString("day_of_week"),
+                rs.getString("subject"),
+                rs.getString("class_name"),
+                rs.getTime("start_time"),
+                rs.getTime("end_time"),
+                rs.getString("room_name")
+            });
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, 
+            "Error loading schedule data: " + ex.getMessage(),
+            "Database Error",
+            JOptionPane.ERROR_MESSAGE);
     }
     }
       public static Teach getInstance(int teacherId, int classId) {
@@ -173,11 +183,7 @@ public void setClassId(int classId) {
         btnRemoveClass_Home = new rojeru_san.complementos.RSButtonHover();
         jPanel1 = new javax.swing.JPanel();
         btnHome_Teach = new rojeru_san.complementos.RSButtonHover();
-        btnTeach_Teach = new rojeru_san.complementos.RSButtonHover();
-        btnUser_Teach = new rojeru_san.complementos.RSButtonHover();
         btnLogout_Teach = new rojeru_san.complementos.RSButtonHover();
-        btnStudents_Teach = new rojeru_san.complementos.RSButtonHover();
-        btnSubjects_Teach = new rojeru_san.complementos.RSButtonHover();
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         ClassTable = new javax.swing.JTable();
@@ -277,23 +283,6 @@ public void setClassId(int classId) {
             }
         });
 
-        btnTeach_Teach.setBackground(new java.awt.Color(255, 255, 255));
-        btnTeach_Teach.setForeground(new java.awt.Color(0, 0, 0));
-        btnTeach_Teach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Teach.png"))); // NOI18N
-        btnTeach_Teach.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTeach_TeachActionPerformed(evt);
-            }
-        });
-
-        btnUser_Teach.setBackground(new java.awt.Color(255, 255, 255));
-        btnUser_Teach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user.png"))); // NOI18N
-        btnUser_Teach.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUser_TeachActionPerformed(evt);
-            }
-        });
-
         btnLogout_Teach.setBackground(new java.awt.Color(255, 255, 255));
         btnLogout_Teach.setForeground(new java.awt.Color(0, 0, 0));
         btnLogout_Teach.setText("Logout");
@@ -307,56 +296,23 @@ public void setClassId(int classId) {
             }
         });
 
-        btnStudents_Teach.setBackground(new java.awt.Color(255, 255, 255));
-        btnStudents_Teach.setForeground(new java.awt.Color(0, 0, 0));
-        btnStudents_Teach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Students.png"))); // NOI18N
-        btnStudents_Teach.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStudents_TeachActionPerformed(evt);
-            }
-        });
-
-        btnSubjects_Teach.setBackground(new java.awt.Color(255, 255, 255));
-        btnSubjects_Teach.setForeground(new java.awt.Color(0, 0, 0));
-        btnSubjects_Teach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Subjects.png"))); // NOI18N
-        btnSubjects_Teach.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubjects_TeachActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(btnUser_Teach, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnTeach_Teach, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnHome_Teach, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnLogout_Teach, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnStudents_Teach, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnSubjects_Teach, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(btnHome_Teach, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+                    .addComponent(btnLogout_Teach, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnUser_Teach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
+                .addGap(78, 78, 78)
                 .addComponent(btnHome_Teach, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnTeach_Teach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnStudents_Teach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSubjects_Teach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogout_Teach, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -404,7 +360,7 @@ public void setClassId(int classId) {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(146, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(67, 67, 67)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -419,10 +375,6 @@ public void setClassId(int classId) {
         homeFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnHome_TeachActionPerformed
-
-    private void btnTeach_TeachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeach_TeachActionPerformed
-    JOptionPane.showMessageDialog(new JFrame(), "You are already in the teaching window.", "Error", JOptionPane.ERROR_MESSAGE);
-    }//GEN-LAST:event_btnTeach_TeachActionPerformed
 
     private void btnAddClass_TeachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClass_TeachActionPerformed
      AddSchedule addScheduleFrame = new AddSchedule(loggedInteachers_id, this, classId, this);
@@ -439,14 +391,6 @@ public void setClassId(int classId) {
     private void btnMenu_TeachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu_TeachActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnMenu_TeachActionPerformed
-
-    private void btnUser_TeachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUser_TeachActionPerformed
-        // TODO add your handling code here:
-        AccountManagement AccManageFrame = new AccountManagement();
-        AccManageFrame.setExtendedState(AccountManagement.MAXIMIZED_BOTH); // Set full screen
-        AccManageFrame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnUser_TeachActionPerformed
 
     private void btnLogout_TeachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogout_TeachActionPerformed
         // TODO add your handling code here:                                    
@@ -468,21 +412,6 @@ public void setClassId(int classId) {
     }
 
     }//GEN-LAST:event_btnLogout_TeachActionPerformed
-
-    private void btnStudents_TeachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudents_TeachActionPerformed
-        // TODO add your handling code here:
-         Students studentsFrame = new Students();
-         studentsFrame.setExtendedState(Students.MAXIMIZED_BOTH); // Set full screen
-         studentsFrame.setVisible(true);
-         this.dispose();
-    }//GEN-LAST:event_btnStudents_TeachActionPerformed
-
-    private void btnSubjects_TeachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubjects_TeachActionPerformed
-        Subjects subjectsFrame = new Subjects();
-        subjectsFrame.setExtendedState(Students.MAXIMIZED_BOTH);
-        subjectsFrame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnSubjects_TeachActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -519,6 +448,16 @@ public void setClassId(int classId) {
     }
     }//GEN-LAST:event_btnRemoveClass_HomeActionPerformed
 
+    private void setupDayFilter() {
+    String[] days = {"All Days", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+    dayFilterComboBox = new JComboBox<>(days);
+    dayFilterComboBox.setPreferredSize(new java.awt.Dimension(150, 25));
+    
+    jPanel1.add(dayFilterComboBox);
+    dayFilterComboBox.setBounds(30, 15, 150, 25);
+    
+    dayFilterComboBox.addActionListener(e -> loadClassData());
+}
     private void deleteSchedule(int scheduleId) {
     String sql = "DELETE FROM schedules WHERE schedule_id = ?";
     try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/crms", "root", "");
@@ -832,11 +771,7 @@ public void setClassId(int classId) {
     private rojeru_san.complementos.RSButtonHover btnLogout_Teach;
     private rojeru_san.complementos.RSButtonHover btnMenu_Teach;
     private rojeru_san.complementos.RSButtonHover btnRemoveClass_Home;
-    private rojeru_san.complementos.RSButtonHover btnStudents_Teach;
-    private rojeru_san.complementos.RSButtonHover btnSubjects_Teach;
-    private rojeru_san.complementos.RSButtonHover btnTeach_Teach;
     private rojeru_san.complementos.RSButtonHover btnUpdateclass_Home;
-    private rojeru_san.complementos.RSButtonHover btnUser_Teach;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

@@ -26,7 +26,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
-import loginandsignup.Login;
 
 
 
@@ -535,9 +534,10 @@ private Teach teachFrame; // Add a reference to the Teach frame
 
     private void btnAddClass_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClass_HomeActionPerformed
         // TODO add your handling code here:
-     // Pass the current teacher ID to the addclasses frame
-    addclasses addClassesFrame = new addclasses(this,currentTeachers_Id);
-    addClassesFrame.setVisible(true);
+    addclasses frame = new addclasses(this, currentTeachers_Id);
+    frame.setLocationRelativeTo(this);
+    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    frame.setVisible(true);
     }//GEN-LAST:event_btnAddClass_HomeActionPerformed
 
     private void btnMenu_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu_HomeActionPerformed
@@ -633,18 +633,28 @@ private Teach teachFrame; // Add a reference to the Teach frame
         // Establish database connection
         conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/crms", "root", "");
         
-        // Prepare delete statement
-        String deleteQuery = "DELETE FROM classes WHERE class_id = ?";
-        pstmt = conn.prepareStatement(deleteQuery);
+        // Prepare delete statements
+        String deleteSchedulesQuery = "DELETE FROM schedules WHERE class_id = ?";
+        String deleteClassQuery = "DELETE FROM classes WHERE class_id = ?";
+        
+        PreparedStatement deleteSchedulesPstmt = conn.prepareStatement(deleteSchedulesQuery);
+        PreparedStatement deleteClassPstmt = conn.prepareStatement(deleteClassQuery);
         
         // Disable auto-commit for transaction support
         conn.setAutoCommit(false);
         
-        // Delete each selected class
+        // Delete each selected class and its schedules
         for (int i = 0; i < classIdsToDelete.size(); i++) {
             try {
-                pstmt.setInt(1, classIdsToDelete.get(i));
-                int rowsAffected = pstmt.executeUpdate();
+                int classId = classIdsToDelete.get(i);
+                
+                // First delete schedules
+                deleteSchedulesPstmt.setInt(1, classId);
+                deleteSchedulesPstmt.executeUpdate();
+                
+                // Then delete the class
+                deleteClassPstmt.setInt(1, classId);
+                int rowsAffected = deleteClassPstmt.executeUpdate();
                 
                 if (rowsAffected > 0) {
                     successfulDeletes++;
@@ -710,6 +720,7 @@ private Teach teachFrame; // Add a reference to the Teach frame
     }
     
     // Refresh the table
+    loadClasses();
 
     }//GEN-LAST:event_btnRemoveClass_HomeActionPerformed
 
