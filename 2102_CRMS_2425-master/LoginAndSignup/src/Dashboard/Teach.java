@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.Time;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import java.text.SimpleDateFormat;
 
 public class Teach extends javax.swing.JFrame {
     private int selectedClassId; // Ensure this is set appropriately based on your application logic
@@ -23,20 +25,52 @@ public class Teach extends javax.swing.JFrame {
     private JComboBox<String> dayFilterComboBox;
 
     
-     private Teach(int teacherId, int classId) {
-    this.loggedInteachers_id = teacherId;
-    this.classId = classId;
-    initComponents();
-    setupDayFilter();  // Add this line
-    loadClassData();
-    scheduleTable = new JTable(new DefaultTableModel(
-        new Object[]{"Day", "Subject", "Class Name", "Start Time", "End Time", "Room"}, 0
-    ));
+    private Teach(int teacherId, int classId) {
+        this.loggedInteachers_id = teacherId;
+        this.classId = classId;
+        initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);  // Add this
+        setupDayFilter();
+        loadClassData();
+    
+    // Create the table with its model
+   DefaultTableModel model = new DefaultTableModel(
+    new Object[]{"ID", "Day", "Subject", "Class Name", "Start Time", "End Time", "Room"}, 0
+);
+    scheduleTable = new JTable(model);
+    
+    // Add sorting functionality
+    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+    scheduleTable.setRowSorter(sorter);
+    // Hide the ID column
+ClassTable.getColumnModel().getColumn(0).setMinWidth(0);
+ClassTable.getColumnModel().getColumn(0).setMaxWidth(0);
+ClassTable.getColumnModel().getColumn(0).setWidth(0);
+
+    // Custom comparator for time columns (3 and 4 are the indices for start_time and end_time)
+    sorter.setComparator(3, (String o1, String o2) -> {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            return sdf.parse(o1).compareTo(sdf.parse(o2));
+        } catch (Exception e) {
+            return 0;
+        }
+    });
+    sorter.setComparator(4, (String o1, String o2) -> {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            return sdf.parse(o1).compareTo(sdf.parse(o2));
+        } catch (Exception e) {
+            return 0;
+        }
+    });
 }
-     public Teach() {
+public Teach() {
     initComponents();
+    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);  // Add this
     this.setExtendedState(Teach.MAXIMIZED_BOTH);
-    loadClassData(); // Load data on initialization (if needed)
+    loadClassData();
+// Load data on initialization (if needed)
 }
      void loadClassData() {
         // Logic to load data into ClassTable based on the classId
@@ -64,12 +98,13 @@ public class Teach extends javax.swing.JFrame {
         ResultSet rs = pstmt.executeQuery();
         while (rs.next()) {
             model.addRow(new Object[]{
-                rs.getString("day_of_week"),
-                rs.getString("subject"),
-                rs.getString("class_name"),
-                rs.getTime("start_time"),
-                rs.getTime("end_time"),
-                rs.getString("room_name")
+                 rs.getInt("schedule_id"),  // Add this line
+                 rs.getString("day_of_week"),
+                 rs.getString("subject"),
+                 rs.getString("class_name"),
+                 rs.getTime("start_time"),
+                 rs.getTime("end_time"),
+                 rs.getString("room_name")
             });
         }
     } catch (SQLException ex) {
@@ -126,44 +161,11 @@ public void setClassId(int classId) {
         }
     }
      
-     private int getSelectedScheduleId() {
+    private int getSelectedScheduleId() {
     int selectedRow = ClassTable.getSelectedRow();
     if (selectedRow != -1) {
-        // Get the data from the selected row
-        // Since your table doesn't have a schedule ID column visible,
-        // you'll need to either:
-        // 1. Add a hidden column for schedule ID, or
-        // 2. Query the database using the visible data to get the schedule ID
-        
-        // For now, let's query the database using the visible data
-        String day = (String) ClassTable.getValueAt(selectedRow, 0);
-        String subject = (String) ClassTable.getValueAt(selectedRow, 1);
-        String className = (String) ClassTable.getValueAt(selectedRow, 2);
-        String startTime = (String) ClassTable.getValueAt(selectedRow, 3);
-        
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/crms", "root", "")) {
-            String query = "SELECT s.schedule_id FROM schedules s " +
-                          "INNER JOIN classes c ON s.class_id = c.class_id " +
-                          "WHERE s.day_of_week = ? " +
-                          "AND c.subject = ? " +
-                          "AND c.class_name = ? " +
-                          "AND s.start_time = ?";
-                          
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, day);
-            pstmt.setString(2, subject);
-            pstmt.setString(3, className);
-            pstmt.setString(4, startTime);
-            
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("schedule_id");
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error retrieving schedule ID: " + e.getMessage(), 
-                "Database Error", JOptionPane.ERROR_MESSAGE);
-        }
-        return -1;
+        Object value = ClassTable.getValueAt(selectedRow, 0);
+        return value != null ? Integer.parseInt(value.toString()) : -1;
     }
     return -1;
 }
@@ -188,7 +190,7 @@ public void setClassId(int classId) {
         jScrollPane1 = new javax.swing.JScrollPane();
         ClassTable = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE); 
 
         jPanel4.setBackground(new java.awt.Color(0, 102, 102));
 
@@ -318,26 +320,34 @@ public void setClassId(int classId) {
 
         ClassTable.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         ClassTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Day          ", "Subject", "Class Name", "Start Time", "End Time", "Room"
-            }
+    new Object [][] {
+        {null, null, null, null, null, null, null},
+        {null, null, null, null, null, null, null},
+        {null, null, null, null, null, null, null},
+        {null, null, null, null, null, null, null}
+    },
+    new String [] {
+        "ID", "Day", "Subject", "Class Name", "Start Time", "End Time", "Room"
+    }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
+                java.lang.Integer.class,  // ID column
+                java.lang.String.class,   // Day
+                java.lang.String.class,   // Subject
+                java.lang.String.class,   // Class Name
+                java.lang.String.class,   // Start Time
+                java.lang.String.class,   // End Time
+                java.lang.String.class 
+            };   // Room
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
+
+        ClassTable.getColumnModel().getColumn(0).setMinWidth(0);
+ClassTable.getColumnModel().getColumn(0).setMaxWidth(0);
+ClassTable.getColumnModel().getColumn(0).setWidth(0);
         ClassTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(ClassTable);
 
@@ -419,8 +429,8 @@ public void setClassId(int classId) {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnUpdateclass_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateclass_HomeActionPerformed
-   int selectedScheduleId = getSelectedScheduleId(); // Get the selected schedule ID
-    System.out.println("Selected Schedule ID: " + selectedScheduleId); // Debugging line
+   int selectedScheduleId = getSelectedScheduleId();
+System.out.println("Selected Schedule ID: " + selectedScheduleId);
     if (selectedScheduleId != -1) { // Check if a valid schedule ID is selected
         // Ensure classId is set correctly
         if (classId == 0) {
@@ -435,16 +445,50 @@ public void setClassId(int classId) {
     }//GEN-LAST:event_btnUpdateclass_HomeActionPerformed
 
     private void btnRemoveClass_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveClass_HomeActionPerformed
-       int selectedScheduleId = getSelectedScheduleId(); // Get the selected schedule ID
-    System.out.println("Selected Schedule ID for deletion: " + selectedScheduleId); // Debugging line
-
-    if (selectedScheduleId != -1) { // Check if a valid schedule ID is selected
-        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this schedule?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            deleteSchedule(selectedScheduleId); // Call the delete method
-        }
-    } else {
+       int selectedRow = ClassTable.getSelectedRow();
+    if (selectedRow == -1) {
         JOptionPane.showMessageDialog(this, "Please select a schedule to delete.", "Selection Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    try {
+        String day = (String) ClassTable.getValueAt(selectedRow, 0);
+        String startTime = ClassTable.getValueAt(selectedRow, 3).toString();
+        String roomName = (String) ClassTable.getValueAt(selectedRow, 5);
+
+        int confirm = JOptionPane.showConfirmDialog(this, 
+            "Delete schedule?\nDay: " + day + "\nTime: " + startTime + "\nRoom: " + roomName, 
+            "Confirm", 
+            JOptionPane.YES_NO_OPTION);
+            
+        if (confirm == JOptionPane.YES_OPTION) {
+            String query = "DELETE s FROM schedules s " +
+                      "INNER JOIN rooms r ON s.room_id = r.room_id " +
+                      "WHERE s.day_of_week = ? " +
+                      "AND s.start_time = ? " +
+                      "AND r.room_name = ? " +
+                      "AND s.class_id = ?";
+
+            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/crms", "root", "");
+                 PreparedStatement pstmt = conn.prepareStatement(query)) {
+                
+                pstmt.setString(1, day.trim());
+                pstmt.setString(2, startTime.trim());
+                pstmt.setString(3, roomName.trim());
+                pstmt.setInt(4, classId);
+                
+                int affectedRows = pstmt.executeUpdate();
+                if (affectedRows > 0) {
+                    JOptionPane.showMessageDialog(this, "Schedule deleted successfully.");
+                    loadClassData();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Could not delete the schedule.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
     }
     }//GEN-LAST:event_btnRemoveClass_HomeActionPerformed
 
@@ -458,22 +502,7 @@ public void setClassId(int classId) {
     
     dayFilterComboBox.addActionListener(e -> loadClassData());
 }
-    private void deleteSchedule(int scheduleId) {
-    String sql = "DELETE FROM schedules WHERE schedule_id = ?";
-    try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/crms", "root", "");
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        pstmt.setInt(1, scheduleId);
-        int affectedRows = pstmt.executeUpdate();
-        if (affectedRows > 0) {
-            JOptionPane.showMessageDialog(this, "Schedule deleted successfully.");
-            loadClassData(); // Refresh the table data
-        } else {
-            JOptionPane.showMessageDialog(this, "No schedule found with the given ID.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Error deleting schedule: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-    }
-}
+    
     /**
      * @param args the command line arguments
      */

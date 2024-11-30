@@ -28,10 +28,12 @@ public class UpdateSchedule extends javax.swing.JFrame {
     private static final String USER = "root";
     private static final String PASS = "";
     
+    private Teach teachFrame;
     private int loggedInteachers_id;
     private int selectedClassId;
     private int selectedScheduleId;
-    private Teach teachFrame;
+    private java.util.Map<String, Integer> roomNameToIdMap = new java.util.HashMap<>();
+
 
   public UpdateSchedule(int teacherId, Teach teachFrame, int classId, int scheduleId) {
         this.loggedInteachers_id = teacherId;
@@ -39,14 +41,47 @@ public class UpdateSchedule extends javax.swing.JFrame {
         this.selectedClassId = classId;
         this.selectedScheduleId = scheduleId;
         initComponents();
-        setupUI();
+        setupRoomComboBox();
+        populateRoomComboBox();
         populateFields();
     }
 
+    private void setupRoomComboBox() {
+        roomComboBox = new javax.swing.JComboBox<>();
+        roomComboBox.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        roomComboBox.setBorder(javax.swing.BorderFactory.createTitledBorder(
+            new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true),
+            "Room",
+            javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+            javax.swing.border.TitledBorder.TOP,
+            new java.awt.Font("Segoe UI", 2, 14)
+        ));
+        
+        // Add the combo box to your form's panel
+        jPanel1.add(roomComboBox);
+        roomComboBox.setBounds(10, 200, 467, 50); // Set explicit bounds
+    }
 
-  private void setupUI() {
-        jLabel1.setText("Update Schedule");
-        CreateButton.setText("Update"); // Rename button to reflect its true purpose
+    private void populateRoomComboBox() {
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
+            String query = "SELECT room_id, room_name FROM rooms";
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    roomNameToIdMap.clear();
+                    roomComboBox.removeAllItems();
+
+                    while (rs.next()) {
+                        String roomName = rs.getString("room_name");
+                        int roomId = rs.getInt("room_id");
+                        roomComboBox.addItem(roomName);
+                        roomNameToIdMap.put(roomName, roomId);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error loading rooms: " + e.getMessage(),
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void populateFields() {
@@ -57,52 +92,21 @@ public class UpdateSchedule extends javax.swing.JFrame {
                           "WHERE s.schedule_id = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(query)) {
                 pstmt.setInt(1, selectedScheduleId);
-                ResultSet rs = pstmt.executeQuery();
-                if (rs.next()) {
-                    jComboBox1.setSelectedItem(rs.getString("day_of_week"));
-                    Subject1.setText(new SimpleDateFormat("HH:mm").format(rs.getTime("start_time")));
-                    Subject2.setText(new SimpleDateFormat("HH:mm").format(rs.getTime("end_time")));
-                    Room.setText(rs.getString("room_name"));
-                } else {
-                    JOptionPane.showMessageDialog(this, "Schedule not found.", "Error", JOptionPane.ERROR_MESSAGE);
-                    this.dispose();
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+                        jComboBox1.setSelectedItem(rs.getString("day_of_week"));
+                        Subject1.setText(new SimpleDateFormat("HH:mm").format(rs.getTime("start_time")));
+                        Subject2.setText(new SimpleDateFormat("HH:mm").format(rs.getTime("end_time")));
+                        roomComboBox.setSelectedItem(rs.getString("room_name"));
+                    }
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error loading schedule: " + ex.getMessage());
-            this.dispose();
-        }
-    }
-
-    private void loadScheduleData() {
-        String query = "SELECT day_of_week, start_time, end_time, room_id FROM schedules WHERE schedule_id = ?";
-        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, selectedScheduleId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    String dayOfWeek = rs.getString("day_of_week");
-                    Time startTime = rs.getTime("start_time");
-                    Time endTime = rs.getTime("end_time");
-                    int roomId = rs.getInt("room_id");
-
-                    // Set the fields with the retrieved data
-                    jComboBox1.setSelectedItem(dayOfWeek);
-                    Subject1.setText(new SimpleDateFormat("HH:mm").format(startTime));
-                    Subject2.setText(new SimpleDateFormat("HH:mm").format(endTime));
-                    Room.setText(getRoomNameById(roomId)); // Get room name from ID
-                } else {
-                    JOptionPane.showMessageDialog(this, "Schedule not found.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error loading schedule data: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error loading schedule: " + ex.getMessage(),
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
-    
-     
      private String getRoomNameById(int roomId) throws SQLException {
         String roomName = null;
         String query = "SELECT room_name FROM rooms WHERE room_id = ?";
@@ -132,7 +136,6 @@ public class UpdateSchedule extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        Room = new app.bolivia.swing.JCTextField();
         CreateButton = new javax.swing.JButton();
         CancelButton = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -147,8 +150,6 @@ public class UpdateSchedule extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Add Schedule");
-
-        Room.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Room", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
 
         CreateButton.setText("Create");
         CreateButton.addActionListener(new java.awt.event.ActionListener() {
@@ -190,7 +191,6 @@ public class UpdateSchedule extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Subject1, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Room, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Subject2, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(34, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -211,8 +211,6 @@ public class UpdateSchedule extends javax.swing.JFrame {
                 .addComponent(Subject1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Subject2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Room, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CancelButton)
@@ -235,43 +233,62 @@ public class UpdateSchedule extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateButtonActionPerformed
-      if (!validateInputs()) {
+        System.out.println("Updating schedule with ID: " + selectedScheduleId);
+        if (!validateInputs()) {
             return;
         }
 
         try {
-            String roomText = Room.getText().trim();
+            String selectedRoom = (String) roomComboBox.getSelectedItem();
+            if (selectedRoom == null || !roomNameToIdMap.containsKey(selectedRoom)) {
+                JOptionPane.showMessageDialog(this, "Please select a valid room.");
+                return;
+            }
+
+            int roomId = roomNameToIdMap.get(selectedRoom);
+            String dayOfWeek = (String) jComboBox1.getSelectedItem();
             Time startTime = parseTime(Subject1.getText().trim());
             Time endTime = parseTime(Subject2.getText().trim());
-            String dayOfWeek = (String) jComboBox1.getSelectedItem();
-            int roomId = getRoomId(roomText);
 
-            if (roomId == -1) {
-                JOptionPane.showMessageDialog(this, "Invalid room specified.");
-                return;
-            }
-
-            if (startTime.after(endTime)) {
-                JOptionPane.showMessageDialog(this, "Start time must be before end time.");
-                return;
-            }
-
+            // Check for schedule conflicts
             if (hasScheduleConflict(roomId, dayOfWeek, startTime, endTime)) {
-                JOptionPane.showMessageDialog(this, "Schedule conflict detected.");
+                JOptionPane.showMessageDialog(this, "Schedule conflict detected. Please choose a different time or room.");
                 return;
             }
 
-            updateSchedule(roomId, dayOfWeek, startTime, endTime);
+            // Update the schedule
+            String updateQuery = "UPDATE schedules SET day_of_week = ?, start_time = ?, end_time = ?, room_id = ? " +
+                    "WHERE schedule_id = ? AND class_id = ?";
+            try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+                 PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
+                
+                pstmt.setString(1, dayOfWeek);
+                pstmt.setTime(2, startTime);
+                pstmt.setTime(3, endTime);
+                pstmt.setInt(4, roomId);
+                pstmt.setInt(5, selectedScheduleId);
+                pstmt.setInt(6, selectedClassId);  // Add the missing class_id parameter
 
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Invalid time format. Please use HH:mm format (e.g., 09:30)");
+                int affectedRows = pstmt.executeUpdate();
+                if (affectedRows > 0) {
+                    JOptionPane.showMessageDialog(this, "Schedule updated successfully!");
+                    teachFrame.loadClassData(); // Refresh the parent frame's table
+                    this.dispose(); // Close the update window
+                } else {
+                    JOptionPane.showMessageDialog(this, "Failed to update schedule.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_CreateButtonActionPerformed
 
     private boolean validateInputs() {
-        if (Room.getText().trim().isEmpty() || 
+        if (roomComboBox.getSelectedItem() == null || 
             Subject1.getText().trim().isEmpty() || 
             Subject2.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in all fields.");
@@ -279,104 +296,38 @@ public class UpdateSchedule extends javax.swing.JFrame {
         }
         return true;
     }
-   private Time parseTime(String timeStr) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        sdf.setLenient(false);
-        return new Time(sdf.parse(timeStr).getTime());
-    }
-   
-    private void updateSchedule(int roomId, String dayOfWeek, Time startTime, Time endTime) throws SQLException {
-        String sql = "UPDATE schedules SET room_id = ?, day_of_week = ?, start_time = ?, end_time = ? WHERE schedule_id = ?";
-        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, roomId);
-            pstmt.setString(2, dayOfWeek);
-            pstmt.setTime(3, startTime);
-            pstmt.setTime(4, endTime);
-            pstmt.setInt(5, selectedScheduleId);
 
-            int affected = pstmt.executeUpdate();
-            if (affected > 0) {
-                JOptionPane.showMessageDialog(this, "Schedule updated successfully!");
-                if (teachFrame != null) {
-                    teachFrame.loadClassData(); // Make sure this method exists in Teach class
-                }
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "No changes were made to the schedule.");
-            }
+    private Time parseTime(String timeStr) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            java.util.Date date = sdf.parse(timeStr);
+            return new Time(date.getTime());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid time format. Please use HH:mm format (e.g., 14:30)");
         }
-    }
-
-
-    
-
- private String getSubjectByClassId(int classId) throws SQLException {
-        String subject = null;
-        String query = "SELECT subject FROM classes WHERE class_id = ?";
-        
-        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, classId);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                subject = rs.getString("subject");
-            }
-        }
-        
-        return subject;
-    }
-     
-     private String getClassNameById(int classId) throws SQLException {
-        String className = null;
-        String query = "SELECT class_name FROM classes WHERE class_id = ?";
-        
-        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, classId);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                className = rs.getString("class_name");
-            }
-        }
-        
-        return className;
-    }
-     private int getRoomId(String roomText) throws SQLException {
-        String query = "SELECT room_id FROM rooms WHERE room_name = ? OR room_id = ?";
-        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, roomText);
-            try {
-                pstmt.setInt(2, Integer.parseInt(roomText));
-            } catch (NumberFormatException e) {
-                pstmt.setInt(2, -1);
-            }
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("room_id");
-            }
-        }
-        return -1;
     }
 
     private boolean hasScheduleConflict(int roomId, String dayOfWeek, Time startTime, Time endTime) throws SQLException {
         String query = "SELECT 1 FROM schedules WHERE room_id = ? AND day_of_week = ? " +
                       "AND schedule_id != ? " +  // Exclude current schedule
-                      "AND ((start_time < ? AND end_time > ?) OR (start_time < ? AND end_time > ?))";
+                      "AND ((? BETWEEN start_time AND end_time) OR " +  // New start time falls within existing schedule
+                      "(? BETWEEN start_time AND end_time) OR " +      // New end time falls within existing schedule
+                      "(start_time BETWEEN ? AND ?))";                 // Existing schedule falls within new time range
 
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
+            
             pstmt.setInt(1, roomId);
             pstmt.setString(2, dayOfWeek);
             pstmt.setInt(3, selectedScheduleId);
-            pstmt.setTime(4, endTime);
-            pstmt.setTime(5, startTime);
-            pstmt.setTime(6, endTime);
-            pstmt.setTime(7, startTime);
+            pstmt.setTime(4, startTime);
+            pstmt.setTime(5, endTime);
+            pstmt.setTime(6, startTime);
+            pstmt.setTime(7, endTime);
 
-            ResultSet rs = pstmt.executeQuery();
-            return rs.next();
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next(); // Returns true if there's a conflict
+            }
         }
     }
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
@@ -417,9 +368,9 @@ public class UpdateSchedule extends javax.swing.JFrame {
 
         /* Create and display the form */
        SwingUtilities.invokeLater(() -> {
-        UpdateSchedule frame = new UpdateSchedule(1, new Teach(), 1, 1); // Pass the required parameters
-        frame.setVisible(true);
-    });
+    UpdateSchedule frame = new UpdateSchedule(1, new Teach(), 1, 1); // Pass the required parameters
+    frame.setVisible(true);
+});
     
     }
     
@@ -427,11 +378,11 @@ public class UpdateSchedule extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CancelButton;
     private javax.swing.JButton CreateButton;
-    private app.bolivia.swing.JCTextField Room;
     private app.bolivia.swing.JCTextField Subject1;
     private app.bolivia.swing.JCTextField Subject2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JComboBox<String> roomComboBox;
     // End of variables declaration//GEN-END:variables
 }
