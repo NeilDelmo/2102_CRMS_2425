@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -17,19 +17,18 @@ import java.awt.event.KeyEvent;;
  */
 public class RemoveSection extends javax.swing.JFrame {
     
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/crms"; // Change to your database name
-    private static final String USER = "root"; // Change to your MySQL username
-    private static final String PASS = ""; // Change to your MySQL password
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/crms";
+    private static final String USER = "root";
+    private static final String PASS = "";
 
     public RemoveSection() {
         initComponents();
         setButtonStyles();
-        this.setLocationRelativeTo(null); //to make it centralized
+        this.setLocationRelativeTo(null);
         setupEnterKeyNavigation();
-
     }
+
     private void setupEnterKeyNavigation() {
-     // Add key listeners to each text field
         sectionCode.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -38,9 +37,9 @@ public class RemoveSection extends javax.swing.JFrame {
                 }
             }
         });
-
     }
-     private void validateAndRemoveSection() {
+
+    private void validateAndRemoveSection() {
         String sectionCodeText = sectionCode.getText().trim();
         
         if (sectionCodeText.isEmpty()) {
@@ -48,17 +47,15 @@ public class RemoveSection extends javax.swing.JFrame {
             return;
         }
 
-        // If validation passes, proceed with removing the section
         removeSection(sectionCodeText);
     }
-     private void removeSection(String sectionCode) {
-        // First check if the section exists and has no students
+
+    private void removeSection(String sectionCode) {
         String checkSQL = "SELECT COUNT(*) as student_count FROM students st " +
                          "JOIN sections s ON st.section_id = s.section_id " +
                          "WHERE s.section_code = ?";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
-            // Check for students
             try (PreparedStatement checkStmt = conn.prepareStatement(checkSQL)) {
                 checkStmt.setString(1, sectionCode);
                 var rs = checkStmt.executeQuery();
@@ -71,7 +68,6 @@ public class RemoveSection extends javax.swing.JFrame {
                 }
             }
             
-            // If no students, proceed with deletion
             String deleteSQL = "DELETE FROM sections WHERE section_code = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(deleteSQL)) {
                 pstmt.setString(1, sectionCode);
@@ -81,7 +77,6 @@ public class RemoveSection extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Section removed successfully!");
                     clearFields();
                     
-                    // Refresh the sections table
                     for (java.awt.Window window : java.awt.Window.getWindows()) {
                         if (window instanceof Sections && window.isVisible()) {
                             ((Sections) window).LoadSections();
@@ -89,7 +84,7 @@ public class RemoveSection extends javax.swing.JFrame {
                         }
                     }
                     
-                    dispose(); // Close the remove section window
+                    dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, 
                         "Section not found with code: " + sectionCode, 
@@ -102,6 +97,11 @@ public class RemoveSection extends javax.swing.JFrame {
                 "Error removing section: " + ex.getMessage(), 
                 "Database Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void clearFields() {
+        sectionCode.setText("");
+        sectionCode.requestFocus();
     }
 
     /**
@@ -119,7 +119,7 @@ public class RemoveSection extends javax.swing.JFrame {
         CancelButton = new javax.swing.JButton();
         CreateButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -165,65 +165,54 @@ public class RemoveSection extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void setButtonStyles() {
-        // Create button style
-        CreateButton.setBackground(new Color(255, 255, 255, 0)); // Transparent background
-        CreateButton.setForeground(Color.BLACK); // Black text
-        CreateButton.setBorder(BorderFactory.createEmptyBorder()); // No border
-        CreateButton.setFocusPainted(false); // Remove focus outline
-        CreateButton.setFont(new Font("Segoe UI", Font.PLAIN, 14)); // Regular font
-        CreateButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Hand cursor on hover
 
-        // Cancel button style
-        CancelButton.setBackground(new Color(255, 255, 255, 0)); // Transparent background
-        CancelButton.setForeground(Color.BLACK); // Black text
-        CancelButton.setBorder(BorderFactory.createEmptyBorder()); // No border
-        CancelButton.setFocusPainted(false); // Remove focus outline
-        CancelButton.setFont(new Font("Segoe UI", Font.PLAIN, 14)); // Regular font
-        CancelButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Hand cursor on hover
-        
-        // Add mouse listeners for hover effects
-        CreateButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                CreateButton.setForeground(new Color(0, 120, 60)); // Change text color on hover
-        }
-            @Override 
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                CreateButton.setForeground(Color.BLACK); // Original text color
-            }
-        });
-
-        CancelButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                CancelButton.setForeground(new Color(200, 0, 0)); // Change text color on hover
-            }
-            @Override
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                CancelButton.setForeground(Color.BLACK); // Original text color
-            }
-        });
-    }
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void CreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateButtonActionPerformed
         validateAndRemoveSection();
-        
     }//GEN-LAST:event_CreateButtonActionPerformed
-private void clearFields() {
-    sectionCode.setText("");
-    sectionCode.requestFocus(); // Set focus back to first name field
-}
-   
+
+    private void setButtonStyles() {
+        CreateButton.setBackground(new Color(255, 255, 255, 0));
+        CreateButton.setForeground(Color.BLACK);
+        CreateButton.setBorder(BorderFactory.createEmptyBorder());
+        CreateButton.setFocusPainted(false);
+        CreateButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        CreateButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        CancelButton.setBackground(new Color(255, 255, 255, 0));
+        CancelButton.setForeground(Color.BLACK);
+        CancelButton.setBorder(BorderFactory.createEmptyBorder());
+        CancelButton.setFocusPainted(false);
+        CancelButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        CancelButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        
+        CreateButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                CreateButton.setForeground(new Color(0, 120, 60));
+            }
+            @Override 
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                CreateButton.setForeground(Color.BLACK);
+            }
+        });
+
+        CancelButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                CancelButton.setForeground(new Color(200, 0, 0));
+            }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                CancelButton.setForeground(Color.BLACK);
+            }
+        });
+    }
+
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -240,76 +229,7 @@ private void clearFields() {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(RemoveSection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new RemoveSection().setVisible(true);

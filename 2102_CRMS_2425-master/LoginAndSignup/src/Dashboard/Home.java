@@ -92,9 +92,7 @@ public Home(int teachers_id) {
         btnTeach_Home = new rojeru_san.complementos.RSButtonHover();
         btnUser_Home = new rojeru_san.complementos.RSButtonHover();
         btnLogout_Home = new rojeru_san.complementos.RSButtonHover();
-        btnStudents_Home = new rojeru_san.complementos.RSButtonHover();
         btnRooms_Home = new rojeru_san.complementos.RSButtonHover();
-        btnClasswork_Home = new rojeru_san.complementos.RSButtonHover();
         btnSections_Home = new rojeru_san.complementos.RSButtonHover();
         jScrollPane1 = new javax.swing.JScrollPane();
         ClassTable = new javax.swing.JTable();
@@ -212,30 +210,12 @@ public Home(int teachers_id) {
             }
         });
 
-        btnStudents_Home.setBackground(new java.awt.Color(255, 255, 255));
-        btnStudents_Home.setForeground(new java.awt.Color(0, 0, 0));
-        btnStudents_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Students.png"))); // NOI18N
-        btnStudents_Home.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStudents_HomeActionPerformed(evt);
-            }
-        });
-
         btnRooms_Home.setBackground(new java.awt.Color(255, 255, 255));
         btnRooms_Home.setForeground(new java.awt.Color(0, 0, 0));
         btnRooms_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/classroom.png"))); // NOI18N
         btnRooms_Home.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRooms_HomeActionPerformed(evt);
-            }
-        });
-
-        btnClasswork_Home.setBackground(new java.awt.Color(255, 255, 255));
-        btnClasswork_Home.setForeground(new java.awt.Color(0, 0, 0));
-        btnClasswork_Home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Classwork.png"))); // NOI18N
-        btnClasswork_Home.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClasswork_HomeActionPerformed(evt);
             }
         });
 
@@ -262,8 +242,6 @@ public Home(int teachers_id) {
                     .addComponent(btnTeach_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnHome_Home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnLogout_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnStudents_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnClasswork_Home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnSections_Home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnRooms_Home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
@@ -277,15 +255,11 @@ public Home(int teachers_id) {
                 .addComponent(btnHome_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnTeach_Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnClasswork_Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnStudents_Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(76, 76, 76)
                 .addComponent(btnSections_Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(76, 76, 76)
                 .addComponent(btnRooms_Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(btnLogout_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -471,9 +445,11 @@ public void loadClasses() {
             conn = DriverManager.getConnection(url, user, password);
     
             // Modify query to filter classes by teacher ID and exclude room
-            String query = "SELECT class_id, class_name, section, subject " +
-                           "FROM classes " +
-                           "WHERE teachers_id = ?";
+            String query = "SELECT c.class_id, c.class_name, COALESCE(s.section_code, 'Unassigned') as section_code, " +
+               "c.subject " +
+               "FROM classes c " +
+               "LEFT JOIN sections s ON c.section = s.section_id " +
+               "WHERE c.teachers_id = ?";
     
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, currentTeachers_Id);
@@ -487,7 +463,7 @@ public void loadClasses() {
                 Boolean checkboxState = false; // Initialize checkbox state to false
                 Integer classId = rs.getInt("class_id");
                 String className = rs.getString("class_name");
-                String section = rs.getString("section");
+                String section = rs.getString("section_code");
                 String subject = rs.getString("subject");
 
                 Object[] rowData = {
@@ -572,13 +548,6 @@ private Teach teachFrame; // Add a reference to the Teach frame
     }
 
     }//GEN-LAST:event_btnLogout_HomeActionPerformed
-
-    private void btnStudents_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudents_HomeActionPerformed
-        Students studentsFrame = new Students();
-         studentsFrame.setExtendedState(Students.MAXIMIZED_BOTH); // Set full screen
-         studentsFrame.setVisible(true);
-         this.dispose();
-    }//GEN-LAST:event_btnStudents_HomeActionPerformed
 
     private void btnSubjects_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubjects_HomeActionPerformed
         Sections sectionsFrame = new Sections();
@@ -864,14 +833,12 @@ private Teach teachFrame; // Add a reference to the Teach frame
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable ClassTable;
     private rojeru_san.complementos.RSButtonHover btnAddClass_Home;
-    private rojeru_san.complementos.RSButtonHover btnClasswork_Home;
     private rojeru_san.complementos.RSButtonHover btnHome_Home;
     private rojeru_san.complementos.RSButtonHover btnLogout_Home;
     private rojeru_san.complementos.RSButtonHover btnMenu_Home;
     private rojeru_san.complementos.RSButtonHover btnRemoveClass_Home;
     private rojeru_san.complementos.RSButtonHover btnRooms_Home;
     private rojeru_san.complementos.RSButtonHover btnSections_Home;
-    private rojeru_san.complementos.RSButtonHover btnStudents_Home;
     private rojeru_san.complementos.RSButtonHover btnTeach_Home;
     private rojeru_san.complementos.RSButtonHover btnUpdateclass_Home;
     private rojeru_san.complementos.RSButtonHover btnUser_Home;

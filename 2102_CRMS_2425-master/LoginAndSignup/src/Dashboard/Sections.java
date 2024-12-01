@@ -120,13 +120,11 @@ public int countStudentsInSection(int section_code) {
         btnAddSections_Sections = new rojeru_san.complementos.RSButtonHover();
         btnRemoveSection_Sections = new rojeru_san.complementos.RSButtonHover();
         updatesection = new rojeru_san.complementos.RSButtonHover();
+        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         btnHome_Subjects = new rojeru_san.complementos.RSButtonHover();
         btnLogout_Subjects = new rojeru_san.complementos.RSButtonHover();
-        btnStudents_Subjects = new rojeru_san.complementos.RSButtonHover();
         btnSections_Sections = new rojeru_san.complementos.RSButtonHover();
-        btnRooms_Sections = new rojeru_san.complementos.RSButtonHover();
-        btnClasswork_Subjects = new rojeru_san.complementos.RSButtonHover();
         jScrollPane1 = new javax.swing.JScrollPane();
         Sections_Table = new javax.swing.JTable();
 
@@ -171,6 +169,13 @@ public int countStudentsInSection(int section_code) {
             }
         });
 
+        jButton1.setText("Enter ");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -181,6 +186,8 @@ public int countStudentsInSection(int section_code) {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
                 .addComponent(btnRemoveSection_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
                 .addComponent(updatesection, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,8 +204,10 @@ public int countStudentsInSection(int section_code) {
                     .addComponent(btnRemoveSection_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAddSections_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMenu_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(16, 16, 16))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(jButton1)))
+                .addGap(14, 14, 14))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -226,39 +235,12 @@ public int countStudentsInSection(int section_code) {
             }
         });
 
-        btnStudents_Subjects.setBackground(new java.awt.Color(255, 255, 255));
-        btnStudents_Subjects.setForeground(new java.awt.Color(0, 0, 0));
-        btnStudents_Subjects.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Students.png"))); // NOI18N
-        btnStudents_Subjects.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStudents_SubjectsActionPerformed(evt);
-            }
-        });
-
         btnSections_Sections.setBackground(new java.awt.Color(255, 255, 255));
         btnSections_Sections.setForeground(new java.awt.Color(0, 0, 0));
         btnSections_Sections.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/section.png"))); // NOI18N
         btnSections_Sections.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSections_SectionsActionPerformed(evt);
-            }
-        });
-
-        btnRooms_Sections.setBackground(new java.awt.Color(255, 255, 255));
-        btnRooms_Sections.setForeground(new java.awt.Color(0, 0, 0));
-        btnRooms_Sections.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/classroom.png"))); // NOI18N
-        btnRooms_Sections.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRooms_SectionsActionPerformed(evt);
-            }
-        });
-
-        btnClasswork_Subjects.setBackground(new java.awt.Color(255, 255, 255));
-        btnClasswork_Subjects.setForeground(new java.awt.Color(0, 0, 0));
-        btnClasswork_Subjects.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Classwork.png"))); // NOI18N
-        btnClasswork_Subjects.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClasswork_SubjectsActionPerformed(evt);
             }
         });
 
@@ -271,10 +253,7 @@ public int countStudentsInSection(int section_code) {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnHome_Subjects, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
                     .addComponent(btnLogout_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnStudents_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnSections_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnRooms_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnClasswork_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(btnSections_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -282,14 +261,8 @@ public int countStudentsInSection(int section_code) {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(118, 118, 118)
                 .addComponent(btnHome_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(btnClasswork_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnStudents_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
                 .addComponent(btnSections_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnRooms_Sections, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogout_Subjects, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -372,13 +345,6 @@ public int countStudentsInSection(int section_code) {
 
     }//GEN-LAST:event_btnLogout_SubjectsActionPerformed
 
-    private void btnStudents_SubjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudents_SubjectsActionPerformed
-        Students studentsFrame = new Students();
-         studentsFrame.setExtendedState(Students.MAXIMIZED_BOTH); // Set full screen
-         studentsFrame.setVisible(true);
-         this.dispose();
-    }//GEN-LAST:event_btnStudents_SubjectsActionPerformed
-
     private void btnSections_SectionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSections_SectionsActionPerformed
          JOptionPane.showMessageDialog(new JFrame(), "You are already in the Sections window.", "Error", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_btnSections_SectionsActionPerformed
@@ -388,22 +354,6 @@ public int countStudentsInSection(int section_code) {
         RemoveSection removesectionFrame  = new RemoveSection();
         removesectionFrame.setVisible(true);
     }//GEN-LAST:event_btnRemoveSection_SectionsActionPerformed
-
-    private void btnRooms_SectionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRooms_SectionsActionPerformed
-        // TODO add your handling code here:
-        Rooms roomsFrame = new Rooms();
-        roomsFrame.setExtendedState(Rooms.MAXIMIZED_BOTH);
-        roomsFrame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnRooms_SectionsActionPerformed
-
-    private void btnClasswork_SubjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClasswork_SubjectsActionPerformed
-        // TODO add your handling code here:
-        Classwork classworkFrame = new Classwork();
-        classworkFrame.setExtendedState(Classwork.MAXIMIZED_BOTH);
-        classworkFrame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnClasswork_SubjectsActionPerformed
 
     private void btnHome_SubjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHome_SubjectsActionPerformed
         Home homeFrame = new Home();
@@ -433,6 +383,32 @@ public int countStudentsInSection(int section_code) {
     updateFrame.setLocationRelativeTo(this);
     updateFrame.setVisible(true);
     }//GEN-LAST:event_updatesectionActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+     int selectedRow = Sections_Table.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a section first.");
+        return;
+    }
+    
+    try {
+        String sectionCode = Sections_Table.getValueAt(selectedRow, 1).toString();
+        String query = "SELECT section_id FROM sections WHERE section_code = ?";
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/crms", "root", "");
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setString(1, sectionCode);
+        ResultSet rs = pstmt.executeQuery();
+        
+        if (rs.next()) {
+            Navigation nav = new Navigation(rs.getInt("section_id"));
+            nav.setLocationRelativeTo(this);
+            nav.setVisible(true);
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -983,14 +959,12 @@ public int countStudentsInSection(int section_code) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Sections_Table;
     private rojeru_san.complementos.RSButtonHover btnAddSections_Sections;
-    private rojeru_san.complementos.RSButtonHover btnClasswork_Subjects;
     private rojeru_san.complementos.RSButtonHover btnHome_Subjects;
     private rojeru_san.complementos.RSButtonHover btnLogout_Subjects;
     private rojeru_san.complementos.RSButtonHover btnMenu_Subjects;
     private rojeru_san.complementos.RSButtonHover btnRemoveSection_Sections;
-    private rojeru_san.complementos.RSButtonHover btnRooms_Sections;
     private rojeru_san.complementos.RSButtonHover btnSections_Sections;
-    private rojeru_san.complementos.RSButtonHover btnStudents_Subjects;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;

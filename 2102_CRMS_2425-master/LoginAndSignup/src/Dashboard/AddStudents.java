@@ -22,12 +22,30 @@ public class AddStudents extends javax.swing.JFrame {
     private static final String USER = "root"; // Change to your MySQL username
     private static final String PASS = ""; // Change to your MySQL password
 
+    private int sectionId = -1;
+    private String sectionCode = null;
+
     public AddStudents() {
         initComponents();
         setButtonStyles();
         this.setLocationRelativeTo(null); //to make it centralized
         setupEnterKeyNavigation();
         loadSections();
+        
+        // Change from EXIT_ON_CLOSE to DISPOSE_ON_CLOSE
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+
+    public AddStudents(int sectionId) {
+        this.sectionId = sectionId;
+        initComponents();
+        setButtonStyles();
+        this.setLocationRelativeTo(null); //to make it centralized
+        setupEnterKeyNavigation();
+        loadSectionById(sectionId);
+        
+        // Change from EXIT_ON_CLOSE to DISPOSE_ON_CLOSE
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     private void loadSections() {
@@ -45,6 +63,28 @@ public class AddStudents extends javax.swing.JFrame {
     } catch (SQLException ex) {
         ex.printStackTrace();
         JOptionPane.showMessageDialog(this, "Error loading sections: " + ex.getMessage(),
+                "Database Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+private void loadSectionById(int sectionId) {
+    String query = "SELECT section_code FROM sections WHERE section_id = ?";
+    try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+        
+        stmt.setInt(1, sectionId);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            String sectionCode = rs.getString("section_code");
+            this.sectionCode = sectionCode;
+            sectionsComboBox.removeAllItems();
+            sectionsComboBox.addItem(sectionCode);
+            sectionsComboBox.setEnabled(false); // Lock the combo box
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error loading section: " + ex.getMessage(),
                 "Database Error", JOptionPane.ERROR_MESSAGE);
     }
 }
@@ -94,82 +134,89 @@ private void setupEnterKeyNavigation() {
     }
 
  private void createStudent(String firstNameText, String lastNameText, String sectionCode) {
-    String insertStudentSQL = "INSERT INTO students (student_firstname, student_lastname) VALUES (?, ?)";
-    String getLastInsertedStudentSQL = "SELECT LAST_INSERT_ID() AS student_id";
-    String updateSectionSQL = "UPDATE sections SET student_id = ? WHERE section_code = ?"; // Ensure section_code matches the type in the database
+        if (sectionId == -1 && "Select a Section".equals(sectionCode)) {
+            JOptionPane.showMessageDialog(this, 
+                "Please select a valid section", 
+                "Input Error", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    Connection conn = null;
-    try {
-        conn = DriverManager.getConnection(DB_URL, USER, PASS);
-        conn.setAutoCommit(false); // Start transaction
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            conn.setAutoCommit(false); // Start transaction
 
-        // Insert student
-        int studentId = 0; // Initialize studentId
-        try (PreparedStatement pstmtStudent = conn.prepareStatement(insertStudentSQL)) {
-            pstmtStudent.setString(1, firstNameText);
-            pstmtStudent.setString(2, lastNameText);
-            
-            int rowsAffected = pstmtStudent.executeUpdate();
-            if (rowsAffected == 0) {
-                throw new SQLException("Creating student failed, no rows affected.");
+            String insertStudentSQL;
+            PreparedStatement pstmt;
+
+            if (sectionId != -1) {
+                // If we have a specific section ID, use it directly
+                insertStudentSQL = "INSERT INTO students (student_firstname, student_lastname, section_id) VALUES (?, ?, ?)";
+                pstmt = conn.prepareStatement(insertStudentSQL);
+                pstmt.setString(1, firstNameText);
+                pstmt.setString(2, lastNameText);
+                pstmt.setInt(3, sectionId);
+            } else {
+                // Otherwise, look up the section ID by code
+                insertStudentSQL = "INSERT INTO students (student_firstname, student_lastname, section_id) " +
+                                 "SELECT ?, ?, section_id FROM sections WHERE section_code = ?";
+                pstmt = conn.prepareStatement(insertStudentSQL);
+                pstmt.setString(1, firstNameText);
+                pstmt.setString(2, lastNameText);
+                pstmt.setString(3, sectionCode);
             }
 
-            // Get the last inserted student ID
-            try (PreparedStatement pstmtLastId = conn.prepareStatement(getLastInsertedStudentSQL);
-                 ResultSet rs = pstmtLastId.executeQuery()) {
-                
-                if (rs.next()) {
-                    studentId = rs.getInt("student_id");
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SQLException("Creating student failed. Section may not exist.");
+            }
+
+            conn.commit(); // Commit transaction
+            JOptionPane.showMessageDialog(this, "Student added successfully!");
+            clearFields();
+            
+            // Refresh the parent Students window if it exists
+            if (getParent() instanceof Students) {
+                Students parent = (Students) getParent();
+                if (sectionId != -1) {
+                    parent.LoadStudentsBySection();
                 } else {
-                    throw new SQLException("Failed to retrieve last inserted student ID");
+                    parent.LoadStudents();
+                }
+            }
+
+        } catch (SQLException ex) {
+            // Rollback transaction in case of error
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException rollbackEx) {
+                    rollbackEx.printStackTrace();
+                }
+            }
+            
+            String errorMessage = "Error adding student: ";
+            if (ex.getMessage().contains("foreign key constraint")) {
+                errorMessage += "Invalid section selected.";
+            } else {
+                errorMessage += ex.getMessage();
+            }
+            
+            JOptionPane.showMessageDialog(this, 
+                errorMessage,
+                "Database Error", 
+                JOptionPane.ERROR_MESSAGE);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
                 }
             }
         }
-
-        // Update section with student ID
-        try (PreparedStatement pstmtSection = conn.prepareStatement(updateSectionSQL)) {
-            pstmtSection.setInt(1, studentId);
-            pstmtSection.setString(2, sectionCode); // Use sectionCode as is, without parsing
-            
-            int sectionRowsAffected = pstmtSection.executeUpdate();
-            if (sectionRowsAffected == 0) {
-                throw new SQLException("Updating section failed, no rows affected. Check if section code is valid.");
-            }
-        }
-
-        conn.commit(); // Commit transaction
-        JOptionPane.showMessageDialog(this, "Student added successfully!");
-        clearFields();
-
-    } catch (SQLException ex) {
-        // Rollback transaction in case of error
-        if (conn != null) {
-            try {
-                conn.rollback();
-            } catch (SQLException rollbackEx) {
-                rollbackEx.printStackTrace();
-            }
-        }
-        
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error adding student: " + ex.getMessage(),
-                "Database Error", JOptionPane.ERROR_MESSAGE);
-    } finally {
-        // Restore auto-commit and close connection
-        if (conn != null) {
-            try {
-                conn.setAutoCommit(true);
-                conn.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-}
-    
-    
-    public class PopulateComboBox {
-
     }
 
     /**
@@ -328,6 +375,8 @@ private void setupEnterKeyNavigation() {
     }//GEN-LAST:event_firstNameActionPerformed
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
+        // Clear fields and dispose of the window
+        clearFields();
         this.dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
 
@@ -338,8 +387,6 @@ private void setupEnterKeyNavigation() {
 
     private void sectionsComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sectionsComboBoxActionPerformed
         // TODO add your handling code here:
-
-
     }//GEN-LAST:event_sectionsComboBoxActionPerformed
 
     public String getSection() {
@@ -350,7 +397,8 @@ private void setupEnterKeyNavigation() {
     private void clearFields() {
         firstName.setText("");
         lastName.setText("");
-        firstName.requestFocus(); // Set focus back to first name field
+        sectionsComboBox.setSelectedIndex(0);
+        firstName.requestFocus();
     }
 
     public static void main(String args[]) {
