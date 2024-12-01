@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2024 at 05:31 PM
+-- Generation Time: Dec 01, 2024 at 04:55 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,8 +44,9 @@ CREATE TABLE `classes` (
 INSERT INTO `classes` (`class_id`, `class_name`, `section`, `subject`, `teachers_id`) VALUES
 (1, 'Joed\'s Class', '2102', 'Object-Oriented-Programming', 3),
 (2, 'DSA - 121', '1102', 'Data Structures and Algorithm', 3),
-(6, 'data', '101', 'data', 1),
-(11, 'Neil\'s Class', '103', 'Programming', 1);
+(6, 'data', '1', 'data', 1),
+(11, 'Neil\'s Class', '1', 'Programming', 1),
+(13, 'asgard', '2', 'Isda', 1);
 
 -- --------------------------------------------------------
 
@@ -55,12 +56,33 @@ INSERT INTO `classes` (`class_id`, `class_name`, `section`, `subject`, `teachers
 
 CREATE TABLE `classwork` (
   `classwork_id` int(11) NOT NULL,
+  `title` varchar(100) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `class_id` int(11) DEFAULT NULL,
+  `section_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `classwork`
+--
+
+INSERT INTO `classwork` (`classwork_id`, `title`, `description`, `due_date`, `class_id`, `section_id`) VALUES
+(2, 'qweqw', 'qwe', '2024-02-12', NULL, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `grades`
+--
+
+CREATE TABLE `grades` (
+  `grade_id` int(11) NOT NULL,
   `student_id` int(11) DEFAULT NULL,
-  `title` varchar(255) NOT NULL,
-  `due_date` datetime DEFAULT NULL,
-  `created_at` datetime DEFAULT current_timestamp(),
-  `Grades` int(11) DEFAULT NULL,
-  `class_id` int(11) NOT NULL
+  `classwork_id` int(11) DEFAULT NULL,
+  `score` decimal(5,2) DEFAULT NULL,
+  `feedback` text DEFAULT NULL,
+  `date_graded` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -112,7 +134,10 @@ CREATE TABLE `schedules` (
 INSERT INTO `schedules` (`schedule_id`, `class_id`, `room_id`, `day_of_week`, `start_time`, `end_time`, `subject`, `class_name`, `room`) VALUES
 (3, 6, 1, 'Tuesday', '08:00:00', '09:00:00', 'Python', NULL, NULL),
 (4, 6, 2, 'Monday', '08:00:00', '11:11:00', 'python', NULL, NULL),
-(5, 6, 3, 'Monday', '07:00:00', '09:00:00', 'data', NULL, NULL);
+(5, 6, 3, 'Monday', '07:00:00', '09:00:00', 'data', NULL, NULL),
+(8, 11, 5, 'Monday', '06:00:00', '08:00:00', NULL, NULL, NULL),
+(9, 11, 3, 'Monday', '03:00:00', '05:00:00', NULL, NULL, NULL),
+(10, 11, 1, 'Monday', '23:00:00', '23:30:00', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -171,7 +196,8 @@ INSERT INTO `students` (`student_id`, `student_firstname`, `student_lastname`, `
 (21, 'xyed', 'jugoes', NULL),
 (22, 'abdul', 'jabar', NULL),
 (23, 'Joed', 'DE', NULL),
-(24, 'Neil', 'Delmo', NULL);
+(24, 'Neil', 'Delmo', NULL),
+(26, 'Jojo', 'Kujo', 2);
 
 -- --------------------------------------------------------
 
@@ -180,11 +206,22 @@ INSERT INTO `students` (`student_id`, `student_firstname`, `student_lastname`, `
 --
 
 CREATE TABLE `student_classwork` (
-  `student_classwork_id` int(11) NOT NULL,
-  `student_id` int(11) DEFAULT NULL,
-  `classwork_id` int(11) DEFAULT NULL,
-  `grade` decimal(5,2) DEFAULT NULL,
-  `submission_date` datetime DEFAULT NULL
+  `student_id` int(11) NOT NULL,
+  `classwork_id` int(11) NOT NULL,
+  `section_id` int(11) DEFAULT NULL,
+  `submission_date` datetime DEFAULT NULL,
+  `grade` decimal(5,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_sections`
+--
+
+CREATE TABLE `student_sections` (
+  `student_id` int(11) NOT NULL,
+  `section_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -224,7 +261,16 @@ ALTER TABLE `classes`
 --
 ALTER TABLE `classwork`
   ADD PRIMARY KEY (`classwork_id`),
-  ADD KEY `class_id` (`student_id`);
+  ADD KEY `class_id` (`class_id`),
+  ADD KEY `section_id` (`section_id`);
+
+--
+-- Indexes for table `grades`
+--
+ALTER TABLE `grades`
+  ADD PRIMARY KEY (`grade_id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `classwork_id` (`classwork_id`);
 
 --
 -- Indexes for table `rooms`
@@ -257,9 +303,16 @@ ALTER TABLE `students`
 -- Indexes for table `student_classwork`
 --
 ALTER TABLE `student_classwork`
-  ADD PRIMARY KEY (`student_classwork_id`),
-  ADD KEY `student_id` (`student_id`),
-  ADD KEY `classwork_id` (`classwork_id`);
+  ADD PRIMARY KEY (`student_id`,`classwork_id`),
+  ADD KEY `classwork_id` (`classwork_id`),
+  ADD KEY `section_id` (`section_id`);
+
+--
+-- Indexes for table `student_sections`
+--
+ALTER TABLE `student_sections`
+  ADD PRIMARY KEY (`student_id`,`section_id`),
+  ADD KEY `section_id` (`section_id`);
 
 --
 -- Indexes for table `teachers`
@@ -277,7 +330,19 @@ ALTER TABLE `teachers`
 -- AUTO_INCREMENT for table `classes`
 --
 ALTER TABLE `classes`
-  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `classwork`
+--
+ALTER TABLE `classwork`
+  MODIFY `classwork_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `grades`
+--
+ALTER TABLE `grades`
+  MODIFY `grade_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `rooms`
@@ -289,7 +354,7 @@ ALTER TABLE `rooms`
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `sections`
@@ -301,13 +366,7 @@ ALTER TABLE `sections`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-
---
--- AUTO_INCREMENT for table `student_classwork`
---
-ALTER TABLE `student_classwork`
-  MODIFY `student_classwork_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `teachers`
@@ -329,7 +388,15 @@ ALTER TABLE `classes`
 -- Constraints for table `classwork`
 --
 ALTER TABLE `classwork`
-  ADD CONSTRAINT `classwork_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `classes` (`class_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `classwork_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `classes` (`class_id`),
+  ADD CONSTRAINT `classwork_ibfk_2` FOREIGN KEY (`section_id`) REFERENCES `sections` (`section_id`);
+
+--
+-- Constraints for table `grades`
+--
+ALTER TABLE `grades`
+  ADD CONSTRAINT `grades_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`),
+  ADD CONSTRAINT `grades_ibfk_2` FOREIGN KEY (`classwork_id`) REFERENCES `classwork` (`classwork_id`);
 
 --
 -- Constraints for table `schedules`
@@ -348,8 +415,16 @@ ALTER TABLE `students`
 -- Constraints for table `student_classwork`
 --
 ALTER TABLE `student_classwork`
-  ADD CONSTRAINT `student_classwork_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `student_classwork_ibfk_2` FOREIGN KEY (`classwork_id`) REFERENCES `classwork` (`classwork_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `student_classwork_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`),
+  ADD CONSTRAINT `student_classwork_ibfk_2` FOREIGN KEY (`classwork_id`) REFERENCES `classwork` (`classwork_id`),
+  ADD CONSTRAINT `student_classwork_ibfk_3` FOREIGN KEY (`section_id`) REFERENCES `sections` (`section_id`);
+
+--
+-- Constraints for table `student_sections`
+--
+ALTER TABLE `student_sections`
+  ADD CONSTRAINT `student_sections_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`),
+  ADD CONSTRAINT `student_sections_ibfk_2` FOREIGN KEY (`section_id`) REFERENCES `sections` (`section_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
