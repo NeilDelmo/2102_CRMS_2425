@@ -316,16 +316,8 @@ public class SignUp extends javax.swing.JFrame {
 
     private void SaveAndGoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveAndGoLoginActionPerformed
         String fullname, email, password, confirmPassword;
-        String URL, USER, PASS;
-        URL = "jdbc:mysql://localhost:3306/crms";
-        USER = "root";
-        PASS = "";
         
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection(URL, USER, PASS);
-            Statement st = con.createStatement();
-            
             fullname = NameSignUP.getText();
             email = EmailTxT.getText();
             password = new String(PasswordSignUp.getPassword());
@@ -348,20 +340,36 @@ public class SignUp extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(new JFrame(), "Password does not match", "Error",
                         JOptionPane.ERROR_MESSAGE);
             } else {
-                String tableName = userType.equals("Teacher") ? "teachers" : "student_accounts";
-                String fullNameColumn = userType.equals("Teacher") ? "fullname" : "full_name";  
-                String query = "INSERT INTO " + tableName + " (" + fullNameColumn + ", password, email) VALUES ('" + fullname + "', '" + password + "', '" + email + "')";
-                st.executeUpdate(query);
+                boolean success = false;
+                if (userType.equals("Teacher")) {
+                    // Handle teacher signup as before
+                    String URL = "jdbc:mysql://localhost:3306/crms";
+                    String USER = "root";
+                    String PASS = "";
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    Connection con = DriverManager.getConnection(URL, USER, PASS);
+                    Statement st = con.createStatement();
+                    String query = "INSERT INTO teachers (fullname, password, email) VALUES ('" + fullname + "', '" + password + "', '" + email + "')";
+                    st.executeUpdate(query);
+                    success = true;
+                    con.close();
+                } else {
+                    // Handle student signup with new handler
+                    success = StudentSignupHandler.createStudentAccount(fullname, email, password);
+                }
                 
-                Login LoginFrame = new Login();
-                LoginFrame.setVisible(true);
-                LoginFrame.pack();
-                LoginFrame.setLocationRelativeTo(null);
-                this.dispose();
+                if (success) {
+                    Login LoginFrame = new Login();
+                    LoginFrame.setVisible(true);
+                    LoginFrame.pack();
+                    LoginFrame.setLocationRelativeTo(null);
+                    this.dispose();
+                }
             }
-            con.close();
         } catch (Exception e) {
             System.out.println("Error!" + e.getMessage());
+            JOptionPane.showMessageDialog(new JFrame(), "Error: " + e.getMessage(), "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_SaveAndGoLoginActionPerformed
 

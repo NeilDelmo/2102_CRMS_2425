@@ -15,20 +15,17 @@ import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
 public class StudentCalendar extends javax.swing.JFrame {
-    private int selectedClassId; // Ensure this is set appropriately based on your application logic
      private static StudentCalendar instance; // The single instance
-    private int loggedInteachers_id; // Ensure this is initialized appropriately;
+    private int loggedInStudentId;
     private int classId; // Store the class ID
-    private JTable classTable; // Your JTable
     private JTable scheduleTable;
     private JComboBox<String> dayFilterComboBox;
 
     
-     private StudentCalendar(int teacherId, int classId) {
-    this.loggedInteachers_id = teacherId;
-    this.classId = classId;
+    public StudentCalendar(int studentId) {  // Remove classId parameter
+    this.loggedInStudentId = studentId;
     initComponents();
-    setupDayFilter();  // Add this line
+    setupDayFilter();
     loadClassData();
     scheduleTable = new JTable(new DefaultTableModel(
         new Object[]{"Day", "Subject", "Class Name", "Start Time", "End Time", "Room"}, 0
@@ -40,24 +37,36 @@ public class StudentCalendar extends javax.swing.JFrame {
     loadClassData(); // Load data on initialization (if needed)
 }
      void loadClassData() {
-        // Logic to load data into ClassTable based on the classId
     DefaultTableModel model = (DefaultTableModel) ClassTable.getModel();
-    model.setRowCount(0); // Clear existing data
+    model.setRowCount(0);
 
     String selectedDay = (String) dayFilterComboBox.getSelectedItem();
     
-    String query = "SELECT s.schedule_id, s.day_of_week, c.subject, c.class_name, s.start_time, s.end_time, r.room_name " +
-                  "FROM schedules s " +
-                  "INNER JOIN classes c ON s.class_id = c.class_id " +
-                  "INNER JOIN rooms r ON s.room_id = r.room_id " +
-                  "WHERE s.class_id = ?" +
-                  (!"All Days".equals(selectedDay) ? " AND s.day_of_week = ?" : "") +
-                  " ORDER BY FIELD(s.day_of_week, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), s.start_time";
+    String query = "SELECT s.schedule_id, s.day_of_week, c.subject, c.class_name, s.start_time, s.end_time, r.room_name "
+    + "FROM schedules s "
+    + "INNER JOIN classes c ON s.class_id = c.class_id "
+    + "INNER JOIN rooms r ON s.room_id = r.room_id "
+    + "INNER JOIN student_classes sc ON c.class_id = sc.class_id "
+    + "WHERE sc.student_account_id = ? ";
+
+    if (!"All Days".equals(selectedDay)) {
+        query += "AND s.day_of_week = ? ";
+    }
+
+    query += "ORDER BY CASE s.day_of_week "
+        + "WHEN 'Monday' THEN 1 "
+        + "WHEN 'Tuesday' THEN 2 "
+        + "WHEN 'Wednesday' THEN 3 "
+        + "WHEN 'Thursday' THEN 4 "
+        + "WHEN 'Friday' THEN 5 "
+        + "WHEN 'Saturday' THEN 6 "
+        + "WHEN 'Sunday' THEN 7 "
+        + "END, s.start_time";
 
     try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/crms", "root", "");
          PreparedStatement pstmt = conn.prepareStatement(query)) {
-        
-        pstmt.setInt(1, classId);
+   
+        pstmt.setInt(1, loggedInStudentId);
         if (!"All Days".equals(selectedDay)) {
             pstmt.setString(2, selectedDay);
         }
@@ -80,17 +89,13 @@ public class StudentCalendar extends javax.swing.JFrame {
             "Database Error",
             JOptionPane.ERROR_MESSAGE);
     }
+}
+      public static StudentCalendar getInstance(int studentId) {  // Remove classId parameter
+    if (instance == null) {
+        instance = new StudentCalendar(studentId);
     }
-      public static StudentCalendar getInstance(int teacherId, int classId) {
-        if (instance == null) {
-            instance = new StudentCalendar(teacherId, classId);
-        } else {
-            // Optionally update the classId if needed
-            instance.classId = classId;
-            instance.loadClassData(); // Reload data if the classId changes
-        }
-        return instance;
-    }
+    return instance;
+}
     public void updateClass(int classId) {
     this.classId = classId;
     // Update the UI or perform any other necessary actions

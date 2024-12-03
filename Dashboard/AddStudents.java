@@ -94,27 +94,58 @@ private void setupEnterKeyNavigation() {
     }
     
 private void createStudent(String firstNameText, String lastNameText, String section_code) {
-    String insertStudentSQL = "INSERT INTO students (student_firstname, student_lastname, section_code) VALUES (?, ?, ?)"; // Add section_code directly
+    String insertStudentSQL = "INSERT INTO students (student_firstname, student_lastname, section_code) VALUES (?, ?, ?)";
+    String checkAccountSQL = "SELECT student_account_id FROM student_accounts WHERE full_name = ?";
     Connection conn = null;
 
     try {
         conn = DriverManager.getConnection(DB_URL, USER, PASS);
         conn.setAutoCommit(false); // Start transaction
 
-        // Insert student with section_code association
-        try (PreparedStatement pstmtStudent = conn.prepareStatement(insertStudentSQL)) {
+        // First check if there's a matching student account
+        try (PreparedStatement checkStmt = conn.prepareStatement(checkAccountSQL)) {
+            checkStmt.setString(1, firstNameText + " " + lastNameText);
+            ResultSet rs = checkStmt.executeQuery();
+            
+            // Insert student
+            PreparedStatement pstmtStudent = conn.prepareStatement(insertStudentSQL, PreparedStatement.RETURN_GENERATED_KEYS);
             pstmtStudent.setString(1, firstNameText);
             pstmtStudent.setString(2, lastNameText);
-            pstmtStudent.setString(3, section_code); // Associate student directly with the selected section
+            pstmtStudent.setString(3, section_code);
 
             int rowsAffected = pstmtStudent.executeUpdate();
             if (rowsAffected == 0) {
                 throw new SQLException("Creating student failed, no rows affected.");
             }
+
+            // Get the generated student ID
+            ResultSet generatedKeys = pstmtStudent.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int studentId = generatedKeys.getInt(1);
+
+                // If there's a matching account, link them
+                if (rs.next()) {
+                    int accountId = rs.getInt("student_account_id");
+                    String updateSQL = "UPDATE students SET student_account_id = ? WHERE student_id = ?";
+                    PreparedStatement updateStmt = conn.prepareStatement(updateSQL);
+                    updateStmt.setInt(1, accountId);
+                    updateStmt.setInt(2, studentId);
+                    updateStmt.executeUpdate();
+
+                    JOptionPane.showMessageDialog(this, 
+                        "Student added and linked to existing account!", 
+                        "Success", 
+                        JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, 
+                        "Student added! They will be linked to their account when they sign up.", 
+                        "Success", 
+                        JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
         }
         
         conn.commit(); // Commit transaction
-        JOptionPane.showMessageDialog(this, "Student added successfully!");
         clearFields();
 
     } catch (SQLException ex) {
@@ -127,7 +158,10 @@ private void createStudent(String firstNameText, String lastNameText, String sec
             }
         }
         ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error adding student: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, 
+            "Error adding student: " + ex.getMessage(), 
+            "Database Error", 
+            JOptionPane.ERROR_MESSAGE);
     } finally {
         // Restore auto-commit and close connection
         if (conn != null) {
@@ -307,8 +341,6 @@ private void createStudent(String firstNameText, String lastNameText, String sec
 
     private void sectionsComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sectionsComboBoxActionPerformed
         // TODO add your handling code here:
-
-
     }//GEN-LAST:event_sectionsComboBoxActionPerformed
 
     public String getSection() {

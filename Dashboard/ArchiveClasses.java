@@ -577,7 +577,7 @@ public class ArchiveClasses extends javax.swing.JFrame {
 
         if (selectedRow != -1) {
             Integer classId = (Integer) ArchiveClasses.getValueAt(selectedRow, 1); // Assuming Class ID is in the second column
-            Teach teachFrame = Teach.getInstance(currentTeachers_Id, classId); // Use the Singleton method
+            Teach teachFrame = Teach.getInstance(currentTeachers_Id); // Use the Singleton method
             teachFrame.setVisible(true); // Show the Teach frame
         } else {
             JOptionPane.showMessageDialog(this, "Please select a class to teach.", "No Selection", JOptionPane.WARNING_MESSAGE);

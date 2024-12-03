@@ -23,9 +23,8 @@ public class Teach extends javax.swing.JFrame {
     private JComboBox<String> dayFilterComboBox;
 
     
-     private Teach(int teacherId, int classId) {
+    public Teach(int teacherId) {
     this.loggedInteachers_id = teacherId;
-    this.classId = classId;
     initComponents();
     setupDayFilter();  // Add this line
     loadClassData();
@@ -45,18 +44,31 @@ public class Teach extends javax.swing.JFrame {
 
     String selectedDay = (String) dayFilterComboBox.getSelectedItem();
     
-    String query = "SELECT s.schedule_id, s.day_of_week, c.subject, c.class_name, s.start_time, s.end_time, r.room_name " +
-                  "FROM schedules s " +
-                  "INNER JOIN classes c ON s.class_id = c.class_id " +
-                  "INNER JOIN rooms r ON s.room_id = r.room_id " +
-                  "WHERE s.class_id = ?" +
-                  (!"All Days".equals(selectedDay) ? " AND s.day_of_week = ?" : "") +
-                  " ORDER BY FIELD(s.day_of_week, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), s.start_time";
+    String query = "SELECT s.schedule_id, s.day_of_week, c.subject, c.class_name, s.start_time, s.end_time, r.room_name "
+    + "FROM schedules s "
+    + "INNER JOIN classes c ON s.class_id = c.class_id "
+    + "INNER JOIN rooms r ON s.room_id = r.room_id "
+    + "WHERE c.teachers_id = ? ";
 
+// Add day filter if needed
+if (!"All Days".equals(selectedDay)) {
+    query += "AND s.day_of_week = ? ";
+}
+
+// Add ordering
+query += "ORDER BY CASE s.day_of_week "
+    + "WHEN 'Monday' THEN 1 "
+    + "WHEN 'Tuesday' THEN 2 "
+    + "WHEN 'Wednesday' THEN 3 "
+    + "WHEN 'Thursday' THEN 4 "
+    + "WHEN 'Friday' THEN 5 "
+    + "WHEN 'Saturday' THEN 6 "
+    + "WHEN 'Sunday' THEN 7 "
+    + "END, s.start_time";
     try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/crms", "root", "");
          PreparedStatement pstmt = conn.prepareStatement(query)) {
-        
-        pstmt.setInt(1, classId);
+   
+        pstmt.setInt(1, loggedInteachers_id);
         if (!"All Days".equals(selectedDay)) {
             pstmt.setString(2, selectedDay);
         }
@@ -80,16 +92,12 @@ public class Teach extends javax.swing.JFrame {
             JOptionPane.ERROR_MESSAGE);
     }
     }
-      public static Teach getInstance(int teacherId, int classId) {
-        if (instance == null) {
-            instance = new Teach(teacherId, classId);
-        } else {
-            // Optionally update the classId if needed
-            instance.classId = classId;
-            instance.loadClassData(); // Reload data if the classId changes
-        }
-        return instance;
+      public static Teach getInstance(int teacherId) {
+    if (instance == null) {
+        instance = new Teach(teacherId);
     }
+    return instance;
+}
     public void updateClass(int classId) {
     this.classId = classId;
     // Update the UI or perform any other necessary actions

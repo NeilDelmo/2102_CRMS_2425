@@ -21,16 +21,16 @@ import java.sql.PreparedStatement;
 
 
 public class HomeStudent extends javax.swing.JFrame {
-   private static int currentTeachers_Id;
+   private static int currentStudentId;
 
     // Static method to set the current teacher ID
-    public static void setCurrentTeacherId(int teachers_id) {
-        currentTeachers_Id = teachers_id;
+    public static void setCurrentTeacherId(int currentStudentId) {
+        currentStudentId = currentStudentId;
     }
 
     // Static method to get the current teacher ID (optional, but can be useful)
-    public static int getCurrentTeacherId() {
-        return currentTeachers_Id;
+    public static int getcurrentStudentId() {
+        return currentStudentId;
     }
     
     public HomeStudent(){
@@ -40,8 +40,8 @@ public class HomeStudent extends javax.swing.JFrame {
         this.setExtendedState(HomeStudent.MAXIMIZED_BOTH);
     }
     
-public HomeStudent(int teachers_id) {
-    currentTeachers_Id = teachers_id;
+public HomeStudent(int currentStudentId) {
+    this.currentStudentId = currentStudentId;
     initComponents();
     setupTableWithCheckboxes();
     loadClasses();
@@ -303,19 +303,19 @@ public HomeStudent(int teachers_id) {
         
     }//GEN-LAST:event_btnHome_HomeActionPerformed
     private void setupTableWithCheckboxes() {
-        CheckboxTableModel model = new CheckboxTableModel(); // No need for rows and columns in constructor
-        ClassTable.setModel(model);
-        ClassTable.getColumnModel().getColumn(0).setCellRenderer(new CheckboxRenderer());
-    }
+    CheckboxTableModel model = new CheckboxTableModel();
+    ClassTable.setModel(model);
+    // Remove the line that sets the checkbox renderer
+}
 
-    public static class CheckboxTableModel extends AbstractTableModel {
-     private Vector<Vector<Object>> data;
-    private String[] columnNames = {"Selected", "Class ID", "Class Name", "Section", "Subject"};
-    private Vector<Boolean> selection;
+   public static class CheckboxTableModel extends AbstractTableModel {
+    private Vector<Vector<Object>> data;
+    private String[] columnNames = {"Class ID", "Instructor", "Class Name", "Section", "Subject"};
+    private Vector<String> instructors;
 
     public CheckboxTableModel() {
         data = new Vector<>();
-        selection = new Vector<>();
+        instructors = new Vector<>();
     }
 
     @Override
@@ -334,153 +334,116 @@ public HomeStudent(int teachers_id) {
     }
 
     @Override
-    public Class<?> getColumnClass(int column) {
-        if (column == 0) {
-            return Boolean.class; // Checkbox column
-        } else if (column == 1) {
-            return Integer.class; // Class ID
-        } else {
-            return String.class; // Other columns
-        }
-    }
-
-    @Override
-    public boolean isCellEditable(int row, int column) {
-        return column == 0; // Only checkbox column is editable
-    }
-
-    @Override
-    public Object getValueAt(int row, int column) {
-        if (column == 0) {
-            return selection.get(row);
-        }
-        // Adjust column index for data Vector (subtract 1 because column 0 is checkbox)
-        return data.get(row).get(column - 1);
-    }
-
-    @Override
-    public void setValueAt(Object value, int row, int column) {
-        if (column == 0) {
-            selection.set(row, (Boolean) value);
-            fireTableCellUpdated(row, column);
-        } else {
-            // Adjust column index for data Vector
-            data.get(row).set(column - 1, value);
-            fireTableCellUpdated(row, column);
-        }
-    }
-
-    public void addRow(Object[] rowData) {
-        Vector<Object> row = new Vector<>();
-        // Skip the first element (checkbox state) when adding to data vector
-        for (int i = 1; i < rowData.length; i++) {
-            row.add(rowData[i]);
-        }
-        data.add(row);
-        // Add checkbox state to selection vector
-        selection.add((Boolean) rowData[0]);
-        fireTableRowsInserted(data.size() - 1, data.size() - 1);
-    }
-
-    public void clear() {
-        data.clear();
-        selection.clear();
-        fireTableDataChanged();
+public Class<?> getColumnClass(int column) {
+    if (column == 0) {
+        return Integer.class; // Class ID column is now first
+    } else {
+        return String.class; // All other columns are strings
     }
 }
 
-    public static class CheckboxRenderer extends JCheckBox implements TableCellRenderer {
-        public CheckboxRenderer() {
-            setHorizontalAlignment(JLabel.CENTER);
-        }
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            if (isSelected) {
-                setForeground(table.getSelectionForeground());
-                setBackground(table.getSelectionBackground());
-            } else {
-                setForeground(table.getForeground());
-                setBackground(table.getBackground());
-            }
-            setSelected((Boolean) value);
-            return this;
-        }
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        return false; // No columns are editable
     }
 
+    @Override
+public Object getValueAt(int row, int column) {
+    if (column == 1) {
+        return instructors.get(row); // Instructor name is now second column
+    } else if (column == 0) {
+        return data.get(row).get(0); // Class ID is first column
+    }
+    return data.get(row).get(column - 1);
+}
+
+    @Override
+public void setValueAt(Object value, int row, int column) {
+    if (column == 1) {
+        instructors.set(row, (String) value);
+    } else {
+        data.get(row).set(column - 1, value);
+    }
+    fireTableCellUpdated(row, column);
+}
+
+   public void addRow(Object[] rowData) {
+    Vector<Object> row = new Vector<>();
+    row.add(rowData[0]); // Class ID
+    row.add(rowData[2]); // Class Name
+    row.add(rowData[3]); // Section
+    row.add(rowData[4]); // Subject
+    data.add(row);
+    instructors.add((String) rowData[1]); // Instructor name is now second
+    fireTableRowsInserted(data.size() - 1, data.size() - 1);
+}
+
+    public void clear() {
+        data.clear();
+        instructors.clear();
+        fireTableDataChanged();
+    }
+
+}
 
 public void loadClasses() {
-    System.out.println("Current Teacher ID: " + currentTeachers_Id);
-        String url = "jdbc:mysql://localhost:3306/crms";
-        String user = "root";
-        String password = "";
+    System.out.println("Current Teacher ID: " + currentStudentId);
+    String url = "jdbc:mysql://localhost:3306/crms";
+    String user = "root";
+    String password = "";
 
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+    try (Connection conn = DriverManager.getConnection(url, user, password)) {
+        // Modified query to join with teachers table
+        String query = "SELECT c.class_id, c.class_name, c.section_code, c.subject, t.fullname AS instructor_name " +
+                      "FROM classes c " +
+                      "JOIN teachers t ON c.teachers_id = t.teachers_id " +
+                      "WHERE c.teachers_id = ?";
 
-        try {
-            conn = DriverManager.getConnection(url, user, password);
-    
-            // Modify query to filter classes by teacher ID and exclude room
-            String query = "SELECT class_id, class_name, section_code, subject " +
-                           "FROM classes " +
-                           "WHERE teachers_id = ?";
-    
-            pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, currentTeachers_Id);
-    
-            rs = pstmt.executeQuery();
-    
-            CheckboxTableModel model = (CheckboxTableModel) ClassTable.getModel();
-            model.clear(); // Clear existing rows
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, currentStudentId);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                CheckboxTableModel model = (CheckboxTableModel) ClassTable.getModel();
+                model.clear();
 
-            while (rs.next()) {
-                Boolean checkboxState = false; // Initialize checkbox state to false
-                Integer classId = rs.getInt("class_id");
-                String className = rs.getString("class_name");
-                int sectionCode = rs.getInt("section_code");
-                String subject = rs.getString("subject");
+                while (rs.next()) {
+                    String instructorName = rs.getString("instructor_name");
+                    Integer classId = rs.getInt("class_id");
+                    String className = rs.getString("class_name");
+                    int sectionCode = rs.getInt("section_code");
+                    String subject = rs.getString("subject");
 
-                Object[] rowData = {
-                    checkboxState, // Checkbox initially unchecked
-                    classId,       // Class ID
-                    className,     // Class Name
-                    sectionCode,       // Section
-                    subject        // Subject
-                    // Room is excluded
-                };
-                model.addRow(rowData);
-            }
-    
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, 
-                "Database error: " + e.getMessage(), 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-        } finally {
-            // Properly close resources
-            try {
-                if (rs != null) rs.close();
-                if (pstmt != null) pstmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+                    Object[] rowData = {
+                        classId,
+                        instructorName,
+                        className,
+                        sectionCode,
+                        subject
+                    };
+                    model.addRow(rowData);
+                }
             }
         }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, 
+            "Database error: " + e.getMessage(), 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
+    }
 }
 
 private Teach teachFrame; // Add a reference to the Teach frame
     private void btnTeach_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeach_HomeActionPerformed
       int selectedRow = ClassTable.getSelectedRow();
-
     if (selectedRow != -1) {
-        Integer classId = (Integer) ClassTable.getValueAt(selectedRow, 1); // Assuming Class ID is in the second column
-        Teach teachFrame = Teach.getInstance(currentTeachers_Id, classId); // Use the Singleton method
-        teachFrame.setVisible(true); // Show the Teach frame
+        Integer classId = (Integer) ClassTable.getValueAt(selectedRow, 1);
+        StudentCalendar calendarFrame = StudentCalendar.getInstance(currentStudentId);
+        calendarFrame.setExtendedState(StudentCalendar.MAXIMIZED_BOTH);
+        calendarFrame.setVisible(true);
+        this.dispose();
     } else {
-        JOptionPane.showMessageDialog(this, "Please select a class to teach.", "No Selection", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Please select a class to view schedule.", "No Selection", JOptionPane.WARNING_MESSAGE);
     }
     }//GEN-LAST:event_btnTeach_HomeActionPerformed
 
