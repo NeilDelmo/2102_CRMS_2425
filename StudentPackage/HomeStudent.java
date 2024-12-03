@@ -395,9 +395,11 @@ public void loadClasses() {
     try (Connection conn = DriverManager.getConnection(url, user, password)) {
         // Modified query to join with teachers table
         String query = "SELECT c.class_id, c.class_name, c.section_code, c.subject, t.fullname AS instructor_name " +
-                      "FROM classes c " +
-                      "JOIN teachers t ON c.teachers_id = t.teachers_id " +
-                      "WHERE c.teachers_id = ?";
+"FROM classes c " +
+"JOIN teachers t ON c.teachers_id = t.teachers_id " +
+"JOIN sections s ON c.section_code = s.section_code " +
+"JOIN students st ON s.section_code = st.section_code " +
+"WHERE st.student_account_id = ?";
 
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setInt(1, currentStudentId);
@@ -480,13 +482,6 @@ private Teach teachFrame; // Add a reference to the Teach frame
 
     }//GEN-LAST:event_btnLogout_HomeActionPerformed
 
-    private void btnStudents_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudents_HomeActionPerformed
-        Students studentsFrame = new Students();
-         studentsFrame.setExtendedState(Students.MAXIMIZED_BOTH); // Set full screen
-         studentsFrame.setVisible(true);
-         this.dispose();
-    }//GEN-LAST:event_btnStudents_HomeActionPerformed
-
     private void btnSubjects_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubjects_HomeActionPerformed
         Sections sectionsFrame = new Sections();
         sectionsFrame.setExtendedState(Students.MAXIMIZED_BOTH);
@@ -508,12 +503,17 @@ private Teach teachFrame; // Add a reference to the Teach frame
         archiveFrame.setVisible(true);
     }//GEN-LAST:event_btnArchive_HomeActionPerformed
 
-    private void btnClasswork_HomeActionPerformed(java.awt.event.ActionEvent evt){
-        Grades gradesworkFrame = new Grades();
-        gradesworkFrame.setExtendedState(Grades.MAXIMIZED_BOTH);
-        gradesworkFrame.setVisible(true);
+    private void btnStudents_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudents_HomeActionPerformed
+        Students studentsFrame = new Students();
+        studentsFrame.setExtendedState(Students.MAXIMIZED_BOTH); // Set full screen
+        studentsFrame.setVisible(true);
         this.dispose();
-    }
+    }//GEN-LAST:event_btnStudents_HomeActionPerformed
+
+    private void btnClasswork_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClasswork_HomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnClasswork_HomeActionPerformed
+
     
     private void btnRooms_HomeActionPerformed(java.awt.event.ActionEvent evt){
        Rooms roomsFrame = new Rooms();

@@ -506,17 +506,11 @@ public void loadClasses() {
         }
 }
 
-private Teach teachFrame; // Add a reference to the Teach frame
     private void btnTeach_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeach_HomeActionPerformed
-      int selectedRow = ClassTable.getSelectedRow();
-
-    if (selectedRow != -1) {
-        Integer classId = (Integer) ClassTable.getValueAt(selectedRow, 1); // Assuming Class ID is in the second column
-        Teach teachFrame = Teach.getInstance(currentTeachers_Id); // Use the Singleton method
-        teachFrame.setVisible(true); // Show the Teach frame
-    } else {
-        JOptionPane.showMessageDialog(this, "Please select a class to teach.", "No Selection", JOptionPane.WARNING_MESSAGE);
-    }
+    Teach.setTeacherId(currentTeachers_Id);  // Set the teacher ID first
+Teach teachFrame = new Teach();        // Create the frame
+teachFrame.setVisible(true);           // Show the frame
+this.dispose();                        // Close the current frame if needed
     }//GEN-LAST:event_btnTeach_HomeActionPerformed
 
     private void btnAddClass_HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClass_HomeActionPerformed

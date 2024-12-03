@@ -34,8 +34,8 @@ public class AddSchedule extends javax.swing.JFrame {
     private Teach teachFrame; // Reference to the Teach frame
 
     // New combo box for class selection
-    private javax.swing.JComboBox<String> classComboBox;
     private java.util.Map<String, Integer> classNameToIdMap = new java.util.HashMap<>();
+    private java.util.Map<String, Integer> roomNameToIdMap = new java.util.HashMap<>();
 
     public AddSchedule(int teacherId, JFrame homeFrame, int selectedClassId, Teach teachFrame) {
     this();  // This calls initComponents()
@@ -45,6 +45,7 @@ public class AddSchedule extends javax.swing.JFrame {
     this.teachFrame = teachFrame;
     SwingUtilities.invokeLater(() -> {  // Ensure UI is ready
         populateClassComboBox();
+        populateRoomComboBox();
     });
 }
 
@@ -57,8 +58,8 @@ public class AddSchedule extends javax.swing.JFrame {
     private void setupKeyNavigation() {
         // Set up focus traversal using Enter key
         Subject1.addActionListener(evt -> Subject2.requestFocus());
-        Subject2.addActionListener(evt -> Room.requestFocus());
-        Room.addActionListener(evt -> jComboBox1.requestFocus());
+        Subject2.addActionListener(evt -> roomComboBox.requestFocus());
+        roomComboBox.addActionListener(evt -> jComboBox1.requestFocus());
         
         // Add action listener for Cancel button
         CancelButton.addActionListener(evt -> dispose());
@@ -105,6 +106,30 @@ public class AddSchedule extends javax.swing.JFrame {
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+        }
+    }
+    
+    private void populateRoomComboBox() {
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
+            String query = "SELECT room_id, room_name FROM rooms";
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+                    roomNameToIdMap.clear();
+
+                    while (rs.next()) {
+                        String roomName = rs.getString("room_name");
+                        int roomId = rs.getInt("room_id");
+                        model.addElement(roomName);
+                        roomNameToIdMap.put(roomName, roomId);
+                    }
+
+                    roomComboBox.setModel(model);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading rooms: " + ex.getMessage());
         }
     }
     
@@ -169,12 +194,14 @@ public class AddSchedule extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        Room = new app.bolivia.swing.JCTextField();
+        roomComboBox = new javax.swing.JComboBox<>();
         CreateButton = new javax.swing.JButton();
         CancelButton = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         Subject1 = new app.bolivia.swing.JCTextField();
         Subject2 = new app.bolivia.swing.JCTextField();
+        subjectField = new app.bolivia.swing.JCTextField();
+        classComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -185,7 +212,7 @@ public class AddSchedule extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Add Schedule");
 
-        Room.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Room", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
+        roomComboBox.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Room", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
 
         CreateButton.setText("Create");
         CreateButton.addActionListener(new java.awt.event.ActionListener() {
@@ -212,6 +239,15 @@ public class AddSchedule extends javax.swing.JFrame {
 
         Subject2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "End of Time", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14))); // NOI18N
 
+        subjectField.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Subject", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14)));
+        
+        classComboBox.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Class", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 14)));
+        classComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                classComboBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -227,8 +263,10 @@ public class AddSchedule extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Subject1, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Room, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Subject2, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(roomComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Subject2, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(subjectField, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(classComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(34, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -245,11 +283,15 @@ public class AddSchedule extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(classComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(subjectField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(Subject1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Subject2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(Room, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(roomComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CancelButton)
@@ -272,32 +314,28 @@ public class AddSchedule extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateButtonActionPerformed
-    Integer selectedClassId = this.selectedClassId; // Already passed to the constructor
+    String selectedClass = (String) classComboBox.getSelectedItem();
+    if (selectedClass == null) {
+        JOptionPane.showMessageDialog(this, "Please select a class");
+        return;
+    }
+    selectedClassId = classNameToIdMap.get(selectedClass);
 
-    String roomText = Room.getText().trim();
+    String selectedRoom = (String) roomComboBox.getSelectedItem();
+    if (selectedRoom == null) {
+        JOptionPane.showMessageDialog(this, "Please select a room");
+        return;
+    }
+    int roomId = roomNameToIdMap.get(selectedRoom);
+
     String startTimeText = Subject1.getText().trim();
     String endTimeText = Subject2.getText().trim();
     String dayOfWeek = (String) jComboBox1.getSelectedItem();
 
     // Validate inputs
-    if (roomText.isEmpty() || startTimeText.isEmpty() || endTimeText.isEmpty() || dayOfWeek == null) {
+    if (startTimeText.isEmpty() || endTimeText.isEmpty() || dayOfWeek == null) {
         JOptionPane.showMessageDialog(this, "Please fill in all fields.",
                 "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Convert room text to room_id
-    int roomId;
-    try {
-        roomId = getRoomId(roomText);
-        if (roomId == -1) {
-            JOptionPane.showMessageDialog(this, "Invalid room specified.",
-                    "Input Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Error validating room: " +
-                ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
@@ -351,7 +389,6 @@ public class AddSchedule extends javax.swing.JFrame {
             teachFrame.addScheduleToTable(dayOfWeek, subject, className, startTime, endTime, roomName);
 
             // // Clear the fields
-            Room.setText("");
             Subject1.setText("");
             Subject2.setText("");
         } else {
@@ -371,23 +408,10 @@ public class AddSchedule extends javax.swing.JFrame {
         java.util.Date date = sdf.parse(timeStr);
         return new Time(date.getTime());
     }
-    private int getRoomId(String roomText) throws SQLException {
-       String query = "SELECT room_id FROM rooms WHERE room_name = ? OR room_id = ?";
-
-        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setString(1, roomText);
-            try {
-                pstmt.setInt(2, Integer.parseInt(roomText));
-            } catch (NumberFormatException e) {
-                pstmt.setInt(2, -1);
-            }
-
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("room_id");
-            }
+    private int getRoomId(String roomName) throws SQLException {
+       Integer roomId = roomNameToIdMap.get(roomName);
+        if (roomId != null) {
+            return roomId;
         }
         return -1;
     }
@@ -420,6 +444,21 @@ public class AddSchedule extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void classComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classComboBoxActionPerformed
+        String selectedClass = (String) classComboBox.getSelectedItem();
+        if (selectedClass != null) {
+            selectedClassId = classNameToIdMap.get(selectedClass);
+            try {
+                String subject = getSubjectByClassId(selectedClassId);
+                if (subject != null) {
+                    subjectField.setText(subject);
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Error getting subject: " + ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_classComboBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -459,11 +498,13 @@ public class AddSchedule extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CancelButton;
     private javax.swing.JButton CreateButton;
-    private app.bolivia.swing.JCTextField Room;
+    private javax.swing.JComboBox<String> roomComboBox;
     private app.bolivia.swing.JCTextField Subject1;
     private app.bolivia.swing.JCTextField Subject2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private app.bolivia.swing.JCTextField subjectField;
+    private javax.swing.JComboBox<String> classComboBox;
     // End of variables declaration//GEN-END:variables
 }

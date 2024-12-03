@@ -14,11 +14,9 @@ import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
 public class Teach extends javax.swing.JFrame {
-    private int selectedClassId; // Ensure this is set appropriately based on your application logic
      private static Teach instance; // The single instance
-    private int loggedInteachers_id; // Ensure this is initialized appropriately;
+     private static int loggedInteachers_id;
     private int classId; // Store the class ID
-    private JTable classTable; // Your JTable
     private JTable scheduleTable;
     private JComboBox<String> dayFilterComboBox;
 
@@ -32,10 +30,19 @@ public class Teach extends javax.swing.JFrame {
         new Object[]{"Day", "Subject", "Class Name", "Start Time", "End Time", "Room"}, 0
     ));
 }
+    
+    public static void setTeacherId(int teacherId) {
+    loggedInteachers_id = teacherId;
+}
+
+public static int getTeacherId() {
+    return loggedInteachers_id;
+}
      public Teach() {
     initComponents();
-    this.setExtendedState(Teach.MAXIMIZED_BOTH);
-    loadClassData(); // Load data on initialization (if needed)
+    this.setExtendedState(Teach.MAXIMIZED_BOTH); 
+    setupDayFilter();
+    loadClassData();
 }
      void loadClassData() {
         // Logic to load data into ClassTable based on the classId
@@ -192,7 +199,6 @@ public void setClassId(int classId) {
         jPanel1 = new javax.swing.JPanel();
         btnHome_Teach = new rojeru_san.complementos.RSButtonHover();
         btnLogout_Teach = new rojeru_san.complementos.RSButtonHover();
-        jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         ClassTable = new javax.swing.JTable();
 
@@ -253,7 +259,7 @@ public void setClassId(int classId) {
                 .addComponent(btnMenu_Teach, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 369, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(64, 64, 64)
                 .addComponent(btnRemoveClass_Home, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -349,26 +355,24 @@ public void setClassId(int classId) {
         ClassTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(ClassTable);
 
-        jScrollPane2.setViewportView(jScrollPane1);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 703, Short.MAX_VALUE)
+                .addGap(20, 20, 20))
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(146, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1)
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(67, 67, 67)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -785,6 +789,5 @@ public void setClassId(int classId) {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }
